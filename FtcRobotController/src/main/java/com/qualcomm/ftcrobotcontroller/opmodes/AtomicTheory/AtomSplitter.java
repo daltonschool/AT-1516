@@ -4,7 +4,8 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.ServoController;
-
+import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
+import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -21,6 +22,8 @@ public abstract class AtomSplitter extends OpMode {
 
     //So like the loop method is unique in the Teleop classes
     //and the init? method is unique in the Autonomous classes
+
+    DeviceInterfaceModule cdim;
 
     //Motor Controllers
     DcMotorController front_motor_controller_drive;
@@ -45,12 +48,16 @@ public abstract class AtomSplitter extends OpMode {
         back_motor_controller_drive = hardwareMap.dcMotorController.get("Motor Controller 1");
         front_motor_controller_drive = hardwareMap.dcMotorController.get("Motor Controller 2");
 
+        cdim = hardwareMap.deviceInterfaceModule.get("dim");
+
         //Configure Servo Controller(s)
         servoController1 = hardwareMap.servoController.get("Servo Controller 1");
 
         //Configure Sensors
         colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
         colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
+//        color3 = hardwareMap.i2cDevice.get("sensor1");
+
 
         //Configure Motors
         BR = hardwareMap.dcMotor.get("back_right");
@@ -67,6 +74,12 @@ public abstract class AtomSplitter extends OpMode {
         FR.setDirection(DcMotor.Direction.REVERSE);
 
 
+    }
+
+    public void printi2cData(String sensorName, int port) {
+        byte[] read = cdim.getCopyOfReadBuffer(port);
+        for (int i = 0; i < read.length; i++)
+            telemetry.addData(sensorName + " #"+i, read[i]);
     }
 
     //scales motor power to

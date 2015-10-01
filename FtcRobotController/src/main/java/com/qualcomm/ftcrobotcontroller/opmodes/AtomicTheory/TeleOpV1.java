@@ -34,6 +34,14 @@ public class TeleOpV1 extends AtomSplitter {
         BL.setPower(leftPower);
         FL.setPower(leftPower);
 
+        if (gamepad1.a) {
+//            colorSensor1.enableLed(true);
+            colorSensor2.enableLed(true);
+        }
+        else if (gamepad1.b) {
+//            colorSensor1.enableLed(false);
+            colorSensor2.enableLed(false);
+        }
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
@@ -42,10 +50,7 @@ public class TeleOpV1 extends AtomSplitter {
 		 * are currently write only.
 		 */
         telemetry.addData("Atomic Theory 4174", "*** Robot Data***");
-        telemetry.addData("right_motors", "right_motors:  " + String.format("%.2f", BR.getPower()));
-        telemetry.addData("left_motors", "left_motors:  " + String.format("%.2f", BL.getPower()));
-        telemetry.addData("Color sensor1: ", "argb: " + colorSensor1.argb());
-        telemetry.addData("Color sensor2: ", "argb: " + colorSensor2.argb());
+        printi2cData("Color Sensor", 1);
     }
 
 
