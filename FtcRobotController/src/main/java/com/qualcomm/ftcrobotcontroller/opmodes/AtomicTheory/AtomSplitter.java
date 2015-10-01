@@ -23,21 +23,21 @@ public abstract class AtomSplitter extends OpMode {
     //and the init? method is unique in the Autonomous classes
 
     //Motor Controllers
-    static DcMotorController front_motor_controller_drive;
-    static DcMotorController back_motor_controller_drive;
+    DcMotorController front_motor_controller_drive;
+    DcMotorController back_motor_controller_drive;
 
     //Servo Controller(s)
-    static ServoController servoController1;
+    ServoController servoController1;
 
     //Drive Motors
-    static DcMotor BR;
-    static DcMotor BL;
-    static DcMotor FR;
-    static DcMotor FL;
+    DcMotor BR;
+    DcMotor BL;
+    DcMotor FR;
+    DcMotor FL;
 
     //Sensors
-    static ColorSensor colorSensor1;
-    static ColorSensor colorSensor2;
+    ColorSensor colorSensor1;
+    ColorSensor colorSensor2;
 
     //Initialize hardware
     public void init() {
@@ -49,8 +49,8 @@ public abstract class AtomSplitter extends OpMode {
         servoController1 = hardwareMap.servoController.get("Servo Controller 1");
 
         //Configure Sensors
-        colorSensor1 = hardwareMap.colorSensor.get("Color Sensor 1");
-        colorSensor2 = hardwareMap.colorSensor.get("Color Sensor 2");
+        colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
+        colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
 
         //Configure Motors
         BR = hardwareMap.dcMotor.get("back_right");

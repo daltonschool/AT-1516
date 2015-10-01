@@ -26,6 +26,7 @@ public class TeleOpV1 extends AtomSplitter {
         double leftPower = (float) scale_motor_power(throttleLeft);
         double rightPower = (float) scale_motor_power(throttleRight);
 
+
         // write the values to the motors
         BR.setPower(rightPower);
         FR.setPower(rightPower);
@@ -43,8 +44,8 @@ public class TeleOpV1 extends AtomSplitter {
         telemetry.addData("Atomic Theory 4174", "*** Robot Data***");
         telemetry.addData("right_motors", "right_motors:  " + String.format("%.2f", BR.getPower()));
         telemetry.addData("left_motors", "left_motors:  " + String.format("%.2f", BL.getPower()));
-        telemetry.addData("Color sensor1: ", "argb: " + toHexString(colorSensor1.argb()));
-        telemetry.addData("Color sensor2: ", "argb: " + toHexString(colorSensor2.argb()));
+        telemetry.addData("Color sensor1: ", "argb: " + colorSensor1.argb());
+        telemetry.addData("Color sensor2: ", "argb: " + colorSensor2.argb());
     }
 
 
