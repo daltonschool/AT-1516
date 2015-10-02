@@ -35,11 +35,11 @@ public class TeleOpV1 extends AtomSplitter {
         FL.setPower(leftPower);
 
         if (gamepad1.a) {
-//            colorSensor1.enableLed(true);
+            colorSensor1.enableLed(true);
             colorSensor2.enableLed(true);
         }
         else if (gamepad1.b) {
-//            colorSensor1.enableLed(false);
+            colorSensor1.enableLed(false);
             colorSensor2.enableLed(false);
         }
 
