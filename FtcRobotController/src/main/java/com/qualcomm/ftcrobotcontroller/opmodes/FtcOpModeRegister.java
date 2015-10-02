@@ -59,6 +59,7 @@ public class FtcOpModeRegister implements OpModeRegister {
 
 
       manager.register("TeleOpV1", TeleOpV1.class);
+      manager.register("ModernRobotics RGB", MRRGBExample.class);
       manager.register("NullOp", NullOp.class);
 
 //    manager.register("K9TeleOp", K9TeleOp.class);
