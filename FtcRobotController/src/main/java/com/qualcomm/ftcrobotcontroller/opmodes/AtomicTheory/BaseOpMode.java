@@ -14,11 +14,11 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * Created by Nathaniel Ostrer on 9/26/15.
  *
- * AtomSplitter.java is the Atomic Theory Helper Class
+ * BaseOpMode.java is the Atomic Theory Helper Class
  */
 
 
-public abstract class AtomSplitter extends OpMode {
+public abstract class BaseOpMode extends OpMode {
 
     //So like the loop method is unique in the Teleop classes
     //and the init? method is unique in the Autonomous classes
@@ -56,8 +56,6 @@ public abstract class AtomSplitter extends OpMode {
         //Configure Sensors
         colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
         colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
-//        color3 = hardwareMap.i2cDevice.get("sensor1");
-
 
         //Configure Motors
         BR = hardwareMap.dcMotor.get("back_right");
@@ -72,8 +70,6 @@ public abstract class AtomSplitter extends OpMode {
         //Set Right Motors as REVERSE
         BR.setDirection(DcMotor.Direction.REVERSE);
         FR.setDirection(DcMotor.Direction.REVERSE);
-
-
     }
 
     public void printi2cData(String sensorName, int port) {

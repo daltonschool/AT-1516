@@ -1,20 +1,10 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoController;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-
-import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.*;
-
 /**
  * Created by Nathaniel Ostrer on 9/24/15.
  */
 
-public class TeleOpV1 extends AtomSplitter {
+public class TeleOpV1 extends BaseOpMode {
 
     public void loop() {
 
