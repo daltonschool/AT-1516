@@ -5,7 +5,8 @@ import android.graphics.Color;
 /**
  * Created by davis on 10/2/15.
  */
-public class BoopBopperTest extends BaseLinearOpMode {
+public class BoopBopperTest extends AtomicBaseLinearOpMode {
+
   public void runOpMode() throws InterruptedException{
     config();
     waitOneFullHardwareCycle();

@@ -8,6 +8,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 19
     }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/libs/armeabi'] } }
 }
 
 buildscript {
@@ -39,10 +40,16 @@ allprojects {
 
 dependencies {
     compile files('libs/android-support-v4.jar')
-    compile (name:'RobotCore-release', ext:'aar')
-    compile (name:'Hardware-release', ext:'aar')
-    compile (name:'FtcCommon-release', ext:'aar')
-    compile (name:'ModernRobotics-release', ext:'aar')
-    compile (name:'Analytics-release', ext:'aar')
-    compile (name:'WirelessP2p-release', ext:'aar')
+    compile(name: 'RobotCore-release', ext: 'aar')
+    compile(name: 'Hardware-release', ext: 'aar')
+    compile(name: 'FtcCommon-release', ext: 'aar')
+    compile(name: 'ModernRobotics-release', ext: 'aar')
+    compile(name: 'Analytics-release', ext: 'aar')
+    compile(name: 'WirelessP2p-release', ext: 'aar')
+    compile files('src/libs/armeabi/javacpp.jar')
+    compile files('src/libs/armeabi/javacv.jar')
+    compile files('src/libs/ffmpeg.jar')
+    compile files('src/libs/javacpp.jar')
+    compile files('src/libs/javacv.jar')
+    compile files('src/libs/opencv.jar')
 }
