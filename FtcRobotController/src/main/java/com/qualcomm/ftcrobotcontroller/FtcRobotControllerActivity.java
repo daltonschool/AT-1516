@@ -72,50 +72,8 @@ import com.qualcomm.robotcore.wifi.WifiDirectAssistant;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
-import android.hardware.Camera;
-
-import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.CameraOp;
-import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.CameraPreview;
-import android.widget.FrameLayout;
-import android.widget.
 
 public class FtcRobotControllerActivity extends Activity {
-
-    /** START TEST CAMERA CODE **/
-
-    public Camera camera;
-    private Camera openFrontFacingCamera() {
-        int cameraId = -1;
-        Camera cam = null;
-        int numberOfCameras = Camera.getNumberOfCameras();
-        for (int i = 0; i < numberOfCameras; i++) {
-            Camera.CameraInfo info = new Camera.CameraInfo();
-            Camera.getCameraInfo(i, info);
-            if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                cameraId = i;
-                break;
-            }
-        }
-        try {
-            cam = Camera.open(cameraId);
-        } catch (Exception e) {
-
-        }
-        return cam;
-    }
-
-    public void initPreview(final Camera camera, final CameraOp context, final Camera.PreviewCallback previewCallback) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                context.preview = new CameraPreview(FtcRobotControllerActivity.this, camera, previewCallback);
-                FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
-                previewLayout.addView(context.preview);
-            }
-        });
-    }
-
-    /* END TEST CAMERA CODE */
 
   private static final int REQUEST_CONFIG_WIFI_CHANNEL = 1;
   private static final boolean USE_DEVICE_EMULATION = false;
