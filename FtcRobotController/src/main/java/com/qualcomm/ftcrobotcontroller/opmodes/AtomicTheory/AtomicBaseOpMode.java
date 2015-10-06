@@ -3,6 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.I2cDevice;
@@ -38,6 +39,8 @@ public abstract class AtomicBaseOpMode extends OpMode {
     DcMotor FR;
     DcMotor FL;
 
+    Servo bopper;
+
     //Sensors
     ColorSensor colorSensor1;
     ColorSensor colorSensor2;
@@ -56,6 +59,10 @@ public abstract class AtomicBaseOpMode extends OpMode {
         //Configure Sensors
         colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
         colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
+
+        // Configure Servos
+        bopper = hardwareMap.servo.get("bopper");
+
 
         //Configure Motors
         BR = hardwareMap.dcMotor.get("back_right");

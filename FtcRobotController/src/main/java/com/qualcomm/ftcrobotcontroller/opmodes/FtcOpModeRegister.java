@@ -35,8 +35,8 @@ import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.BoopBopperTest;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
-import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.TeleOpV1;
-
+import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.*;
+import com.qualcomm.ftcrobotcontroller.opmodes.cheer4ftc.*;
 /**
  * Register Op Modes
  */
@@ -62,6 +62,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("TeleOpV1", TeleOpV1.class);
     manager.register("Boop Bopper Test", BoopBopperTest.class);
     manager.register("ModernRobotics RGB", MRRGBExample.class);
+    manager.register("Detect Colors", DetectColor.class);
     manager.register("NullOp", NullOp.class);
 
 //    manager.register("K9TeleOp", K9TeleOp.class);

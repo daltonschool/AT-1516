@@ -41,21 +41,21 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     int degrees = 0;
     switch (rotation) {
       case Surface.ROTATION_0:
-        degrees = 0;
-        break;
-      case Surface.ROTATION_90:
-        degrees = 90;
-        break;
-      case Surface.ROTATION_180:
         degrees = 180;
         break;
-      case Surface.ROTATION_270:
+      case Surface.ROTATION_90:
         degrees = 270;
+        break;
+      case Surface.ROTATION_180:
+        degrees = 0;
+        break;
+      case Surface.ROTATION_270:
+        degrees = 90;
         break;
     }
 
     int result;
-    if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+    if (info.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
       result = (info.orientation + degrees) % 360;
       result = (360 - result) % 360;  // compensate the mirror
     } else {  // back-facing
@@ -71,7 +71,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     try {
       Camera.Parameters parameters = mCamera.getParameters();
       //         mCamera.setDisplayOrientation(90);
-      setCameraDisplayOrientation(((Activity) this.getContext()), Camera.CameraInfo.CAMERA_FACING_FRONT, mCamera);
+      setCameraDisplayOrientation(((Activity) this.getContext()), Camera.CameraInfo.CAMERA_FACING_BACK, mCamera);
 
       mCamera.setParameters(parameters);
 
@@ -109,7 +109,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     // start preview with new settings
     try {
       Camera.Parameters parameters = mCamera.getParameters();
-      setCameraDisplayOrientation(((Activity) this.getContext()), Camera.CameraInfo.CAMERA_FACING_FRONT, mCamera);
+      setCameraDisplayOrientation(((Activity) this.getContext()), Camera.CameraInfo.CAMERA_FACING_BACK, mCamera);
       mCamera.setParameters(parameters);
 
       mCamera.setPreviewCallback(previewCallback);

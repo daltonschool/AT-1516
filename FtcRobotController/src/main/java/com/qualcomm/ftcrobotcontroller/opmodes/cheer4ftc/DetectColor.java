@@ -9,14 +9,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Enables control of the robot via the gamepad
  */
 public class DetectColor extends LinearOpModeCamera {
-  int ds2 = 2;  // additional downsampling of the image
+  int ds2 = 1;  // additional downsampling of the image
   // set to 1 to disable further downsampling
 
   @Override
   public void runOpMode() throws InterruptedException {
 
     String colorString = "NONE";
-
+    String colorString2 = "NONE";
+    int blueValue1 = 0;
+    int blueValue2 = 0;
+    int redValue1 = 0;
+    int redValue2 = 0;
     // linear OpMode, so could do stuff like this too.
         /*
         motorLeft = hardwareMap.dcMotor.get("motor_1");
@@ -61,32 +65,36 @@ public class DetectColor extends LinearOpModeCamera {
 
           Bitmap rgbImage;
           rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
-          for (int x = 0; x < width / ds2; x++) {
-            for (int y = 0; y < height / ds2; y++) {
+          for (int x = 0; x < width/2; x++) {
+            for (int y = 0; y < height; y++) {
               int pixel = rgbImage.getPixel(x, y);
-              redValue += red(pixel);
-              blueValue += blue(pixel);
+              redValue1 += red(pixel);
+              blueValue1 += blue(pixel);
               greenValue += green(pixel);
             }
           }
-          int color = highestColor(redValue, greenValue, blueValue);
 
-          switch (color) {
-            case 0:
-              colorString = "RED";
-              break;
-            case 1:
-              colorString = "GREEN";
-              break;
-            case 2:
-              colorString = "BLUE";
+          redValue = blueValue = greenValue = 0;
+
+          for (int x = width/2; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+              int pixel = rgbImage.getPixel(x, y);
+              redValue2 += red(pixel);
+              blueValue2 += blue(pixel);
+              greenValue += green(pixel);
+            }
           }
 
+
         } else {
-          colorString = "NONE";
+          blueValue1 = blueValue2 = redValue1 = redValue2 = 0;
         }
 
-        telemetry.addData("Color:", "Color detected is: " + colorString);
+        telemetry.addData("Left:", blueValue1 > redValue1 ? "Blue" : "Red");
+        telemetry.addData("Right:", blueValue2 > redValue2 ? "Blue" : "Red");
+        telemetry.addData("Bluer side:", blueValue1 > blueValue2 ? "LEFT" : "RIGHT");
+
+        blueValue1 = blueValue2 = redValue1 = redValue2 = 0;
         waitOneFullHardwareCycle();
       }
     }

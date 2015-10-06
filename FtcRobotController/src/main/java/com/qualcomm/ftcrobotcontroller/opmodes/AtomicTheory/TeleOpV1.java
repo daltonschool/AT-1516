@@ -31,6 +31,13 @@ public class TeleOpV1 extends AtomicBaseOpMode {
         else if (gamepad1.b) {
             colorSensor1.enableLed(false);
             colorSensor2.enableLed(false);
+            bopper.setPosition(0.5);
+        }
+        else if (gamepad1.x) {
+            bopper.setPosition(0.0);
+        }
+        else if (gamepad1.y) {
+            bopper.setPosition(1.0);
         }
 
 		/*
