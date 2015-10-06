@@ -4,7 +4,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
  * Created by Nathaniel Ostrer on 9/24/15.
  */
 
-public class TeleOpV1 extends BaseOpMode {
+public class TeleOpV1 extends AtomicBaseOpMode {
 
     public void loop() {
 

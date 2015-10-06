@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.ServoController;
 /**
  * Created by Davis Haupt on 10/2/15.
  */
-public abstract class BaseLinearOpMode extends LinearOpMode{
+public abstract class AtomicBaseLinearOpMode extends LinearOpMode{
   DeviceInterfaceModule cdim;
 
   //Motor Controllers

@@ -14,11 +14,11 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * Created by Nathaniel Ostrer on 9/26/15.
  *
- * BaseOpMode.java is the Atomic Theory Helper Class
+ * AtomicBaseOpMode.java is the Atomic Theory Helper Class
  */
 
 
-public abstract class BaseOpMode extends OpMode {
+public abstract class AtomicBaseOpMode extends OpMode {
 
     //So like the loop method is unique in the Teleop classes
     //and the init? method is unique in the Autonomous classes

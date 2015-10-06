@@ -31,6 +31,11 @@
     android:name="android.permission.WRITE_SETTINGS"
     android:required="true" />
 
+  <uses-permission android:name="android.permission.CAMERA" />
+
+  <uses-feature android:name="android.hardware.camera" />
+  <uses-feature android:name="android.hardware.camera.front" />
+
   <uses-feature android:name="android.hardware.usb.accessory" />
 
   <application
@@ -84,6 +89,7 @@
         <action android:name="com.qualcomm.ftcrobotcontroller.VIEW_LOGS"/>
         <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
+
     </activity>
   </application>
 

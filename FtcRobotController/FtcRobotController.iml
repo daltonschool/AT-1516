@@ -53,6 +53,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/libs/armeabi" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/jni" isTestSource="false" />
@@ -96,10 +97,16 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="android-support-v4" level="project" />
     <orderEntry type="library" exported="" name="ModernRobotics-release-" level="project" />
+    <orderEntry type="library" exported="" name="javacpp" level="project" />
+    <orderEntry type="library" exported="" name="1_javacpp" level="project" />
     <orderEntry type="library" exported="" name="Analytics-release-" level="project" />
     <orderEntry type="library" exported="" name="FtcCommon-release-" level="project" />
     <orderEntry type="library" exported="" name="WirelessP2p-release-" level="project" />
+    <orderEntry type="library" exported="" name="ffmpeg" level="project" />
     <orderEntry type="library" exported="" name="Hardware-release-" level="project" />
+    <orderEntry type="library" exported="" name="javacv" level="project" />
+    <orderEntry type="library" exported="" name="1_javacv" level="project" />
     <orderEntry type="library" exported="" name="RobotCore-release-" level="project" />
+    <orderEntry type="library" exported="" name="opencv" level="project" />
   </component>
 </module>
