@@ -32,7 +32,12 @@
       android:padding="8dp"
       android:textSize="16sp"
       android:textStyle="bold"/>
-
+    <FrameLayout
+        android:layout_width="100dp"
+        android:layout_height="125dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/previewLayout">
+    </FrameLayout>
     <ImageButton
       android:id="@+id/menu_buttons"
       android:contentDescription="menu_buttons"

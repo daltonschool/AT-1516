@@ -22,7 +22,7 @@ import java.io.ByteArrayOutputStream;
 public class OpModeCamera extends OpMode {
 
   public Camera camera;
-//  public CameraPreview preview;
+  public CameraPreview preview;
 
   public int width;
   public int height;
@@ -156,17 +156,17 @@ public class OpModeCamera extends OpMode {
 
     data = parameters.flatten();
 
-//    if (preview == null) {
-//      ((FtcRobotControllerActivity) hardwareMap.appContext).initPreview(camera, this, previewCallback);
-//    }
+    if (preview == null) {
+      ((FtcRobotControllerActivity) hardwareMap.appContext).initPreview(camera, this, previewCallback);
+    }
   }
 
   public void stopCamera() {
     if (camera != null) {
-//      if (preview != null) {
-//        ((FtcRobotControllerActivity) hardwareMap.appContext).removePreview(this);
-//        preview = null;
-//      }
+      if (preview != null) {
+        ((FtcRobotControllerActivity) hardwareMap.appContext).removePreview(this);
+        preview = null;
+      }
       camera.stopPreview();
       camera.setPreviewCallback(null);
       camera.release();

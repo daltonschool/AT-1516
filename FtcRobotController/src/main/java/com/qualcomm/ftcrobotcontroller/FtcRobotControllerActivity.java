@@ -108,7 +108,7 @@ public class FtcRobotControllerActivity extends Activity {
   protected FtcEventLoop eventLoop;
 
   /////////////////////////////////////////////////////////
-  /* ADDED FOR CAMERA!!!
+  // ADDED FOR CAMERA!!!
 
   public void initPreview(final Camera camera, final OpModeCamera context, final Camera.PreviewCallback previewCallback) {
     runOnUiThread(new Runnable() {
@@ -155,7 +155,7 @@ public class FtcRobotControllerActivity extends Activity {
   }
 
   // END CAMERA ADD!!!
-  ////////////////////////////////////////////*/
+  //////////////////////////////////////////////
 
   protected class RobotRestarter implements Restarter {
 
