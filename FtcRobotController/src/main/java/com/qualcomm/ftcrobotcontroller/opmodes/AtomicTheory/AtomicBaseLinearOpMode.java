@@ -14,8 +14,9 @@ import com.qualcomm.ftcrobotcontroller.opmodes.cheer4ftc.LinearOpModeCamera;
  */
 public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
 
-  static final int RED = -1;
-  static final int BLUE = 1;
+  public enum Alliance {
+    RED, BLUE;
+  }
 
   static final int LEFT = -1;
   static final int RIGHT = 1;
@@ -41,6 +42,12 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
   //Sensors
   ColorSensor colorSensor1;
   ColorSensor colorSensor2;
+
+  /**
+   *
+   * @return the team that the player is on. (RED or BLUE)
+   */
+  public abstract Alliance getTeam();
 
   public void config() {
     //Configure Motor Controllers

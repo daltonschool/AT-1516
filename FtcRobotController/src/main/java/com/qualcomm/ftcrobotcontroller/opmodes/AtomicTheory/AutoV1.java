@@ -4,6 +4,20 @@ import android.graphics.Bitmap;
 
 /**
  * Created by davis on 10/6/15.
+ *
+ * @author Davis Haupt
+ *
+ * Abstract autonomous OpMode.
+ *
+ * Basically, this OpMode starts some distance away from the beacon,
+ * detects which side of the beacon corresponds to which color,
+ * approaches the beacon, and pushes the correct button.
+ *
+ * It can also place the climbers in the bin.
+ *
+ * Concrete sub-classes of this class implement the
+ * getTeam() method, so that there are separate OpModes for the
+ * Red and Blue alliances.
  */
 public abstract class AutoV1 extends AtomicBaseLinearOpMode{
   int ds2 = 1;  // additional downsampling of the image
@@ -23,15 +37,15 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode{
 
       // Assign RED or BLUE to each side of the beacon depending on which
       // color is most prevalent in that side of the image.
-      int leftButton = pic[0][0] > pic[0][2] ? RED : BLUE;
-      int rightButton= pic[1][0] > pic[1][2] ? RED : BLUE;
+      Alliance leftButton = pic[0][0] > pic[0][2] ? Alliance.RED : Alliance.BLUE;
+      Alliance rightButton= pic[1][0] > pic[1][2] ? Alliance.RED : Alliance.BLUE;
 
       // If both sides are the same color,
       // determine which side is *more* blue, and set that as BLUE.
       if (leftButton == rightButton) {
         if (pic[0][2] > pic[1][2])
-          leftButton = BLUE;
-          rightButton = RED;
+          leftButton = Alliance.BLUE;
+          rightButton = Alliance.RED;
       }
     }
   }
@@ -43,16 +57,10 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode{
    * @param r color of right side of the beacon
    * @return side to push
    */
-  public int getPush(int l, int r) {
+  public int getPush(Alliance l, Alliance r) {
     if (getTeam() == l) return LEFT;
     else return RIGHT;
   }
-
-  /**
-   *
-   * @return the team that the player is on. (RED or BLUE)
-   */
-  public abstract int getTeam();
 
   /**
    *

@@ -45,6 +45,7 @@ public abstract class AtomicBaseOpMode extends OpMode {
     ColorSensor colorSensor1;
     ColorSensor colorSensor2;
 
+
     //Initialize hardware
     public void init() {
         //Configure Motor Controllers

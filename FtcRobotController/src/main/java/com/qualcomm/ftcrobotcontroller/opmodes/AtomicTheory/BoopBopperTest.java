@@ -31,4 +31,8 @@ public class BoopBopperTest extends AtomicBaseLinearOpMode {
       waitOneFullHardwareCycle();
     }
   }
+
+  public Alliance getTeam() {
+    return Alliance.RED;
+  }
 }
