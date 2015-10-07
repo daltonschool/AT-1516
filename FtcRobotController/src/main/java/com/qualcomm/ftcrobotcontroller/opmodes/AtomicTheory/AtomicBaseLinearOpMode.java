@@ -38,6 +38,8 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
 
   // Servos
   Servo bopper;
+  Servo lift;
+  Servo drop;
 
   //Sensors
   ColorSensor colorSensor1;
@@ -65,6 +67,7 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
 
     //Configure Servos
     bopper = hardwareMap.servo.get("bopper");
+
 
     //Configure Motors
     BR = hardwareMap.dcMotor.get("back_right");
