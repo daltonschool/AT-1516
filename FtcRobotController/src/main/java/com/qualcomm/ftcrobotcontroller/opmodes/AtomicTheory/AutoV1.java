@@ -50,12 +50,7 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode {
         } else if(pic[0][2] > pic[1][2]) {
           leftButton = Alliance.RED;
           rightButton = Alliance.BLUE;
-        } else { //well shit... just guess I suppose
-          boolean choose = new Random().nextBoolean();
-          leftButton = choose ? Alliance.BLUE : Alliance.RED;
-          rightButton = choose ? Alliance.RED : Alliance.BLUE;
-
-        }
+        } else; //we can't figure it out so do nothing. not worth it to give the other team points.
       }
     }
   }
