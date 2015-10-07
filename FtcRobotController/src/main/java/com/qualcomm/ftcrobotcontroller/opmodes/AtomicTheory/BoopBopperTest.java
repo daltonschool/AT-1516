@@ -13,6 +13,7 @@ public class BoopBopperTest extends AtomicBaseLinearOpMode {
 
     bopper.setPosition(.5);
 
+
     waitForStart();
 
     float hsvValues[] = {0F,0F,0F};

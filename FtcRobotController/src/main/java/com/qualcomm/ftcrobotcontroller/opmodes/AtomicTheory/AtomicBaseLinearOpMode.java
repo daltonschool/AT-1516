@@ -67,7 +67,14 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
 
     //Configure Servos
     bopper = hardwareMap.servo.get("bopper");
+    lift = hardwareMap.servo.get("lift");
+    drop = hardwareMap.servo.get("drop");
 
+    //set initial position of drop
+    //set lift and bopper to not moving
+    lift.setPosition(1.0);
+    drop.setPosition(1.0);
+    bopper.setPosition(0.5);
 
     //Configure Motors
     BR = hardwareMap.dcMotor.get("back_right");
