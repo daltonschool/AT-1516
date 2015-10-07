@@ -20,7 +20,7 @@ import java.io.ByteArrayOutputStream;
  * <p/>
  * Enables control of the robot via the gamepad
  */
-public class LinearOpModeCamera extends LinearOpMode {
+public abstract class LinearOpModeCamera extends LinearOpMode {
 
   public Camera camera;
   public CameraPreview preview;
@@ -35,12 +35,6 @@ public class LinearOpModeCamera extends LinearOpMode {
   private String data;
   private int ds = 1; // downsampling parameter
 
-
-  @Override
-  // should be overwritten by extension class
-  public void runOpMode() throws InterruptedException {
-
-  }
 
   public Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
     public void onPreviewFrame(byte[] data, Camera camera) {

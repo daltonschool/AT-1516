@@ -8,10 +8,18 @@ import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
 
+import com.qualcomm.ftcrobotcontroller.opmodes.cheer4ftc.LinearOpModeCamera;
 /**
  * Created by Davis Haupt on 10/2/15.
  */
-public abstract class AtomicBaseLinearOpMode extends LinearOpMode{
+public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
+
+  static final int RED = -1;
+  static final int BLUE = 1;
+
+  static final int LEFT = -1;
+  static final int RIGHT = 1;
+
   DeviceInterfaceModule cdim;
 
   //Motor Controllers
@@ -64,6 +72,35 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpMode{
     //Set Right Motors as REVERSE
     BR.setDirection(DcMotor.Direction.REVERSE);
     FR.setDirection(DcMotor.Direction.REVERSE);
+  }
+
+  /**
+   * Drive the robot for a certain number of encoder ticks.
+   * @param ticks number of encoder ticks
+   * @param pow motor power (0.0-1.0)
+   * @param dir direction of motion
+   */
+  public void driveTicks(int ticks, double pow, DcMotor.Direction dir) {
+    int d = (dir == DcMotor.Direction.FORWARD) ? 1 : -1;
+  }
+
+  /**
+   * Drive the robot forwards or backwards at a certain power.
+   * @param pow
+   * @param dir
+   */
+  public void drive(double pow, DcMotor.Direction dir) {
+    int d = (dir == DcMotor.Direction.FORWARD) ? 1 : -1;
+  }
+
+  /**
+   * Stop all motors.
+   */
+  public void stopMotors() {
+    BR.setPower(0);
+    BL.setPower(0);
+    FR.setPower(0);
+    FL.setPower(0);
   }
 
 }
