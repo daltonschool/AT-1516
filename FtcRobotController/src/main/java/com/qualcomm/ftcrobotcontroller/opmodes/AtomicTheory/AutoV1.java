@@ -1,6 +1,9 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 
 import android.graphics.Bitmap;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import java.util.Random;
 
 /**
@@ -32,42 +35,62 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode {
       waitForStart();
       stopCameraInSecs(30);
 
+      driveTicks(0, 50, Direction.FORWARD); // Go forth unafraid
+      rotateTicks(0, 25, Direction.COUNTERCLOCKWISE); // rotate 90 deg to the left
+      driveTicks(0, 25, Direction.FORWARD); // allign with the beacon
+      rotateTicks(0, 25, Direction.COUNTERCLOCKWISE); // rotate towards the beacon
+
+      // take a picture, and analyze it for the beacon colors.
+
       Bitmap rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
+      int[][] rgbLevels = colorLevels(rgbImage, 2);
+      Alliance[] beacon = findBeaconColors(rgbLevels);
+      Direction pushDir = getPush(beacon[0], beacon[1]);
 
-      int[][] pic = colorLevels(rgbImage, 2);
+      driveTicks(0, 25, Direction.FORWARD); // move towards the beacon.
+      dumpClimbers();
+      pushButton(pushDir);
+    }
+  }
 
-      // Assign RED or BLUE to each side of the beacon depending on which
-      // color is most prevalent in that side of the image.
-      Alliance leftButton = pic[0][0] > pic[0][2] ? Alliance.RED : Alliance.BLUE;
-      Alliance rightButton = pic[1][0] > pic[1][2] ? Alliance.RED : Alliance.BLUE;
+  public void dumpClimbers() {
+    // CR servos are fucked up
+  }
 
-      // If both sides are the same color,
-      // determine which side is *more* blue, and set that as BLUE.
-      if (leftButton == rightButton) {
-        if (pic[0][2] > pic[1][2]) {
-          leftButton = Alliance.BLUE;
-          rightButton = Alliance.RED;
-        } else if(pic[0][2] > pic[1][2]) {
-          leftButton = Alliance.RED;
-          rightButton = Alliance.BLUE;
-        } else; //we can't figure it out so do nothing. not worth it to give the other team points.
-      }
+  public void pushButton(Direction p) {
+    switch(p) {
+      case LEFT:
+        bopper.setPosition(0.0);
+        break;
+      case RIGHT:
+        bopper.setPosition(1.0);
+        break;
+      default:
+        bopper.setPosition(0.5);
+        break;
     }
   }
 
   public Alliance[] findBeaconColors(int[][] rgbLevels) {
     Alliance[] a = new Alliance[2];
+    // Assign RED or BLUE to each side of the beacon depending on which
+    // color is most prevalent in that side of the image.
     a[0] = rgbLevels[0][0] > rgbLevels[0][2] ? Alliance.RED : Alliance.BLUE;
     a[1] = rgbLevels[1][0] > rgbLevels[1][2] ? Alliance.RED : Alliance.BLUE;
 
+    // If both sides are the same color,
+    // determine which side is *more* blue, and set that as BLUE.
     if (a[0] == a[1]) {
       if (rgbLevels[0][2] > rgbLevels[1][2]) {
         a[0] = Alliance.BLUE;
         a[1] = Alliance.RED;
       }
-      else {
+      else if (rgbLevels[0][2] < rgbLevels[1][2]) {
         a[0] = Alliance.RED;
         a[1] = Alliance.BLUE;
+      }
+      else { // if the values are exactly the same, set both to null.
+        a[0] = a[1] = null;
       }
     }
 

@@ -109,8 +109,18 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
    * @param pow
    * @param dir
    */
-  public void drive(double pow, DcMotor.Direction dir) {
-    int d = (dir == DcMotor.Direction.FORWARD) ? 1 : -1;
+  public void drive(double pow, Direction dir) {
+    int d;
+    switch(dir) {
+      case FORWARD:
+        d = 1;
+        break;
+      case BACKWARD:
+        d = -1;
+        break;
+      default:
+        d = 0;
+    }
 
     FL.setPower(pow*d);
     FR.setPower(pow*d);
@@ -125,7 +135,7 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
    * @param pow motor power (0.0-1.0)
    * @param dir direction of motion
    */
-  public void driveTicks(int ticks, double pow, DcMotor.Direction dir) {
+  public void driveTicks(int ticks, double pow, Direction dir) {
     int startTicks = BR.getCurrentPosition();
     while (Math.abs(BR.getCurrentPosition() - startTicks) < ticks)
       drive(pow, dir);
