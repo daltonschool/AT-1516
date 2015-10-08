@@ -50,6 +50,25 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode{
     }
   }
 
+  public Alliance[] findBeaconColors(int[][] rgbLevels) {
+    Alliance[] a = new Alliance[2];
+    a[0] = rgbLevels[0][0] > rgbLevels[0][2] ? Alliance.RED : Alliance.BLUE;
+    a[1] = rgbLevels[1][0] > rgbLevels[1][2] ? Alliance.RED : Alliance.BLUE;
+
+    if (a[0] == a[1]) {
+      if (rgbLevels[0][2] > rgbLevels[1][2]) {
+        a[0] = Alliance.BLUE;
+        a[1] = Alliance.RED;
+      }
+      else {
+        a[0] = Alliance.RED;
+        a[1] = Alliance.BLUE;
+      }
+    }
+
+    return a;
+  }
+
   /**
    *  if the robot is on the same side as the left button, return LEFT
    *  otherwise, i.e. the robot is on the opposite as the left button, return RIGHT.
@@ -57,9 +76,9 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode{
    * @param r color of right side of the beacon
    * @return side to push
    */
-  public int getPush(Alliance l, Alliance r) {
-    if (getTeam() == l) return LEFT;
-    else return RIGHT;
+  public Direction getPush(Alliance l, Alliance r) {
+    if (getTeam() == l) return Direction.LEFT;
+    else return Direction.RIGHT;
   }
 
   /**

@@ -18,8 +18,9 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
     RED, BLUE;
   }
 
-  static final int LEFT = -1;
-  static final int RIGHT = 1;
+  public enum Direction {
+    FORWARD, BACKWARD, LEFT, RIGHT, CLOCKWISE, COUNTERCLOCKWISE
+  }
 
   DeviceInterfaceModule cdim;
 
@@ -43,11 +44,7 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
   ColorSensor colorSensor1;
   ColorSensor colorSensor2;
 
-  /**
-   *
-   * @return the team that the player is on. (RED or BLUE)
-   */
-  public abstract Alliance getTeam();
+
 
   public void config() {
     //Configure Motor Controllers
@@ -82,23 +79,10 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
   }
 
   /**
-   * Drive the robot for a certain number of encoder ticks.
-   * @param ticks number of encoder ticks
-   * @param pow motor power (0.0-1.0)
-   * @param dir direction of motion
+   *
+   * @return the team that the player is on. (RED or BLUE)
    */
-  public void driveTicks(int ticks, double pow, DcMotor.Direction dir) {
-    int d = (dir == DcMotor.Direction.FORWARD) ? 1 : -1;
-  }
-
-  /**
-   * Drive the robot forwards or backwards at a certain power.
-   * @param pow
-   * @param dir
-   */
-  public void drive(double pow, DcMotor.Direction dir) {
-    int d = (dir == DcMotor.Direction.FORWARD) ? 1 : -1;
-  }
+  public abstract Alliance getTeam();
 
   /**
    * Stop all motors.
@@ -110,4 +94,67 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
     FL.setPower(0);
   }
 
+  /**
+   * Drive the robot forwards or backwards at a certain power.
+   * @param pow
+   * @param dir
+   */
+  public void drive(double pow, DcMotor.Direction dir) {
+    int d = (dir == DcMotor.Direction.FORWARD) ? 1 : -1;
+
+    FL.setPower(pow*d);
+    FR.setPower(pow*d);
+    BL.setPower(pow*d);
+    BR.setPower(pow*d);
+  }
+
+
+  /**
+   * Drive the robot for a certain number of encoder ticks.
+   * @param ticks number of encoder ticks
+   * @param pow motor power (0.0-1.0)
+   * @param dir direction of motion
+   */
+  public void driveTicks(int ticks, double pow, DcMotor.Direction dir) {
+    int startTicks = BR.getCurrentPosition();
+    while (Math.abs(BR.getCurrentPosition() - startTicks) < ticks)
+      drive(pow, dir);
+
+    stopMotors();
+  }
+
+  /**
+   * Rotate (Left side one direction, right side other) at a certain power.
+   * @param pow
+   * @param dir
+   */
+  public void rotate(double pow, Direction dir) {
+    int d;
+    switch(dir){
+      case CLOCKWISE:
+        d = 1;
+      case COUNTERCLOCKWISE:
+        d = -1;
+      default:
+        d = 0;
+    }
+
+    FL.setPower(pow*d*-1);
+    BL.setPower(pow*d*-1);
+    FR.setPower(pow*d);
+    BR.setPower(pow * d);
+  }
+
+  /**
+   * Rotate the robot for a certain number of encoder ticks.
+   * @param ticks
+   * @param pow
+   * @param dir
+   */
+  public void rotateTicks(int ticks, double pow, Direction dir) {
+    int startTicks = BR.getCurrentPosition();
+    while (Math.abs(BR.getCurrentPosition() - startTicks) < ticks)
+      rotate(pow, dir);
+    stopMotors();
+  }
 }
