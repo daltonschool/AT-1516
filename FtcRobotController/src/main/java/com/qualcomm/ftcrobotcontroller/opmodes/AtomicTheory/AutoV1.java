@@ -1,6 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 
 import android.graphics.Bitmap;
+import java.util.Random;
 
 /**
  * Created by davis on 10/6/15.
@@ -19,7 +20,7 @@ import android.graphics.Bitmap;
  * getTeam() method, so that there are separate OpModes for the
  * Red and Blue alliances.
  */
-public abstract class AutoV1 extends AtomicBaseLinearOpMode{
+public abstract class AutoV1 extends AtomicBaseLinearOpMode {
   int ds2 = 1;  // additional downsampling of the image
 
   public void runOpMode() throws InterruptedException{
@@ -38,14 +39,18 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode{
       // Assign RED or BLUE to each side of the beacon depending on which
       // color is most prevalent in that side of the image.
       Alliance leftButton = pic[0][0] > pic[0][2] ? Alliance.RED : Alliance.BLUE;
-      Alliance rightButton= pic[1][0] > pic[1][2] ? Alliance.RED : Alliance.BLUE;
+      Alliance rightButton = pic[1][0] > pic[1][2] ? Alliance.RED : Alliance.BLUE;
 
       // If both sides are the same color,
       // determine which side is *more* blue, and set that as BLUE.
       if (leftButton == rightButton) {
-        if (pic[0][2] > pic[1][2])
+        if (pic[0][2] > pic[1][2]) {
           leftButton = Alliance.BLUE;
           rightButton = Alliance.RED;
+        } else if(pic[0][2] > pic[1][2]) {
+          leftButton = Alliance.RED;
+          rightButton = Alliance.BLUE;
+        } else; //we can't figure it out so do nothing. not worth it to give the other team points.
       }
     }
   }
