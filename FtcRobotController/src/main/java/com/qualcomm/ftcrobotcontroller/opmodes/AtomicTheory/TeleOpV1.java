@@ -12,7 +12,6 @@ public class TeleOpV1 extends AtomicBaseOpMode {
         float throttleLeft = -gamepad1.left_stick_y;
         float throttleRight = -gamepad1.right_stick_y;
 
-
         double leftPower = (float) scale_motor_power(throttleLeft);
         double rightPower = (float) scale_motor_power(throttleRight);
 
@@ -24,19 +23,23 @@ public class TeleOpV1 extends AtomicBaseOpMode {
         BL.setPower(leftPower);
         FL.setPower(leftPower);
 
+        if (gamepad1.left_bumper)
+            belt.setPower(.75);
+        else if (gamepad1.right_bumper)
+            belt.setPower(-.75);
+        else
+            belt.setPower(0);
+
         if (gamepad1.a) {
-            colorSensor1.enableLed(true);
-            colorSensor2.enableLed(true);
+
         }
-        else if (gamepad1.b) {
-            colorSensor1.enableLed(false);
-            colorSensor2.enableLed(false);
+        if (gamepad1.b) {
             bopper.setPosition(0.5);
         }
-        else if (gamepad1.x) {
+        if (gamepad1.x) {
             bopper.setPosition(0.0);
         }
-        else if (gamepad1.y) {
+        if (gamepad1.y) {
             bopper.setPosition(1.0);
         }
 
@@ -47,7 +50,6 @@ public class TeleOpV1 extends AtomicBaseOpMode {
 		 * are currently write only.
 		 */
         telemetry.addData("Atomic Theory 4174", "*** Robot Data***");
-        printi2cData("Color Sensor", 1);
     }
 
 

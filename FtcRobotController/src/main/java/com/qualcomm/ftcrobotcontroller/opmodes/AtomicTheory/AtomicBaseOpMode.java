@@ -29,16 +29,17 @@ public abstract class AtomicBaseOpMode extends OpMode {
     //Motor Controllers
     DcMotorController front_motor_controller_drive;
     DcMotorController back_motor_controller_drive;
-
+    DcMotorController nxtmotor;
     //Servo Controller(s)
     ServoController servoController1;
-1
+
     //Drive Motors
     DcMotor BR;
     DcMotor BL;
     DcMotor FR;
     DcMotor FL;
 
+    DcMotor belt;
     //Servos
     Servo bopper;
     Servo lift;
@@ -54,6 +55,8 @@ public abstract class AtomicBaseOpMode extends OpMode {
         //Configure Motor Controllers
         back_motor_controller_drive = hardwareMap.dcMotorController.get("Motor Controller 1");
         front_motor_controller_drive = hardwareMap.dcMotorController.get("Motor Controller 2");
+        nxtmotor = hardwareMap.dcMotorController.get("nxtmotor");
+        nxtmotor.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
 
         cdim = hardwareMap.deviceInterfaceModule.get("dim");
 
@@ -80,6 +83,7 @@ public abstract class AtomicBaseOpMode extends OpMode {
         FR = hardwareMap.dcMotor.get("front_right");
         FL = hardwareMap.dcMotor.get("front_left");
 
+        belt = hardwareMap.dcMotor.get("belt");
         //Set Left Motors as FORWARD
         BL.setDirection(DcMotor.Direction.FORWARD);
         FL.setDirection(DcMotor.Direction.FORWARD);

@@ -33,7 +33,7 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode {
       startCamera();
 
       waitForStart();
-      stopCameraInSecs(30);
+      stopCameraInSecs(60);
 
       driveTicks(0, 50, Direction.FORWARD); // Go forth unafraid
       rotateTicks(0, 25, Direction.COUNTERCLOCKWISE); // rotate 90 deg to the left
@@ -98,11 +98,11 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode {
   }
 
   /**
-   *  if the robot is on the same side as the left button, return LEFT
+   *  if the robot is on the same alliance as the left button, return LEFT
    *  otherwise, i.e. the robot is on the opposite as the left button, return RIGHT.
    * @param l color of left side of the beacon
    * @param r color of right side of the beacon
-   * @return side to push
+   * @return direction to push
    */
   public Direction getPush(Alliance l, Alliance r) {
     if (getTeam() == l) return Direction.LEFT;
