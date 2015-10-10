@@ -69,7 +69,7 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
 
     //set initial position of drop
     //set lift and bopper to not moving
-    lift.setPosition(1.0);
+    lift.setPosition(.493);
     drop.setPosition(1.0);
     bopper.setPosition(0.5);
 

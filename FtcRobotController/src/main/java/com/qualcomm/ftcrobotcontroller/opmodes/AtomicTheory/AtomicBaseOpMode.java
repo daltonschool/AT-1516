@@ -32,14 +32,17 @@ public abstract class AtomicBaseOpMode extends OpMode {
 
     //Servo Controller(s)
     ServoController servoController1;
-
+1
     //Drive Motors
     DcMotor BR;
     DcMotor BL;
     DcMotor FR;
     DcMotor FL;
 
+    //Servos
     Servo bopper;
+    Servo lift;
+    Servo drop;
 
     //Sensors
     ColorSensor colorSensor1;
@@ -63,7 +66,13 @@ public abstract class AtomicBaseOpMode extends OpMode {
 
         // Configure Servos
         bopper = hardwareMap.servo.get("bopper");
+        lift = hardwareMap.servo.get("lift");
+        drop = hardwareMap.servo.get("drop");
 
+        //Set Servos
+        lift.setPosition(.493);
+        drop.setPosition(1.0);
+        bopper.setPosition(0.5);
 
         //Configure Motors
         BR = hardwareMap.dcMotor.get("back_right");

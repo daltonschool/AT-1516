@@ -8,7 +8,7 @@ public class TeleOpV1 extends AtomicBaseOpMode {
 
     public void loop() {
 
-        //Get the values from the joypad
+        //Get the values from the joynj pad
         float throttleLeft = -gamepad1.left_stick_y;
         float throttleRight = -gamepad1.right_stick_y;
 
