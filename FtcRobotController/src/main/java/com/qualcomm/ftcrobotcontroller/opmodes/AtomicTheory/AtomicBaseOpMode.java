@@ -93,6 +93,12 @@ public abstract class AtomicBaseOpMode extends OpMode {
         FR.setDirection(DcMotor.Direction.REVERSE);
     }
 
+    public void printTelemetry() {
+        telemetry.addData("Left motor power", BL.getPower());
+        telemetry.addData("Right motor power", BR.getPower());
+        telemetry.addData("Encoder distance traveled", BR.getCurrentPosition());
+    }
+
     public void printi2cData(String sensorName, int port) {
         byte[] read = cdim.getCopyOfReadBuffer(port);
         for (int i = 0; i < read.length; i++)

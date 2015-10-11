@@ -59,7 +59,7 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
 
 
-    manager.register("TeleOpV1", TeleOpV1.class);
+    manager.register("TankDriveV1", TankDriveV1.class);
     manager.register("Boop Bopper Test", BoopBopperTest.class);
     manager.register("ModernRobotics RGB", MRRGBExample.class);
     manager.register("Detect Colors", DetectColor.class);

@@ -46,10 +46,10 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode {
       int[][] rgbLevels = colorLevels(rgbImage, 2);
       Alliance[] beacon = findBeaconColors(rgbLevels);
       Direction pushDir = getPush(beacon[0], beacon[1]);
-
-      driveTicks(0, 25, Direction.FORWARD); // move towards the beacon.
+      pushButton(pushDir); // extend the correct side of the bopper
+      // move towards the beacon, in the process, hitting the button.
+      driveTicks(0, 25, Direction.FORWARD);
       dumpClimbers();
-      pushButton(pushDir);
     }
   }
 
@@ -120,7 +120,7 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode {
   private int[][] colorLevels(Bitmap img, int k) {
     int[][] vals = new int[k][3];
 
-    for (int i = 0; i < k; i++) {
+    for (int i = 0; i < vals.length; i++) {
       for (int x = 0; x < width/k * (i+1); x++) {
         for (int y = 0; y < height; y++) {
           int pixel = img.getPixel(x, y);
