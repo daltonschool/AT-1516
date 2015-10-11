@@ -17,9 +17,9 @@ public class FpsDrive extends AtomicBaseOpMode{
     BR.setPower(rightPower);
 
     if (gamepad1.left_stick_button && throttle > 0)
-      belt.setPower(0.75);
+      belt.setPower(scale_motor_power(throttle));
     else if (gamepad1.left_stick_button && throttle < 0)
-      belt.setPower(-0.75);
+      belt.setPower(scale_motor_power(throttle));
     else
       belt.setPower(0.0);
 
