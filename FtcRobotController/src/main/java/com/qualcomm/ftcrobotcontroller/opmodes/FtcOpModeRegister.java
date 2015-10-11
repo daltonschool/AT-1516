@@ -58,10 +58,8 @@ public class FtcOpModeRegister implements OpModeRegister {
      * If two or more op modes are registered with the same name, the app will display an error.
      */
 
-
-    manager.register("TankDriveV1", TankDriveV1.class);
-    manager.register("Boop Bopper Test", BoopBopperTest.class);
-    manager.register("ModernRobotics RGB", MRRGBExample.class);
+    manager.register("FPS Drive", FpsDrive.class);
+    manager.register("Tank Drive", TankDriveV1.class);
     manager.register("Detect Colors", DetectColor.class);
     manager.register("NullOp", NullOp.class);
 
