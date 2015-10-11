@@ -9,8 +9,8 @@ public class TankDriveV1 extends AtomicBaseOpMode {
     public void loop() {
 
         //Get the values from the joynj pad
-        float throttleLeft = -gamepad1.left_stick_y;
-        float throttleRight = -gamepad1.right_stick_y;
+        float throttleLeft = gamepad1.left_stick_y;
+        float throttleRight = gamepad1.right_stick_y;
 
         double leftPower = (float) scale_motor_power(throttleLeft);
         double rightPower = (float) scale_motor_power(throttleRight);

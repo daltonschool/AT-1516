@@ -85,12 +85,12 @@ public abstract class AtomicBaseOpMode extends OpMode {
 
         belt = hardwareMap.dcMotor.get("belt");
         //Set Left Motors as FORWARD
-        BL.setDirection(DcMotor.Direction.FORWARD);
-        FL.setDirection(DcMotor.Direction.FORWARD);
+        BL.setDirection(DcMotor.Direction.REVERSE);
+        FL.setDirection(DcMotor.Direction.REVERSE);
 
         //Set Right Motors as REVERSE
-        BR.setDirection(DcMotor.Direction.REVERSE);
-        FR.setDirection(DcMotor.Direction.REVERSE);
+        BR.setDirection(DcMotor.Direction.FORWARD);
+        FR.setDirection(DcMotor.Direction.FORWARD);
     }
 
     public void printTelemetry() {
