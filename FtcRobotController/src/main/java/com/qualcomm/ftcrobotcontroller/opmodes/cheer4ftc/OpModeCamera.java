@@ -19,7 +19,7 @@ import java.io.ByteArrayOutputStream;
  * <p/>
  * Enables control of the robot via the gamepad
  */
-public class OpModeCamera extends OpMode {
+public abstract class OpModeCamera extends OpMode {
 
   public Camera camera;
   public CameraPreview preview;
@@ -173,24 +173,6 @@ public class OpModeCamera extends OpMode {
       camera = null;
     }
   }
-
-  /*
-   * Code to run when the op mode is first enabled goes here
-   */
-  @Override
-  public void init() {
-    startCamera();
-  }
-
-  /*
-   * This method will be called repeatedly in a loop
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
-  @Override
-  public void loop() {
-
-  }
-
 
   @Override
   public void stop() {
