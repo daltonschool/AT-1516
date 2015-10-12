@@ -96,7 +96,7 @@ public abstract class AtomicBaseOpMode extends OpMode {
     public void printTelemetry() {
         telemetry.addData("Left motor power", BL.getPower());
         telemetry.addData("Right motor power", BR.getPower());
-        telemetry.addData("Encoder distance traveled", BR.getCurrentPosition());
+        telemetry.addData("Encoder distance traveled", BL.getCurrentPosition());
     }
 
     public void printi2cData(String sensorName, int port) {
