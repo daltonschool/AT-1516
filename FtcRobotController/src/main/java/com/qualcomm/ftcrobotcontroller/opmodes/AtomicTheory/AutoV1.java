@@ -28,29 +28,36 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode {
 
   public void runOpMode() throws InterruptedException{
     config();
-    if (isCameraAvailable()) {
-      setCameraDownsampling(8);
-      startCamera();
+    driveTicks(500, 0.5, Direction.FORWARD);
+//    if (isCameraAvailable()) {
+//      setCameraDownsampling(8);
+//      startCamera();
+//
+//      //waitForStart();
+//      stopCameraInSecs(60);
+//
+//      driveTicks(0, 500, Direction.FORWARD); // Go forth unafraid
+//      rotateTicks(0, 25, Direction.COUNTERCLOCKWISE); // rotate 90 deg to the left
+//      driveTicks(0, 25, Direction.FORWARD); // allign with the beacon
+//      rotateTicks(0, 25, Direction.COUNTERCLOCKWISE); // rotate towards the beacon
+//
+//      // take a picture, and analyze it for the beacon colors.
+//
+//      Bitmap rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
+//      int[][] rgbLevels = colorLevels(rgbImage, 2);
+//      Alliance[] beacon = findBeaconColors(rgbLevels);
+//      Direction pushDir = getPush(beacon[0], beacon[1]);
+//      pushButton(pushDir); // extend the correct side of the bopper
+//      // move towards the beacon, in the process, hitting the button.
+//      driveTicks(0, 25, Direction.FORWARD);
+//      dumpClimbers();
 
-      waitForStart();
-      stopCameraInSecs(60);
+      //drive backwards
 
-      driveTicks(0, 50, Direction.FORWARD); // Go forth unafraid
-      rotateTicks(0, 25, Direction.COUNTERCLOCKWISE); // rotate 90 deg to the left
-      driveTicks(0, 25, Direction.FORWARD); // allign with the beacon
-      rotateTicks(0, 25, Direction.COUNTERCLOCKWISE); // rotate towards the beacon
+      //rotate towards mountain
 
-      // take a picture, and analyze it for the beacon colors.
-
-      Bitmap rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
-      int[][] rgbLevels = colorLevels(rgbImage, 2);
-      Alliance[] beacon = findBeaconColors(rgbLevels);
-      Direction pushDir = getPush(beacon[0], beacon[1]);
-      pushButton(pushDir); // extend the correct side of the bopper
-      // move towards the beacon, in the process, hitting the button.
-      driveTicks(0, 25, Direction.FORWARD);
-      dumpClimbers();
-    }
+      //clamber up mountain
+//    }
   }
 
   public void dumpClimbers() {
