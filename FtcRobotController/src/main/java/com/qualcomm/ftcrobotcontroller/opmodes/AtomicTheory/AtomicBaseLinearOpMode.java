@@ -8,19 +8,12 @@ import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
 
+import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.*;
 import com.qualcomm.ftcrobotcontroller.opmodes.cheer4ftc.LinearOpModeCamera;
 /**
  * Created by Davis Haupt on 10/2/15.
  */
 public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
-
-  public enum Alliance {
-    RED, BLUE;
-  }
-
-  public enum Direction {
-    FORWARD, BACKWARD, LEFT, RIGHT, CLOCKWISE, COUNTERCLOCKWISE
-  }
 
   DeviceInterfaceModule cdim;
 

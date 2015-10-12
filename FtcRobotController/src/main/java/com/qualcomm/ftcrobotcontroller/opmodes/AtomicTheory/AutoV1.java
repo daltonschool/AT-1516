@@ -3,7 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 import android.graphics.Bitmap;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-
+import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.*;
 import java.util.Random;
 
 /**

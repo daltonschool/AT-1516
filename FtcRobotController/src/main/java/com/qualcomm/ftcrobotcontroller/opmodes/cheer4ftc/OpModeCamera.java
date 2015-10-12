@@ -174,6 +174,14 @@ public abstract class OpModeCamera extends OpMode {
     }
   }
 
+  /*
+   * Code to run when the op mode is first enabled goes here
+   */
+  @Override
+  public void init() {
+    startCamera();
+  }
+
   @Override
   public void stop() {
     stopCamera();

@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
-
+import com.qualcomm.ftcrobotcontroller.opmodes.cheer4ftc.OpModeCamera;
 /**
  * Created by Nathaniel Ostrer on 9/26/15.
  *
@@ -19,7 +19,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 
-public abstract class AtomicBaseOpMode extends OpMode {
+public abstract class AtomicBaseOpMode extends OpModeCamera {
 
     //So like the loop method is unique in the Teleop classes
     //and the init? method is unique in the Autonomous classes
@@ -91,6 +91,8 @@ public abstract class AtomicBaseOpMode extends OpMode {
         //Set Right Motors as REVERSE
         BR.setDirection(DcMotor.Direction.FORWARD);
         FR.setDirection(DcMotor.Direction.FORWARD);
+
+        super.init();
     }
 
     public void printTelemetry() {
