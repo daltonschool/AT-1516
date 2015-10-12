@@ -6,8 +6,9 @@ import com.qualcomm.robotcore.robocol.Telemetry;
  * Created by nathaniel on 10/12/15.
  */
 
-/*not used anymore :D
-just a template for encoders
+/*
+
+my rough draft for an autonomous
 
 note the encoderZero variable.
  */
