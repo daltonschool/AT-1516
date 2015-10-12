@@ -20,7 +20,6 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
 
     @Override
     public void loop() {
-
         switch(state) {
             case 0: {
                 //drive forwards
@@ -38,7 +37,7 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
 
                     encoderZero = BL.getCurrentPosition();
 
-                    state++;
+                    state=1;
                 }
             }
             case 1: {
@@ -56,7 +55,7 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
 
                     encoderZero = BL.getCurrentPosition();
 
-                    state++;
+                    state=2;
                 }
 
             }

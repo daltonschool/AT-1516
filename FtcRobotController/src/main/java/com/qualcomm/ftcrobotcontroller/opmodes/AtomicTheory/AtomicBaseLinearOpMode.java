@@ -85,7 +85,7 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
    *
    * @return the team that the player is on. (RED or BLUE)
    */
-  public abstract Alliance getTeam();
+  //public abstract Alliance getTeam();
 
   /**
    * Stop all motors.
