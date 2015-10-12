@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.robocol.Telemetry;
  */
 
 /*not used anymore :D
+just a template for encoders
+
+note the encoderZero variable.
  */
 
 public class AutoMoveTesting extends AtomicBaseOpMode {
@@ -21,11 +24,11 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
             case 0: {
                 //drive forwards
                 //blargh...
-                if(BL.getCurrentPosition() - encoderZero < 1000) {
-                    BL.setPower(.0);
-                    BR.setPower(1.0);
-                    FL.setPower(1.0);
-                    FR.setPower(1.0);
+                if(Math.abs(BR.getCurrentPosition() - encoderZero) < 2000) {
+                    BL.setPower(-0.5);
+                    BR.setPower(-0.5);
+                    FL.setPower(-0.5);
+                    FR.setPower(-0.5);
                 } else {
                     BL.setPower(0);
                     BR.setPower(0);
@@ -39,7 +42,21 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
             }
             case 1: {
                 //turn left
+                if(Math.abs(BR.getCurrentPosition() - encoderZero) < 1800) {
+                    BL.setPower(0.5);
+                    BR.setPower(-0.5);
+                    FL.setPower(0.5);
+                    FR.setPower(-0.5);
+                } else {
+                    BL.setPower(0);
+                    BR.setPower(0);
+                    FL.setPower(0);
+                    FR.setPower(0);
 
+                    encoderZero = BL.getCurrentPosition();
+
+                    state++;
+                }
 
             }
             case 2: {
