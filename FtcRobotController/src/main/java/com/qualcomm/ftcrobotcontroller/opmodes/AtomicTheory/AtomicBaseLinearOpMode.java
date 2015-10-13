@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
 
-import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.*;
+import static com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.*;
 import com.qualcomm.ftcrobotcontroller.opmodes.cheer4ftc.LinearOpModeCamera;
 /**
  * Created by Davis Haupt on 10/2/15.
@@ -85,7 +85,7 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
    *
    * @return the team that the player is on. (RED or BLUE)
    */
-  public abstract Alliance getTeam();
+  //public abstract Alliance getTeam();
 
   /**
    * Stop all motors.
