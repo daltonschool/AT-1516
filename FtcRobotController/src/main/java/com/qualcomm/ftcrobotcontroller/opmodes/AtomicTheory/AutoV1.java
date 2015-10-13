@@ -1,6 +1,8 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 
 import android.graphics.Bitmap;
+import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.Alliance;
+import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.Direction;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -103,6 +105,8 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode {
 
     return a;
   }
+
+  public abstract Alliance getTeam();
 
   /**
    *  if the robot is on the same alliance as the left button, return LEFT
