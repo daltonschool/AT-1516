@@ -53,7 +53,7 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
                 encoderZero = BR.getCurrentPosition();
 
                 state = 1;
-                sleep(500);
+                sleep(1000);
             }
 
         } else if(state == 1) {
@@ -72,7 +72,7 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
                 encoderZero = BR.getCurrentPosition();
 
                 state=2;
-                sleep(500);
+                sleep(1000);
             }
         } else if(state == 2) {
             //go forwards
@@ -90,7 +90,7 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
                 encoderZero = BR.getCurrentPosition();
 
                 state=3;
-                sleep(500);
+                sleep(1000);
             }
         } else if(state == 3) {
             //turn left 90 deg
@@ -108,7 +108,7 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
                 encoderZero = BR.getCurrentPosition();
 
                 state = 4;
-                sleep(500);
+                sleep(1000);
             }
         } else if(state == 4) {
             //go forwards to beacon
@@ -126,32 +126,32 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
                 encoderZero = BR.getCurrentPosition();
 
                 state = 5; //switch back to 5 when we figure out what's wrong with camera.
-                sleep(500);
+                sleep(1000);
             }
         } else if(state == 5) {
             //take a picture
-//            rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
-//            sleep(500); //sleep just in case this is critical #BringHimHome
+            rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
+            sleep(3000); //sleep just in case this is critical #BringHimHome //no idea how long to wait
             state = 6;
         } else if(state == 6) {
             //process image
-//            int[][] rgbLevels = colorLevels(rgbImage, 2);
-//            Alliance[] beacon = findBeaconColors(rgbLevels);
-//            pushDir = getPush(beacon[0], beacon[1]);
+            int[][] rgbLevels = colorLevels(rgbImage, 2);
+            Alliance[] beacon = findBeaconColors(rgbLevels);
+            pushDir = getPush(beacon[0], beacon[1]);
             //shouldn't require sleeping because time to process is contained
-            pushDir = Direction.RIGHT;
-            state = 1001;
-        } else if(state == 1001) { //shitty insert I'm so sorry
-            lift.setPosition(1);
-            sleep(300);
+            sleep(2000);
             state = 7;
-        } if(state == 7) {
+        } else if(state == 7) { //shitty insert I'm so sorry
+            lift.setPosition(1);
+            sleep(2000);
+            state = 8;
+        } if(state == 8) {
             //push the button
             lift.setPosition(.493);
             pushButton(pushDir); // extend the correct side of the bopper
-            sleep(500);
-            state=8;
-        } else if(state == 8) {
+            sleep(3000);
+            state=9;
+        } else if(state == 9) {
             //drive forwards to hit button
             if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1000) {
                 BL.setPower(-0.25);
@@ -166,24 +166,22 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
 
                 encoderZero = BR.getCurrentPosition();
 
-                state = 9;
+                state = 10;
                 sleep(500);
-
             }
-        } else if(state == 9) { //drop the climbers
+        } else if(state == 10) { //drop the climbers
             drop.setPosition(0.0);
-            sleep(500);
+            sleep(2500);
             if(drop.getPosition() != 0.0);
             else
-               state = 10;
-        } else if(state == 10) {
+               state = 11;
+        } else if(state == 11) {
             drop.setPosition(1.0); //replace drop
-            sleep(500);
+            sleep(2500);
             if(drop.getPosition() != 1.0);
             else
-                state = 11;
-
-        } else if(state == 11) { //move back to prepare to go up ramp
+                state = 12;
+        } else if(state == 12) { //move back to prepare to go up ramp
             if(Math.abs(BR.getCurrentPosition() - encoderZero) < 6400) {
                 BL.setPower(0.25);
                 BR.setPower(0.25);
@@ -197,10 +195,10 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
 
                 encoderZero = BR.getCurrentPosition();
 
-                state=12;
+                state=13;
                 sleep(500);
             }
-        } else if(state == 12) {
+        } else if(state == 13) {
             //turn 45 deg counter clockwise to go up ramp
             if(Math.abs(BR.getCurrentPosition() - encoderZero) < 600) {
                 BL.setPower(-0.25);
@@ -215,10 +213,10 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
 
                 encoderZero = BR.getCurrentPosition();
 
-                state=13;
+                state=14;
                 sleep(500);
             }
-        } else if(state == 13) {
+        } else if(state == 14) {
             //attack the ramp
             if(Math.abs(BR.getCurrentPosition() - encoderZero) < 10000) {
                 BL.setPower(-1);
@@ -233,11 +231,12 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
 
                 encoderZero = BR.getCurrentPosition();
 
-                state=14;
+                state=15;
                 sleep(500);
             }
         }
     }
+
 
     public void sleep(int ms) {
         int ns = ms * 1000000;
