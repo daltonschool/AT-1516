@@ -262,7 +262,8 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
                 a[1] = Alliance.BLUE;
             }
             else { // if the values are exactly the same, set both to null.
-                a[0] = a[1] = null;
+                a[0] = Alliance.BLUE;
+                a[1] = Alliance.RED;
             }
         }
 
