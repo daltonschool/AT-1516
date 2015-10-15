@@ -94,7 +94,7 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
             }
         } else if(state == 3) {
             //turn left 90 deg
-            if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1500) {
+            if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1800) {
                 BL.setPower(0.25);
                 BR.setPower(-0.25);
                 FL.setPower(0.25);
@@ -112,7 +112,7 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
             }
         } else if(state == 4) {
             //go forwards to beacon
-            if (Math.abs(BR.getCurrentPosition() - encoderZero) < 50) { //not used right now
+            if (Math.abs(BR.getCurrentPosition() - encoderZero) < 500) { //not used right now
                 BL.setPower(-0.25);
                 BR.setPower(-0.25);
                 FL.setPower(-0.25);
@@ -239,7 +239,7 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
 
 
     public void sleep(int ms) {
-        int ns = ms * 1000000;
+        int ns = ms * 1000000000;
         sleepUntil = System.nanoTime()+ns;
     }
 

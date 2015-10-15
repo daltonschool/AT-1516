@@ -73,7 +73,7 @@ public abstract class AtomicBaseOpMode extends OpModeCamera {
         drop = hardwareMap.servo.get("drop");
 
         //Set Servos
-        lift.setPosition(.493);
+        lift.setPosition(.493);lift.setDirection(Servo.Direction.FORWARD);
         drop.setPosition(1.0);
         bopper.setPosition(0.5);
 
