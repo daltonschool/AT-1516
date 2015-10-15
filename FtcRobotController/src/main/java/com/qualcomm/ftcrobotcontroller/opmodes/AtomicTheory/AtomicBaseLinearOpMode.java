@@ -55,14 +55,13 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
     colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
     colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
 
-    //Configure Servos
+    // Configure Servos
     bopper = hardwareMap.servo.get("bopper");
     lift = hardwareMap.servo.get("lift");
     drop = hardwareMap.servo.get("drop");
 
-    //set initial position of drop
-    //set lift and bopper to not moving
-    lift.setPosition(0.5);
+    //Set Servos
+    lift.setPosition(.493);lift.setDirection(Servo.Direction.FORWARD);
     drop.setPosition(1.0);
     bopper.setPosition(0.5);
 
@@ -73,12 +72,13 @@ public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
     FL = hardwareMap.dcMotor.get("front_left");
 
     //Set Left Motors as FORWARD
-    BL.setDirection(DcMotor.Direction.FORWARD);
-    FL.setDirection(DcMotor.Direction.FORWARD);
+    BL.setDirection(DcMotor.Direction.REVERSE);
+    FL.setDirection(DcMotor.Direction.REVERSE);
 
     //Set Right Motors as REVERSE
-    BR.setDirection(DcMotor.Direction.REVERSE);
-    FR.setDirection(DcMotor.Direction.REVERSE);
+    BR.setDirection(DcMotor.Direction.FORWARD);
+    FR.setDirection(DcMotor.Direction.FORWARD);
+
   }
 
   /**
