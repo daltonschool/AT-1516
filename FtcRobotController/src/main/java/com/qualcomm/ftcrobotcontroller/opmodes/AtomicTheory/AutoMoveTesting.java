@@ -35,7 +35,7 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
     public void loop() {
         telemetry.addData("state: ", Integer.toString(state));
         try {
-            if(sleepUntil > System.nanoTime());
+            if (sleepUntil > System.nanoTime()) ;
             else if (state == 0) {
                 //drive forwards
                 //blargh...
@@ -56,387 +56,389 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
                     sleep(1000);
                 }
 
-        if(sleepUntil > System.nanoTime());
-        else if (state == 0) {
-            //drive forwards
-            //blargh...
-            if (Math.abs(BR.getCurrentPosition() - encoderZero) < 3000) {
-                BL.setPower(-0.25);
-                BR.setPower(-0.25);
-                FL.setPower(-0.25);
-                FR.setPower(-0.25);
-            } else {
-                BL.setPower(0);
-                BR.setPower(0);
-                FL.setPower(0);
-                FR.setPower(0);
+                if (sleepUntil > System.nanoTime()) ;
+                else if (state == 0) {
+                    //drive forwards
+                    //blargh...
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 3000) {
+                        BL.setPower(-0.25);
+                        BR.setPower(-0.25);
+                        FL.setPower(-0.25);
+                        FR.setPower(-0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                state = 1;
-                sleep(1000);
-            }
+                        state = 1;
+                        sleep(1000);
+                    }
 
-        } else if(state == 1) {
-            //turn left 90 deg
-            if(Math.abs(BR.getCurrentPosition() - encoderZero) < 1600) {
-                BL.setPower(0.25);
-                BR.setPower(-0.25);
-                FL.setPower(0.25);
-                FR.setPower(-0.25);
-            } else {
-                BL.setPower(0);
-                BR.setPower(0);
-                FL.setPower(0);
-                FR.setPower(0);
+                } else if (state == 1) {
+                    //turn left 90 deg
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1600) {
+                        BL.setPower(0.25);
+                        BR.setPower(-0.25);
+                        FL.setPower(0.25);
+                        FR.setPower(-0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                state=2;
-                sleep(1000);
-            }
-        } else if(state == 2) {
-            //go forwards
-            if(Math.abs(BR.getCurrentPosition() - encoderZero) < 3500) {
-                BL.setPower(-0.25);
-                BR.setPower(-0.25);
-                FL.setPower(-0.25);
-                FR.setPower(-0.25);
-            } else {
-                BL.setPower(0);
-                BR.setPower(0);
-                FL.setPower(0);
-                FR.setPower(0);
+                        state = 2;
+                        sleep(1000);
+                    }
+                } else if (state == 2) {
+                    //go forwards
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 3500) {
+                        BL.setPower(-0.25);
+                        BR.setPower(-0.25);
+                        FL.setPower(-0.25);
+                        FR.setPower(-0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                state=3;
-                sleep(1000);
-            }
-        } else if(state == 3) {
-            //turn left 90 deg
-            if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1800) {
-                BL.setPower(0.25);
-                BR.setPower(-0.25);
-                FL.setPower(0.25);
-                FR.setPower(-0.25);
-            } else {
-                BL.setPower(0);
-                BR.setPower(0);
-                FL.setPower(0);
-                FR.setPower(0);
+                        state = 3;
+                        sleep(1000);
+                    }
+                } else if (state == 3) {
+                    //turn left 90 deg
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1800) {
+                        BL.setPower(0.25);
+                        BR.setPower(-0.25);
+                        FL.setPower(0.25);
+                        FR.setPower(-0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                state = 4;
-                sleep(1000);
-            }
-        } else if(state == 4) {
-            //go forwards to beacon
-            if (Math.abs(BR.getCurrentPosition() - encoderZero) < 500) { //not used right now
-                BL.setPower(-0.25);
-                BR.setPower(-0.25);
-                FL.setPower(-0.25);
-                FR.setPower(-0.25);
-            } else {
-                BL.setPower(0);
-                BR.setPower(0);
-                FL.setPower(0);
-                FR.setPower(0);
+                        state = 4;
+                        sleep(1000);
+                    }
+                } else if (state == 4) {
+                    //go forwards to beacon
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 500) { //not used right now
+                        BL.setPower(-0.25);
+                        BR.setPower(-0.25);
+                        FL.setPower(-0.25);
+                        FR.setPower(-0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                state = 5; //switch back to 5 when we figure out what's wrong with camera.
-                sleep(1000);
-            }
-        } else if(state == 5) {
-            //take a picture
-            rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
-            sleep(3000); //sleep just in case this is critical #BringHimHome //no idea how long to wait
-            state = 6;
-        } else if(state == 6) {
-            //process image
-            int[][] rgbLevels = colorLevels(rgbImage, 2);
-            Alliance[] beacon = findBeaconColors(rgbLevels);
-            pushDir = getPush(beacon[0], beacon[1]);
-            //shouldn't require sleeping because time to process is contained
-            sleep(2000);
-            state = 7;
-        } else if(state == 7) { //shitty insert I'm so sorry
-            lift.setPosition(1);
-            sleep(2000);
-            state = 8;
-        } if(state == 8) {
-            //push the button
-            lift.setPosition(.493);
-            pushButton(pushDir); // extend the correct side of the bopper
-            sleep(3000);
-            state=9;
-        } else if(state == 9) {
-            //drive forwards to hit button
-            if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1000) {
-                BL.setPower(-0.25);
-                BR.setPower(-0.25);
-                FL.setPower(-0.25);
-                FR.setPower(-0.25);
-            } else {
-                BL.setPower(0);
-                BR.setPower(0);
-                FL.setPower(0);
-                FR.setPower(0);
-
-                encoderZero = BR.getCurrentPosition();
-
-                state = 10;
-                sleep(500);
-            }
-        } else if(state == 10) { //drop the climbers
-            drop.setPosition(0.0);
-            sleep(2500);
-            if(drop.getPosition() != 0.0);
-            else
-               state = 11;
-        } else if(state == 11) {
-            drop.setPosition(1.0); //replace drop
-            sleep(2500);
-            if(drop.getPosition() != 1.0);
-            else
-                state = 12;
-        } else if(state == 12) { //move back to prepare to go up ramp
-            if(Math.abs(BR.getCurrentPosition() - encoderZero) < 6400) {
-                BL.setPower(0.25);
-                BR.setPower(0.25);
-                FL.setPower(0.25);
-                FR.setPower(0.25);
-            } else {
-                BL.setPower(0);
-                BR.setPower(0);
-                FL.setPower(0);
-                FR.setPower(0);
-
-                encoderZero = BR.getCurrentPosition();
-
-                state=13;
-                sleep(500);
-            }
-        } else if(state == 13) {
-            //turn 45 deg counter clockwise to go up ramp
-            if(Math.abs(BR.getCurrentPosition() - encoderZero) < 600) {
-                BL.setPower(-0.25);
-                BR.setPower(0.25);
-                FL.setPower(-0.25);
-                FR.setPower(0.25);
-            } else {
-                BL.setPower(0);
-                BR.setPower(0);
-                FL.setPower(0);
-                FR.setPower(0);
-
-                encoderZero = BR.getCurrentPosition();
-
-                state=14;
-                sleep(500);
-            }
-        } else if(state == 14) {
-            //attack the ramp
-            if(Math.abs(BR.getCurrentPosition() - encoderZero) < 10000) {
-                BL.setPower(-1);
-                BR.setPower(-1);
-                FL.setPower(-1);
-                FR.setPower(-1);
-            } else {
-                BL.setPower(0);
-                BR.setPower(0);
-                FL.setPower(0);
-                FR.setPower(0);
-
-                encoderZero = BR.getCurrentPosition();
-
-                state=15;
-                sleep(500);
-            } else if(state == 1) {
-                //turn left 90 deg
-                if(Math.abs(BR.getCurrentPosition() - encoderZero) < 1600) {
-                    BL.setPower(0.25);
-                    BR.setPower(-0.25);
-                    FL.setPower(0.25);
-                    FR.setPower(-0.25);
-                } else {
-                    BL.setPower(0);
-                    BR.setPower(0);
-                    FL.setPower(0);
-                    FR.setPower(0);
-
-                    encoderZero = BR.getCurrentPosition();
-
-                    state=2;
-                    sleep(1000);
+                        state = 5; //switch back to 5 when we figure out what's wrong with camera.
+                        sleep(1000);
+                    }
+                } else if (state == 5) {
+                    //take a picture
+                    rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
+                    sleep(3000); //sleep just in case this is critical #BringHimHome //no idea how long to wait
+                    state = 6;
+                } else if (state == 6) {
+                    //process image
+                    int[][] rgbLevels = colorLevels(rgbImage, 2);
+                    Alliance[] beacon = findBeaconColors(rgbLevels);
+                    pushDir = getPush(beacon[0], beacon[1]);
+                    //shouldn't require sleeping because time to process is contained
+                    sleep(2000);
+                    state = 7;
+                } else if (state == 7) { //shitty insert I'm so sorry
+                    lift.setPosition(1);
+                    sleep(2000);
+                    state = 8;
                 }
-            } else if(state == 2) {
-                //go forwards
-                if(Math.abs(BR.getCurrentPosition() - encoderZero) < 3500) {
-                    BL.setPower(-0.25);
-                    BR.setPower(-0.25);
-                    FL.setPower(-0.25);
-                    FR.setPower(-0.25);
-                } else {
-                    BL.setPower(0);
-                    BR.setPower(0);
-                    FL.setPower(0);
-                    FR.setPower(0);
+                if (state == 8) {
+                    //push the button
+                    lift.setPosition(.493);
+                    pushButton(pushDir); // extend the correct side of the bopper
+                    sleep(3000);
+                    state = 9;
+                } else if (state == 9) {
+                    //drive forwards to hit button
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1000) {
+                        BL.setPower(-0.25);
+                        BR.setPower(-0.25);
+                        FL.setPower(-0.25);
+                        FR.setPower(-0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                    encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                    state=3;
-                    sleep(1000);
-                }
-            } else if(state == 3) {
-                //turn left 90 deg
-                if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1500) {
-                    BL.setPower(0.25);
-                    BR.setPower(-0.25);
-                    FL.setPower(0.25);
-                    FR.setPower(-0.25);
-                } else {
-                    BL.setPower(0);
-                    BR.setPower(0);
-                    FL.setPower(0);
-                    FR.setPower(0);
+                        state = 10;
+                        sleep(500);
+                    }
+                } else if (state == 10) { //drop the climbers
+                    drop.setPosition(0.0);
+                    sleep(2500);
+                    if (drop.getPosition() != 0.0) ;
+                    else
+                        state = 11;
+                } else if (state == 11) {
+                    drop.setPosition(1.0); //replace drop
+                    sleep(2500);
+                    if (drop.getPosition() != 1.0) ;
+                    else
+                        state = 12;
+                } else if (state == 12) { //move back to prepare to go up ramp
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 6400) {
+                        BL.setPower(0.25);
+                        BR.setPower(0.25);
+                        FL.setPower(0.25);
+                        FR.setPower(0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                    encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                    state = 4;
-                    sleep(1000);
-                }
-            } else if(state == 4) {
-                //go forwards to beacon
-                if (Math.abs(BR.getCurrentPosition() - encoderZero) < 50) { //not used right now
-                    BL.setPower(-0.25);
-                    BR.setPower(-0.25);
-                    FL.setPower(-0.25);
-                    FR.setPower(-0.25);
-                } else {
-                    BL.setPower(0);
-                    BR.setPower(0);
-                    FL.setPower(0);
-                    FR.setPower(0);
+                        state = 13;
+                        sleep(500);
+                    }
+                } else if (state == 13) {
+                    //turn 45 deg counter clockwise to go up ramp
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 600) {
+                        BL.setPower(-0.25);
+                        BR.setPower(0.25);
+                        FL.setPower(-0.25);
+                        FR.setPower(0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                    encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                    state = 5; //switch back to 5 when we figure out what's wrong with camera.
-                    sleep(1000);
-                }
-            } else if(state == 5) {
-                //take a picture
-                rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
-                sleep(3000); //sleep just in case this is critical #BringHimHome //no idea how long to wait
-                state = 6;
-            } else if(state == 6) {
-                //process image
-                int[][] rgbLevels = colorLevels(rgbImage, 2);
-                Alliance[] beacon = findBeaconColors(rgbLevels);
-                pushDir = getPush(beacon[0], beacon[1]);
-                //shouldn't require sleeping because time to process is contained
-                sleep(2000);
-                state = 7;
-            } else if(state == 7) { //shitty insert I'm so sorry
-                lift.setPosition(1);
-                sleep(2000);
-                state = 8;
-            } if(state == 8) {
-                //push the button
-                lift.setPosition(.493);
-                pushButton(pushDir); // extend the correct side of the bopper
-                sleep(3000);
-                state=9;
-            } else if(state == 9) {
-                //drive forwards to hit button
-                if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1000) {
-                    BL.setPower(-0.25);
-                    BR.setPower(-0.25);
-                    FL.setPower(-0.25);
-                    FR.setPower(-0.25);
-                } else {
-                    BL.setPower(0);
-                    BR.setPower(0);
-                    FL.setPower(0);
-                    FR.setPower(0);
+                        state = 14;
+                        sleep(500);
+                    }
+                } else if (state == 14) {
+                    //attack the ramp
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 10000) {
+                        BL.setPower(-1);
+                        BR.setPower(-1);
+                        FL.setPower(-1);
+                        FR.setPower(-1);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                    encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                    state = 10;
-                    sleep(500);
-                }
-            } else if(state == 10) { //drop the climbers
-                drop.setPosition(0.0);
-                sleep(2500);
-                if(drop.getPosition() != 0.0);
-                else
-                    state = 11;
-            } else if(state == 11) {
-                drop.setPosition(1.0); //replace drop
-                sleep(2500);
-                if(drop.getPosition() != 1.0);
-                else
-                    state = 12;
-            } else if(state == 12) { //move back to prepare to go up ramp
-                if(Math.abs(BR.getCurrentPosition() - encoderZero) < 6400) {
-                    BL.setPower(0.25);
-                    BR.setPower(0.25);
-                    FL.setPower(0.25);
-                    FR.setPower(0.25);
-                } else {
-                    BL.setPower(0);
-                    BR.setPower(0);
-                    FL.setPower(0);
-                    FR.setPower(0);
+                        state = 15;
+                        sleep(500);
+                    }
+                } else if (state == 1) {
+                    //turn left 90 deg
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1600) {
+                        BL.setPower(0.25);
+                        BR.setPower(-0.25);
+                        FL.setPower(0.25);
+                        FR.setPower(-0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                    encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                    state=13;
-                    sleep(500);
-                }
-            } else if(state == 13) {
-                //turn 45 deg counter clockwise to go up ramp
-                if(Math.abs(BR.getCurrentPosition() - encoderZero) < 600) {
-                    BL.setPower(-0.25);
-                    BR.setPower(0.25);
-                    FL.setPower(-0.25);
-                    FR.setPower(0.25);
-                } else {
-                    BL.setPower(0);
-                    BR.setPower(0);
-                    FL.setPower(0);
-                    FR.setPower(0);
+                        state = 2;
+                        sleep(1000);
+                    }
+                } else if (state == 2) {
+                    //go forwards
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 3500) {
+                        BL.setPower(-0.25);
+                        BR.setPower(-0.25);
+                        FL.setPower(-0.25);
+                        FR.setPower(-0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                    encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                    state=14;
-                    sleep(500);
-                }
-            } else if(state == 14) {
-                //attack the ramp
-                if(Math.abs(BR.getCurrentPosition() - encoderZero) < 10000) {
-                    BL.setPower(-1);
-                    BR.setPower(-1);
-                    FL.setPower(-1);
-                    FR.setPower(-1);
-                } else {
-                    BL.setPower(0);
-                    BR.setPower(0);
-                    FL.setPower(0);
-                    FR.setPower(0);
+                        state = 3;
+                        sleep(1000);
+                    }
+                } else if (state == 3) {
+                    //turn left 90 deg
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1500) {
+                        BL.setPower(0.25);
+                        BR.setPower(-0.25);
+                        FL.setPower(0.25);
+                        FR.setPower(-0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
 
-                    encoderZero = BR.getCurrentPosition();
+                        encoderZero = BR.getCurrentPosition();
 
-                    state=15;
-                    sleep(500);
+                        state = 4;
+                        sleep(1000);
+                    }
+                } else if (state == 4) {
+                    //go forwards to beacon
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 50) { //not used right now
+                        BL.setPower(-0.25);
+                        BR.setPower(-0.25);
+                        FL.setPower(-0.25);
+                        FR.setPower(-0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
+
+                        encoderZero = BR.getCurrentPosition();
+
+                        state = 5; //switch back to 5 when we figure out what's wrong with camera.
+                        sleep(1000);
+                    }
+                } else if (state == 5) {
+                    //take a picture
+                    rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
+                    sleep(3000); //sleep just in case this is critical #BringHimHome //no idea how long to wait
+                    state = 6;
+                } else if (state == 6) {
+                    //process image
+                    int[][] rgbLevels = colorLevels(rgbImage, 2);
+                    Alliance[] beacon = findBeaconColors(rgbLevels);
+                    pushDir = getPush(beacon[0], beacon[1]);
+                    //shouldn't require sleeping because time to process is contained
+                    sleep(2000);
+                    state = 7;
+                } else if (state == 7) { //shitty insert I'm so sorry
+                    lift.setPosition(1);
+                    sleep(2000);
+                    state = 8;
+                } else if (state == 8) {
+                    //push the button
+                    lift.setPosition(.493);
+                    pushButton(pushDir); // extend the correct side of the bopper
+                    sleep(3000);
+                    state = 9;
+                } else if (state == 9) {
+                    //drive forwards to hit button
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 1000) {
+                        BL.setPower(-0.25);
+                        BR.setPower(-0.25);
+                        FL.setPower(-0.25);
+                        FR.setPower(-0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
+
+                        encoderZero = BR.getCurrentPosition();
+
+                        state = 10;
+                        sleep(500);
+                    }
+                } else if (state == 10) { //drop the climbers
+                    drop.setPosition(0.0);
+                    sleep(2500);
+                    if (drop.getPosition() != 0.0) ;
+                    else
+                        state = 11;
+                } else if (state == 11) {
+                    drop.setPosition(1.0); //replace drop
+                    sleep(2500);
+                    if (drop.getPosition() != 1.0) ;
+                    else
+                        state = 12;
+                } else if (state == 12) { //move back to prepare to go up ramp
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 6400) {
+                        BL.setPower(0.25);
+                        BR.setPower(0.25);
+                        FL.setPower(0.25);
+                        FR.setPower(0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
+
+                        encoderZero = BR.getCurrentPosition();
+
+                        state = 13;
+                        sleep(500);
+                    }
+                } else if (state == 13) {
+                    //turn 45 deg counter clockwise to go up ramp
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 600) {
+                        BL.setPower(-0.25);
+                        BR.setPower(0.25);
+                        FL.setPower(-0.25);
+                        FR.setPower(0.25);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
+
+                        encoderZero = BR.getCurrentPosition();
+
+                        state = 14;
+                        sleep(500);
+                    }
+                } else if (state == 14) {
+                    //attack the ramp
+                    if (Math.abs(BR.getCurrentPosition() - encoderZero) < 10000) {
+                        BL.setPower(-1);
+                        BR.setPower(-1);
+                        FL.setPower(-1);
+                        FR.setPower(-1);
+                    } else {
+                        BL.setPower(0);
+                        BR.setPower(0);
+                        FL.setPower(0);
+                        FR.setPower(0);
+
+                        encoderZero = BR.getCurrentPosition();
+
+                        state = 15;
+                        sleep(500);
+                    }
                 }
             }
-        } catch (Exception e) {
-           e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
         }
-
     }
 
     public void sleep(int ms) {
