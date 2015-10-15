@@ -9,28 +9,41 @@ import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.*;
 public class DetectBeaconColors extends AtomicBaseOpMode{
   int ds2 = 1;
 
+  public void init() {
+    setCameraDownsampling(8);
+    startCamera();
+  }
+
   public void loop() {
-    Bitmap rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
+    try {
+      if (imageReady()) {
+        Bitmap rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
 
-    int[][] pics = colorLevels(rgbImage, 2);
-    Alliance[] beacon = findBeaconColors(pics);
+        int[][] pics = colorLevels(rgbImage, 2);
+        Alliance[] beacon = findBeaconColors(pics);
 
-    switch(beacon[0]) {
-      case RED:
-        telemetry.addData("Left", "RED");
-        break;
-      case BLUE:
-        telemetry.addData("Left", "BLUE");
-        break;
+        switch(beacon[0]) {
+          case RED:
+            telemetry.addData("Left", "RED");
+            break;
+          case BLUE:
+            telemetry.addData("Left", "BLUE");
+            break;
+        }
+        switch(beacon[1]) {
+          case RED:
+            telemetry.addData("Right", "RED");
+            break;
+          case BLUE:
+            telemetry.addData("Right", "BLUE");
+            break;
+        }
+      }
     }
-    switch(beacon[1]) {
-      case RED:
-        telemetry.addData("Right", "RED");
-        break;
-      case BLUE:
-        telemetry.addData("Right", "BLUE");
-        break;
+    catch (Exception e) {
+      e.printStackTrace();
     }
+
   }
 
   public Alliance[] findBeaconColors(int[][] rgbLevels) {
@@ -52,7 +65,8 @@ public class DetectBeaconColors extends AtomicBaseOpMode{
         a[1] = Alliance.BLUE;
       }
       else { // if the values are exactly the same, set both to null.
-        a[0] = a[1] = null;
+        a[0] = Alliance.BLUE;
+        a[1] = Alliance.RED;
       }
     }
 
