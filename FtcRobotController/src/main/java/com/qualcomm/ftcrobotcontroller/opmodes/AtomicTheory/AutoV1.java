@@ -30,36 +30,42 @@ public abstract class AutoV1 extends AtomicBaseLinearOpMode {
 
   public void runOpMode() throws InterruptedException{
     config();
-    driveTicks(500, 0.5, Direction.FORWARD);
-//    if (isCameraAvailable()) {
-//      setCameraDownsampling(8);
-//      startCamera();
-//
-//      //waitForStart();
-//      stopCameraInSecs(60);
-//
-//      driveTicks(0, 500, Direction.FORWARD); // Go forth unafraid
-//      rotateTicks(0, 25, Direction.COUNTERCLOCKWISE); // rotate 90 deg to the left
-//      driveTicks(0, 25, Direction.FORWARD); // allign with the beacon
-//      rotateTicks(0, 25, Direction.COUNTERCLOCKWISE); // rotate towards the beacon
-//
-//      // take a picture, and analyze it for the beacon colors.
-//
-//      Bitmap rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
-//      int[][] rgbLevels = colorLevels(rgbImage, 2);
-//      Alliance[] beacon = findBeaconColors(rgbLevels);
-//      Direction pushDir = getPush(beacon[0], beacon[1]);
-//      pushButton(pushDir); // extend the correct side of the bopper
-//      // move towards the beacon, in the process, hitting the button.
-//      driveTicks(0, 25, Direction.FORWARD);
-//      dumpClimbers();
+    if (isCameraAvailable()) {
+      setCameraDownsampling(8);
+      startCamera();
 
-      //drive backwards
+      waitForStart();
+      stopCameraInSecs(60);
 
-      //rotate towards mountain
 
-      //clamber up mountain
-//    }
+      driveTicks(3000, -.25, Direction.FORWARD);
+      wait(500);
+
+      rotateTicks(1600, -.25, Direction.CLOCKWISE);
+      wait(500);
+
+      driveTicks(3500, -.25, Direction.FORWARD);
+      wait(500);
+
+      rotateTicks(1800, -.25, Direction.CLOCKWISE);
+
+
+      driveTicks(0, 500, Direction.FORWARD); // Go forth unafraid
+      rotateTicks(0, 25, Direction.COUNTERCLOCKWISE); // rotate 90 deg to the left
+      driveTicks(0, 25, Direction.FORWARD); // allign with the beacon
+      rotateTicks(0, 25, Direction.COUNTERCLOCKWISE); // rotate towards the beacon
+
+      // take a picture, and analyze it for the beacon colors.
+
+      Bitmap rgbImage = convertYuvImageToRgb(yuvImage, width, height, ds2);
+      int[][] rgbLevels = colorLevels(rgbImage, 2);
+      Alliance[] beacon = findBeaconColors(rgbLevels);
+      Direction pushDir = getPush(beacon[0], beacon[1]);
+      pushButton(pushDir); // extend the correct side of the bopper
+      // move towards the beacon, in the process, hitting the button.
+      driveTicks(0, 25, Direction.FORWARD);
+      dumpClimbers();
+    }
   }
 
   public void dumpClimbers() {

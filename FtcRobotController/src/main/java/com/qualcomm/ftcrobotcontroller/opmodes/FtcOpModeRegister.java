@@ -58,6 +58,7 @@ public class FtcOpModeRegister implements OpModeRegister {
      * If two or more op modes are registered with the same name, the app will display an error.
      */
 
+    manager.register("Fuck Life", FuckThisShit.class);
     manager.register("OpMode Detect Beacon Colors", DetectBeaconColors.class);
     manager.register("FPS Drive", FpsDrive.class);
     manager.register("Tank Drive", TankDriveV1.class);

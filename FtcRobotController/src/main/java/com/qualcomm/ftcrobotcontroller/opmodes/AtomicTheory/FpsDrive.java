@@ -35,6 +35,12 @@ public class FpsDrive extends AtomicBaseOpMode{
     else
       lift.setPosition(.493);
 
+    if (gamepad1.left_bumper)
+      drop.setPosition(1);
+    else if (gamepad1.right_bumper)
+      drop.setPosition(0);
+
+
     printTelemetry();
   }
 }
