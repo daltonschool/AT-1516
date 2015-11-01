@@ -19,7 +19,7 @@ import com.qualcomm.ftcrobotcontroller.opmodes.cheer4ftc.OpModeCamera;
  */
 
 
-public abstract class AtomicBaseOpMode extends OpModeCamera {
+public abstract class AtomicBaseOpMode extends OpMode {
 
     //So like the loop method is unique in the Teleop classes
     //and the init? method is unique in the Autonomous classes
@@ -44,6 +44,8 @@ public abstract class AtomicBaseOpMode extends OpModeCamera {
     Servo bopper;
     Servo lift;
     Servo drop;
+    Servo leftZipper;
+    Servo rightZipper;
 
     //Sensors
     ColorSensor colorSensor1;
@@ -71,6 +73,8 @@ public abstract class AtomicBaseOpMode extends OpModeCamera {
         bopper = hardwareMap.servo.get("bopper");
         lift = hardwareMap.servo.get("lift");
         drop = hardwareMap.servo.get("drop");
+        leftZipper = hardwareMap.servo.get("leftZipper");
+        rightZipper = hardwareMap.servo.get("rightZipper");
 
         //Set Servos
         lift.setPosition(.493);lift.setDirection(Servo.Direction.FORWARD);
@@ -92,7 +96,6 @@ public abstract class AtomicBaseOpMode extends OpModeCamera {
         BR.setDirection(DcMotor.Direction.FORWARD);
         FR.setDirection(DcMotor.Direction.FORWARD);
 
-        super.init();
     }
 
     public void printTelemetry() {

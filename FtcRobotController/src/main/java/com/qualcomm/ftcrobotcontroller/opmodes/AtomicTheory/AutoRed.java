@@ -9,7 +9,7 @@ import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil;
  */
 import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.*;
 
-public class AutoRed extends AutoV1{
+public class AutoRed extends AutoV2{
   public Alliance getTeam() {
     return Alliance.RED;
   }

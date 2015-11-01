@@ -2,11 +2,12 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 
 import android.graphics.Bitmap;
 import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.*;
+import com.qualcomm.ftcrobotcontroller.opmodes.cheer4ftc.OpModeCamera;
 
 /**
  * Created by davis on 10/12/15.
  */
-public class DetectBeaconColors extends AtomicBaseOpMode{
+public class DetectBeaconColors extends OpModeCamera{
   int ds2 = 1;
 
   public void init() {

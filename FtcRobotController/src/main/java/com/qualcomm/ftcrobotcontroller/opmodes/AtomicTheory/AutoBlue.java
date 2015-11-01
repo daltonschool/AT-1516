@@ -8,7 +8,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
  */
 import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.*;
 
-public class AutoBlue extends AutoV1{
+public class AutoBlue extends AutoV2{
   public Alliance getTeam() {
     return Alliance.BLUE;
   }

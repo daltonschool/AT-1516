@@ -16,11 +16,6 @@ public class FpsDrive extends AtomicBaseOpMode{
     FR.setPower(rightPower);
     BR.setPower(rightPower);
 
-    if (gamepad1.left_stick_button)
-      belt.setPower(scale_motor_power(throttle));
-    else
-      belt.setPower(0.0);
-
     if (gamepad1.a)
       bopper.setPosition(1.0);
     else if (gamepad1.b)
@@ -39,6 +34,15 @@ public class FpsDrive extends AtomicBaseOpMode{
       drop.setPosition(1);
     else if (gamepad1.right_bumper)
       drop.setPosition(0);
+
+    if (gamepad1.dpad_up) {
+      leftZipper.setPosition(0);
+      rightZipper.setPosition(0);
+    }
+    else if (gamepad1.dpad_left)
+      leftZipper.setPosition(.5);
+    else if (gamepad1.dpad_right)
+      rightZipper.setPosition(.5);
 
 
     printTelemetry();

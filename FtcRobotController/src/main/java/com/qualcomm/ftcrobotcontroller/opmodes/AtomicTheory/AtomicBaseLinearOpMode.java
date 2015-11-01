@@ -13,7 +13,7 @@ import com.qualcomm.ftcrobotcontroller.opmodes.cheer4ftc.LinearOpModeCamera;
 /**
  * Created by Davis Haupt on 10/2/15.
  */
-public abstract class AtomicBaseLinearOpMode extends LinearOpModeCamera {
+public abstract class AtomicBaseLinearOpMode extends LinearOpMode {
 
   DeviceInterfaceModule cdim;
 

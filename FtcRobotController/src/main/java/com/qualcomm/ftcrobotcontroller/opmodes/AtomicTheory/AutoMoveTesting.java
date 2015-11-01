@@ -278,22 +278,22 @@ public class AutoMoveTesting extends AtomicBaseOpMode {
         return a;
     }
 
-    private int[][] colorLevels(Bitmap img, int k) {
-        int[][] vals = new int[k][3];
-
-        for (int i = 0; i < vals.length; i++) {
-            for (int x = 0; x < width/k * (i+1); x++) {
-                for (int y = 0; y < height; y++) {
-                    int pixel = img.getPixel(x, y);
-                    vals[i][0] = red(pixel);
-                    vals[i][1] = green(pixel);
-                    vals[i][2] = blue(pixel);
-                }
-            }
-        }
-
-        return vals;
-    }
+//    private int[][] colorLevels(Bitmap img, int k) {
+//        int[][] vals = new int[k][3];
+//
+//        for (int i = 0; i < vals.length; i++) {
+//            for (int x = 0; x < width/k * (i+1); x++) {
+//                for (int y = 0; y < height; y++) {
+//                    int pixel = img.getPixel(x, y);
+//                    vals[i][0] = red(pixel);
+//                    vals[i][1] = green(pixel);
+//                    vals[i][2] = blue(pixel);
+//                }
+//            }
+//        }
+//
+//        return vals;
+//    }
 
     public Direction getPush(Alliance l, Alliance r) {
         if (getTeam() == l) return Direction.LEFT;
