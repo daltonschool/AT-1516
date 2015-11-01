@@ -3,7 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 /**
  * Created by davis on 10/15/15.
  */
-public class FuckThisShit extends AtomicBaseLinearOpMode{
+public class AutoV2 extends AtomicBaseLinearOpMode{
   public void runOpMode() throws InterruptedException {
     config();
     waitForStart();
