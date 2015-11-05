@@ -24,20 +24,20 @@ public class FpsDrive extends AtomicBaseOpMode{
       bopper.setPosition(0.5);
 
     if (gamepad1.x)
-      lift.setPosition(1.0);
+      drop.setPosition(1.0);
     else if (gamepad1.y)
-      lift.setPosition(0.0);
+      drop.setPosition(0.0);
+
+    if (gamepad1.left_bumper)
+      lift.setPosition(1);
+    else if (gamepad1.right_bumper)
+      lift.setPosition(0);
     else
       lift.setPosition(.493);
 
-    if (gamepad1.left_bumper)
-      drop.setPosition(1);
-    else if (gamepad1.right_bumper)
-      drop.setPosition(0);
-
     if (gamepad1.dpad_up) {
       leftZipper.setPosition(0);
-      rightZipper.setPosition(0);
+      rightZipper.setPosition(1);
     }
     else if (gamepad1.dpad_left)
       leftZipper.setPosition(.5);
