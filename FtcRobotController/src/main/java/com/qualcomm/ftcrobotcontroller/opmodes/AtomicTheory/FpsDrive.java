@@ -3,7 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 /**
  * Created by davis on 10/10/15.
  */
-public class FpsDrive extends AtomicBaseOpMode{
+public class FpsDrive extends AlphaDrive{
   public void loop() {
     float throttle = gamepad1.left_stick_y;
     float turn = gamepad1.right_stick_x;
@@ -11,40 +11,34 @@ public class FpsDrive extends AtomicBaseOpMode{
     double leftPower = scale_motor_power(throttle - turn);
     double rightPower = scale_motor_power(throttle + turn);
 
-    FL.setPower(leftPower);
-    BL.setPower(leftPower);
-    FR.setPower(rightPower);
-    BR.setPower(rightPower);
+    moveLeft(leftPower);
+    moveRight(rightPower);
 
     if (gamepad1.a)
-      bopper.setPosition(1.0);
+      pressA();
     else if (gamepad1.b)
-      bopper.setPosition(0.0);
+      pressB();
     else
-      bopper.setPosition(0.5);
+      noAB();
 
     if (gamepad1.x)
-      drop.setPosition(1.0);
+      pressX();
     else if (gamepad1.y)
-      drop.setPosition(0.0);
+      pressY();
 
     if (gamepad1.left_bumper)
-      lift.setPosition(1);
+      moveLift(1);
     else if (gamepad1.right_bumper)
-      lift.setPosition(0);
+      moveLift(-1);
     else
-      lift.setPosition(.493);
+      moveLift(0);
 
     if (gamepad1.dpad_up) {
-      leftZipper.setPosition(0);
-      rightZipper.setPosition(1);
+      releaseZipline();
     }
     else if (gamepad1.dpad_left)
-      leftZipper.setPosition(.5);
+      engageZipline(AtomicUtil.Direction.LEFT);
     else if (gamepad1.dpad_right)
-      rightZipper.setPosition(.5);
-
-
-    printTelemetry();
+      engageZipline(AtomicUtil.Direction.RIGHT);
   }
 }
