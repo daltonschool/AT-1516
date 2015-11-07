@@ -13,8 +13,8 @@ public class AlphaDrive extends OpMode{
   DcMotor right;
 
   public void init() {
-    left = hardwareMap.dcMotor.get("leftMotor");
-    right = hardwareMap.dcMotor.get("rightMotor");
+    left = hardwareMap.dcMotor.get("left");
+    right = hardwareMap.dcMotor.get("right");
 
     left.setDirection(DcMotor.Direction.FORWARD);
     right.setDirection(DcMotor.Direction.REVERSE);
