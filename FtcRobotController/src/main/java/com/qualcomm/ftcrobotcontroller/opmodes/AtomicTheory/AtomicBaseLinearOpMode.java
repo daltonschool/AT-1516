@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
 
 import static com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.*;
-import com.qualcomm.ftcrobotcontroller.opmodes.cheer4ftc.LinearOpModeCamera;
 /**
  * Created by Davis Haupt on 10/2/15.
  */

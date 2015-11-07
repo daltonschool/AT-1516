@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.ftcrobotcontroller.opmodes.cheer4ftc.OpModeCamera;
 /**
  * Created by Nathaniel Ostrer on 9/26/15.
  *
