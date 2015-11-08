@@ -24,8 +24,8 @@ public class PixyTest extends LinearOpMode{
 
   /**
    * Convert bytes to an word (Little Endian)
-   * @param b1
-   * @param b2
+   * @param b1 least-significant byte
+   * @param b2 most-significant byte
    * @return little-endian word.
    */
   public short bytesToWord(byte b1, byte b2) {
