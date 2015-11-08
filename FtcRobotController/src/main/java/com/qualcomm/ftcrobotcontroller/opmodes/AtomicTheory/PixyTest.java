@@ -15,9 +15,13 @@ public class PixyTest extends LinearOpMode{
     dim = hardwareMap.deviceInterfaceModule.get("dim");
     waitForStart();
 
+    short lastSync = 0x0000;
     while(opModeIsActive()) {
       byte[] data = dim.getCopyOfReadBuffer(0);
-
+      telemetry.addData("Bytes", "Value");
+      for (int i = 0; i < data.length; i += 2) {
+        telemetry.addData(i + ", " + i+1, bytesToWord(data[i], data[i+1]));
+      }
     }
 
   }
