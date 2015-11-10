@@ -21,6 +21,9 @@ public class PixyTest extends LinearOpMode{
       telemetry.addData("Bytes", "Value");
       for (int i = 0; i < data.length; i += 2) {
         telemetry.addData(i + ", " + i+1, bytesToWord(data[i], data[i+1]));
+        long t = System.currentTimeMillis();
+        while (System.currentTimeMillis() - t < 1000)
+          ;
       }
     }
 

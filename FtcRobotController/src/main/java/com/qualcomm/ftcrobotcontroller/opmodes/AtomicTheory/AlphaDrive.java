@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -11,10 +12,19 @@ public abstract class AlphaDrive extends BaseTeleOp{
 
   DcMotor left;
   DcMotor right;
+  Servo aim;
+  double aimCount;
+  DcMotor pull;
 
   public void init() {
     left = hardwareMap.dcMotor.get("left");
     right = hardwareMap.dcMotor.get("right");
+    pull = hardwareMap.dcMotor.get("pull");
+    aim = hardwareMap.servo.get("aim");
+
+    aimCount = 0;
+
+    aim.setPosition(aimCount);
 
     left.setDirection(DcMotor.Direction.FORWARD);
     right.setDirection(DcMotor.Direction.REVERSE);
@@ -31,12 +41,34 @@ public abstract class AlphaDrive extends BaseTeleOp{
     right.setPower(power);
   }
 
-  void pressA() { }
-  void pressB() { }
+  void pressA() {
+    aimCount = scaleServo(aimCount + .01);
+    aim.setPosition(aimCount);
+  }
+  void pressB() {
+    aimCount =  scaleServo(aimCount -.01);
+    aim.setPosition(aimCount);
+  }
+
+  double scaleServo(double d) {
+    if (d > 1)
+      return 1;
+    else if (d < 0)
+      return 0;
+    else
+      return d;
+  }
+
   void noAB() { }
-  void pressX() { }
-  void pressY() { }
-  void noXY() { }
+  void pressX() {
+    pull.setPower(.75);
+  }
+  void pressY() {
+    pull.setPower(-.75);
+  }
+  void noXY() {
+    pull.setPower(0);
+  }
   void moveLift(double dir) {}
 
   void engageZipline(AtomicUtil.Direction d) { }

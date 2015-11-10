@@ -25,6 +25,8 @@ public class FpsDrive extends AlphaDrive{
       pressX();
     else if (gamepad1.y)
       pressY();
+    else
+      noXY();
 
     if (gamepad1.left_bumper)
       moveLift(1);
