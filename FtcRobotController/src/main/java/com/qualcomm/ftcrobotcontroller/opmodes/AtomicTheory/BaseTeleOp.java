@@ -78,6 +78,15 @@ public abstract class BaseTeleOp extends OpMode{
   }
 
 
+  double scaleServo(double d) {
+    if (d > 1)
+      return 1;
+    else if (d < 0)
+      return 0;
+    else
+      return d;
+  }
+
   static double scale_motor_power (double p_power) {
     //
     // Assume no scaling.

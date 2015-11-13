@@ -18,6 +18,8 @@ public class FpsDrive extends AlphaDrive{
       pressA();
     else if (gamepad1.b)
       pressB();
+    else if (Math.abs(gamepad2.right_stick_y) > .05)
+      smoothAim(gamepad2.right_stick_y);
     else
       noAB();
 
@@ -25,6 +27,8 @@ public class FpsDrive extends AlphaDrive{
       pressX();
     else if (gamepad1.y)
       pressY();
+    else if (Math.abs(gamepad2.left_stick_y) > .05)
+      pullUp(scale_motor_power(gamepad2.left_stick_y));
     else
       noXY();
 

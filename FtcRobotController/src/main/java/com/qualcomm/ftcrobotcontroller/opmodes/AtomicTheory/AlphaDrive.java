@@ -50,13 +50,12 @@ public abstract class AlphaDrive extends BaseTeleOp{
     aim.setPosition(aimCount);
   }
 
-  double scaleServo(double d) {
-    if (d > 1)
-      return 1;
-    else if (d < 0)
-      return 0;
-    else
-      return d;
+  void smoothAim(double m) {
+    aimCount = scaleServo(aimCount + m/100);
+  }
+
+  void pullUp(double m) {
+    pull.setPower(m);
   }
 
   void noAB() { }
@@ -69,6 +68,7 @@ public abstract class AlphaDrive extends BaseTeleOp{
   void noXY() {
     pull.setPower(0);
   }
+
   void moveLift(double dir) {}
 
   void engageZipline(AtomicUtil.Direction d) { }
