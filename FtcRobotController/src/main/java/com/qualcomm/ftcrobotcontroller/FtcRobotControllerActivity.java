@@ -39,6 +39,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -72,7 +76,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 
-public class FtcRobotControllerActivity extends Activity {
+public class FtcRobotControllerActivity extends Activity implements SensorEventListener{
 
   private static final int REQUEST_CONFIG_WIFI_CHANNEL = 1;
   private static final boolean USE_DEVICE_EMULATION = false;
@@ -132,12 +136,30 @@ public class FtcRobotControllerActivity extends Activity {
       DbgLog.msg("USB Device attached; app restart may be needed");
     }
   }
+  SensorManager s;
+  public Sensor accelerometer;
+  public float ax;
+  public float ay;
+  public float az;
+  @Override
+  public void onSensorChanged(SensorEvent sensorEvent) {
+    ax = sensorEvent.values[0];
+    ay = sensorEvent.values[1];
+    az = sensorEvent.values[2];
+  }
 
+  @Override
+  public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+  }
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.activity_ftc_controller);
+
+    s = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+    accelerometer = s.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
     utility = new Utility(this);
     context = this;
@@ -203,11 +225,13 @@ public class FtcRobotControllerActivity extends Activity {
   @Override
   protected void onResume() {
     super.onResume();
+    s.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
   }
 
   @Override
   public void onPause() {
     super.onPause();
+    s.unregisterListener(this);
   }
 
   @Override
