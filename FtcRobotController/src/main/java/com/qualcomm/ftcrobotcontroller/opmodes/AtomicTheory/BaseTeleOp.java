@@ -73,7 +73,7 @@ public abstract class BaseTeleOp extends OpMode{
       default:
         d = 0;
     }
-    moveLeft(power*d);
+    moveLeft(-power*d);
     moveRight(power*d);
   }
 

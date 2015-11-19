@@ -56,6 +56,7 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
 
     manager.register("FPS Drive", FpsDrive.class);
+    manager.register("Single Player Drive", SingleDrive.class);
     manager.register("NullOp", NullOp.class);
 
     //manager.register("MatrixK9TeleOp", MatrixK9TeleOp.class);
