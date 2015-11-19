@@ -32,7 +32,7 @@ public class FpsDrive extends AlphaDrive{
     else
       noXY();
 
-    if (gamepad2.right_bumper)
+    if (gamepad2.a)
       syncAim();
 
     if (gamepad1.left_bumper)
