@@ -15,7 +15,7 @@ public class AntiTippingDemo extends AlphaDrive{
     super.init();
     app = ((FtcRobotControllerActivity)hardwareMap.appContext);
     goal = getPosition();
-    k = .01; // change this for more precision.
+    k = .1; // change this for more precision.
   }
   public void loop() {
     double p = scale_motor_power((goal - getPosition())*k);
