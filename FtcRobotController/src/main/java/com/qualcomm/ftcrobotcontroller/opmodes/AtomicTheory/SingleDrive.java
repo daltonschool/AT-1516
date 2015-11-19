@@ -30,5 +30,7 @@ public class SingleDrive extends AlphaDrive{
 
     if (gamepad1.a)
       syncAim();
+
+    writeTelemetry();
   }
 }

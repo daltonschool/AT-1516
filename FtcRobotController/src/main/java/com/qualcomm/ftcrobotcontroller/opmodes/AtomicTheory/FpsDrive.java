@@ -49,6 +49,6 @@ public class FpsDrive extends AlphaDrive{
     else if (gamepad1.dpad_right)
       engageZipline(AtomicUtil.Direction.RIGHT);
 
-    telemetry.addData("Aim position", aimCount);
+    writeTelemetry();
   }
 }

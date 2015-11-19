@@ -81,4 +81,8 @@ public abstract class AlphaDrive extends BaseTeleOp{
 
   void engageZipline(AtomicUtil.Direction d) { }
   void releaseZipline() { }
+
+  void writeTelemetry() {
+    telemetry.addData("Aim position", aimCount);
+  }
 }
