@@ -56,6 +56,7 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
 
     manager.register("FPS Drive", FpsDrive.class);
+    manager.register("Anti-Tip", AntiTippingDemo.class);
     manager.register("Accelerometer Test", AccelerometerTest.class);
     manager.register("NullOp", NullOp.class);
 
