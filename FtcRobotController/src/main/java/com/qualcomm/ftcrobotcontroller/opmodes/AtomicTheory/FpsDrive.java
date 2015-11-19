@@ -32,6 +32,9 @@ public class FpsDrive extends AlphaDrive{
     else
       noXY();
 
+    if (gamepad2.right_bumper)
+      syncAim();
+
     if (gamepad1.left_bumper)
       moveLift(1);
     else if (gamepad1.right_bumper)
@@ -39,12 +42,13 @@ public class FpsDrive extends AlphaDrive{
     else
       moveLift(0);
 
-    if (gamepad1.dpad_up) {
+    if (gamepad1.dpad_up)
       releaseZipline();
-    }
     else if (gamepad1.dpad_left)
       engageZipline(AtomicUtil.Direction.LEFT);
     else if (gamepad1.dpad_right)
       engageZipline(AtomicUtil.Direction.RIGHT);
+
+    telemetry.addData("Aim position", aimCount);
   }
 }
