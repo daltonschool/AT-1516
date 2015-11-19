@@ -9,17 +9,23 @@ import com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity;
  */
 public class AntiTippingDemo extends AlphaDrive{
   FtcRobotControllerActivity app;
-  float goal;
+  double goal;
   double k;
   public void init() {
     super.init();
     app = ((FtcRobotControllerActivity)hardwareMap.appContext);
-    goal = app.ax; // i'm not sure which axis we want to anti-tip on.
+    goal = getPosition();
     k = .01; // change this for more precision.
   }
   public void loop() {
-    double p = scale_motor_power((goal - app.ax)*k);
-    moveLeft(p);
-    moveRight(p);
+    double p = scale_motor_power((goal - getPosition())*k);
+    drive(p);
+  }
+
+  public double getPosition() {
+    double m = 1;
+    if (app.az < 0) m = -1;
+    double pos = app.ax*m;
+    return pos;
   }
 }
