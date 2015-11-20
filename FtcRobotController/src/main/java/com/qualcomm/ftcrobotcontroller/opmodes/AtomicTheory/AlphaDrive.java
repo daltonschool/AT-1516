@@ -16,7 +16,7 @@ public abstract class AlphaDrive extends BaseTeleOp{
   double aimCount;
   DcMotor pull;
 
-  final double AIM_PRESET = .5; // TODO: FIND AIM PRESET
+  final double AIM_PRESET = 0.27714145; // TODO: FIND AIM PRESET
 
   public void init() {
     left = hardwareMap.dcMotor.get("left");
