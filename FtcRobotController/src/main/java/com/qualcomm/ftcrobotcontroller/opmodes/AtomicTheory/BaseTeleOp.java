@@ -33,6 +33,9 @@ public abstract class BaseTeleOp extends OpMode{
   abstract void pressX();
   abstract void pressY();
   abstract void noXY();
+  abstract void pressLT();
+  abstract void pressLB();
+  abstract void noLBLT();
 
   abstract void moveLift(double dir);
 
