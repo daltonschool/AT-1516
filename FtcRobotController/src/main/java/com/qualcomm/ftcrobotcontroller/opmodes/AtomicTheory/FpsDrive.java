@@ -3,7 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 /**
  * Created by davis on 10/10/15.
  */
-public class FpsDrive extends AlphaDrive{
+public class FpsDrive extends AlphaDrive {
   public void loop() {
     float throttle = gamepad1.left_stick_y;
     float turn = gamepad1.right_stick_x;
@@ -48,6 +48,13 @@ public class FpsDrive extends AlphaDrive{
       engageZipline(AtomicUtil.Direction.LEFT);
     else if (gamepad1.dpad_right)
       engageZipline(AtomicUtil.Direction.RIGHT);
+
+    if(gamepad2.left_bumper)
+      pressLB();
+    else if(gamepad2.left_trigger == 1.0)
+      pressLT();
+    else
+      noLBLT();
 
     writeTelemetry();
   }

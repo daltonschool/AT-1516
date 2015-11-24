@@ -13,7 +13,11 @@ public abstract class AlphaDrive extends BaseTeleOp{
   DcMotor left;
   DcMotor right;
   Servo aim;
+  Servo leftPersonDropper;
+
   double aimCount;
+  double leftPersonCount;
+
   DcMotor pull;
 
   final double AIM_PRESET = 0.27714145; // TODO: FIND AIM PRESET
@@ -24,9 +28,13 @@ public abstract class AlphaDrive extends BaseTeleOp{
     pull = hardwareMap.dcMotor.get("pull");
     aim = hardwareMap.servo.get("aim");
 
+    leftPersonDropper = hardwareMap.servo.get("leftPersonServo");
+
     aimCount = 0;
+    leftPersonCount = .5;
 
     aim.setPosition(aimCount);
+    leftPersonDropper.setPosition(leftPersonCount);
 
     left.setDirection(DcMotor.Direction.FORWARD);
     right.setDirection(DcMotor.Direction.REVERSE);
@@ -57,6 +65,16 @@ public abstract class AlphaDrive extends BaseTeleOp{
     aim.setPosition(aimCount);
   }
 
+  void pressLT() {
+    leftPersonCount = scaleServo(leftPersonCount + .01);
+    leftPersonDropper.setPosition(leftPersonCount);
+  }
+
+  void pressLB() {
+    leftPersonCount = scaleServo(leftPersonCount - .01);
+    leftPersonDropper.setPosition(leftPersonCount);
+  }
+
   void smoothAim(double m) {
     aimCount = scaleServo(aimCount + m/100);
     aim.setPosition(aimCount);
@@ -76,6 +94,7 @@ public abstract class AlphaDrive extends BaseTeleOp{
   void noXY() {
     pull.setPower(0);
   }
+  void noLBLT() { };
 
   void moveLift(double dir) {}
 
