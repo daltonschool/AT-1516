@@ -58,7 +58,7 @@ public abstract class AlphaDrive extends BaseTeleOp{
   }
 
   void smoothAim(double m) {
-    aimCount = scaleServo(aimCount + m/100);
+    aimCount = scaleServo(aimCount + m/300);
     aim.setPosition(aimCount);
   }
 
