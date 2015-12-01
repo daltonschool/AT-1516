@@ -14,7 +14,7 @@ public abstract class AlphaDrive extends BaseTeleOp{
   DcMotor right;
   Servo aim;
   Servo leftPersonDropper;
-
+  Servo whack;
   double aimCount;
   double leftPersonCount;
 
@@ -27,15 +27,16 @@ public abstract class AlphaDrive extends BaseTeleOp{
     right = hardwareMap.dcMotor.get("right");
     pull = hardwareMap.dcMotor.get("pull");
     aim = hardwareMap.servo.get("aim");
-
+    whack = hardwareMap.servo.get("whack");
     leftPersonDropper = hardwareMap.servo.get("leftPersonServo");
 
     aimCount = 0;
-    leftPersonCount = .5;
+    leftPersonCount = 0;
 
     aim.setPosition(aimCount);
     leftPersonDropper.setPosition(leftPersonCount);
 
+    whack.setPosition(.493);
     left.setDirection(DcMotor.Direction.FORWARD);
     right.setDirection(DcMotor.Direction.REVERSE);
 
@@ -66,12 +67,12 @@ public abstract class AlphaDrive extends BaseTeleOp{
   }
 
   void pressLT() {
-    leftPersonCount = scaleServo(leftPersonCount + .01);
+    leftPersonCount = scaleServo(leftPersonCount + .003);
     leftPersonDropper.setPosition(leftPersonCount);
   }
 
   void pressLB() {
-    leftPersonCount = scaleServo(leftPersonCount - .01);
+    leftPersonCount = scaleServo(leftPersonCount - .003);
     leftPersonDropper.setPosition(leftPersonCount);
   }
 
