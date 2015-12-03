@@ -74,7 +74,7 @@ public abstract class AlphaDrive extends BaseTeleOp{
   }
 
   void pressLB() {
-    leftPersonCount = scaleServo(leftPersonCount - .003);
+    leftPersonCount = scaleServo(leftPersonCount - .002);
     leftPersonDropper.setPosition(leftPersonCount);
   }
 
@@ -86,7 +86,7 @@ public abstract class AlphaDrive extends BaseTeleOp{
   }
 
   void pressRB() {
-    leftPersonCount = scaleServo(leftPersonCount + .003);
+    leftPersonCount = scaleServo(leftPersonCount + .002);
     leftPersonDropper.setPosition(leftPersonCount);
   }
 
