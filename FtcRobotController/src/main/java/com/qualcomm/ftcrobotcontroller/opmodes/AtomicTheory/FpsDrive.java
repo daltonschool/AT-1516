@@ -51,10 +51,16 @@ public class FpsDrive extends AlphaDrive {
 
     if(gamepad2.left_bumper)
       pressLB();
-    else if(gamepad2.left_trigger == 1.0)
-      pressLT();
+    else if (gamepad2.right_bumper)
+      pressRB();
+
+    if (gamepad2.left_trigger > .1)
+      pressLT(gamepad2.left_trigger);
+    else if(gamepad2.right_trigger > .1)
+      pressRT(gamepad2.right_trigger);
     else
-      noLBLT();
+      noPressT();
+
 
     writeTelemetry();
   }

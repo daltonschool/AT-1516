@@ -66,14 +66,32 @@ public abstract class AlphaDrive extends BaseTeleOp{
     aim.setPosition(aimCount);
   }
 
-  void pressLT() {
-    leftPersonCount = scaleServo(leftPersonCount + .003);
-    leftPersonDropper.setPosition(leftPersonCount);
+  void pressLT(double d) {
+    double t = .493 + d/2;
+    if (t > 1) t = 1;
+    else if (t < 0) t = 0;
+    whack.setPosition(t);
   }
 
   void pressLB() {
     leftPersonCount = scaleServo(leftPersonCount - .003);
     leftPersonDropper.setPosition(leftPersonCount);
+  }
+
+  void pressRT(double d) {
+    double t = .493 - d;
+    if (t > 1) t = 1;
+    else if (t < 0) t = 0;
+    whack.setPosition(t);
+  }
+
+  void pressRB() {
+    leftPersonCount = scaleServo(leftPersonCount + .003);
+    leftPersonDropper.setPosition(leftPersonCount);
+  }
+
+  void noPressT() {
+    whack.setPosition(.493);
   }
 
   void smoothAim(double m) {
