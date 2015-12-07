@@ -37,7 +37,10 @@ public class SingleDrive extends AlphaDrive{
       smoothAim(gamepad1.right_stick_y);
 
     if (gamepad1.a)
-      syncAim();
+      syncAim(AIM_PRESET_INTO_THIN_AIR);
+    else if(gamepad1.b) {
+      syncAim(AIM_PRESET_MID_ZONE);
+    }
 
     writeTelemetry();
   }

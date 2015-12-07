@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Hardware;
 
 /**
  * Created by davis on 11/21/15.
@@ -10,8 +11,13 @@ public abstract class LinearAlpha extends BaseAuto {
   DcMotor left;
   DcMotor right;
   Servo aim;
+  Servo whack;
   double aimCount;
   DcMotor pull;
+
+
+  Servo leftPersonDropper;
+  double leftPersonCount = 0;
 
   void moveLeft(double power) {
     left.setPower(power);
@@ -25,12 +31,24 @@ public abstract class LinearAlpha extends BaseAuto {
     right = hardwareMap.dcMotor.get("right");
     pull = hardwareMap.dcMotor.get("pull");
     aim = hardwareMap.servo.get("aim");
+    leftPersonDropper = hardwareMap.servo.get("leftPersonServo");
+    whack = hardwareMap.servo.get("whack");
 
+    leftPersonDropper.setPosition(leftPersonCount);
     aimCount = 0;
 
     aim.setPosition(aimCount);
-
+    whack.setPosition(.493);
     left.setDirection(DcMotor.Direction.FORWARD);
     right.setDirection(DcMotor.Direction.REVERSE);
+  }
+
+  double scaleServo(double d) {
+    if (d > 1)
+      return 1;
+    else if (d < 0)
+      return 0;
+    else
+      return d;
   }
 }

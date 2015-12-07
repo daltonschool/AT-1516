@@ -33,7 +33,10 @@ public class FpsDrive extends AlphaDrive {
       noXY();
 
     if (gamepad2.a)
-      syncAim();
+      syncAim(AIM_PRESET_INTO_THIN_AIR);
+    else if(gamepad2.b) {
+      syncAim(AIM_PRESET_MID_ZONE);
+    }
 
     if (gamepad1.left_bumper)
       moveLift(1);

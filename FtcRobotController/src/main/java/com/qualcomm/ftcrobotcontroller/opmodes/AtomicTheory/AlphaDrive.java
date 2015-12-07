@@ -20,7 +20,9 @@ public abstract class AlphaDrive extends BaseTeleOp{
 
   DcMotor pull;
 
-  final double AIM_PRESET = 0.27714145; // TODO: FIND AIM PRESET
+  final double AIM_PRESET_INTO_THIN_AIR = 0.36;
+  final double AIM_PRESET_MID_ZONE = 0.33;// Math.PI/10;
+
 
   public void init() {
     left = hardwareMap.dcMotor.get("left");
@@ -30,7 +32,7 @@ public abstract class AlphaDrive extends BaseTeleOp{
     whack = hardwareMap.servo.get("whack");
     leftPersonDropper = hardwareMap.servo.get("leftPersonServo");
 
-    aimCount = 0;
+    aimCount = 0.2;
     leftPersonCount = 0;
 
     aim.setPosition(aimCount);
@@ -61,8 +63,8 @@ public abstract class AlphaDrive extends BaseTeleOp{
     aim.setPosition(aimCount);
   }
 
-  void syncAim() {
-    aimCount = scaleServo(AIM_PRESET);
+  void syncAim(double preset) {
+    aimCount = scaleServo(preset);
     aim.setPosition(aimCount);
   }
 
