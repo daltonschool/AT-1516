@@ -53,12 +53,15 @@ public abstract class BaseAuto extends LinearOpMode{
     switch (dir) {
       case CLOCKWISE:
         d = 1;
+        break;
       case COUNTERCLOCKWISE:
         d = -1;
+        break;
       default:
         d = 0;
+        break;
     }
-    moveLeft(power*d);
+    moveLeft(-power*d);
     moveRight(power*d);
   }
 

@@ -32,6 +32,8 @@ public abstract class AlphaDrive extends BaseTeleOp{
     whack = hardwareMap.servo.get("whack");
     leftPersonDropper = hardwareMap.servo.get("leftPersonServo");
 
+    originalLeft = left.getCurrentPosition();
+    originalRight = right.getCurrentPosition();
     aimCount = 0.2;
     leftPersonCount = 0;
 
@@ -124,5 +126,12 @@ public abstract class AlphaDrive extends BaseTeleOp{
 
   void writeTelemetry() {
     telemetry.addData("Aim position", aimCount);
+    telemetry.addData("Left encoder", getEncoders()[0]);
+    telemetry.addData("Right encoder", getEncoders()[1]);
+  }
+  int originalLeft;
+  int originalRight;
+  int[] getEncoders() {
+    return new int[] {left.getCurrentPosition() - originalLeft, right.getCurrentPosition() - originalRight};
   }
 }

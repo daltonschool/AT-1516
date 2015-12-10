@@ -35,8 +35,9 @@ public abstract class LinearAlpha extends BaseAuto {
     whack = hardwareMap.servo.get("whack");
 
     leftPersonDropper.setPosition(leftPersonCount);
-    aimCount = 0;
-
+    aimCount = .2;
+    encoderMotor1 = left;
+    encoderMotor2 = right;
     aim.setPosition(aimCount);
     whack.setPosition(.493);
     left.setDirection(DcMotor.Direction.FORWARD);
