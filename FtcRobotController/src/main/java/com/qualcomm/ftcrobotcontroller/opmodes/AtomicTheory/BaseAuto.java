@@ -61,15 +61,44 @@ public abstract class BaseAuto extends LinearOpMode{
         d = 0;
         break;
     }
-    moveLeft(-power*d);
-    moveRight(power*d);
+    moveLeft(-power * d);
+    moveRight(power * d);
   }
 
   void driveTicks(double power, int ticks) {
     int start = encoderMotor1.getCurrentPosition();
-    while (Math.abs(encoderMotor1.getCurrentPosition() - start) < ticks)
+    int start2 = encoderMotor2.getCurrentPosition();
+    double pl = power;
+    double pr = power;
+
+    double K = 1000.0;
+    double C = .02;
+    while (Math.abs(encoderMotor1.getCurrentPosition() - start) < ticks || Math.abs(encoderMotor2.getCurrentPosition() - start2) < ticks) {
+//      int e1 = encoderMotor1.getCurrentPosition();
+//      int e2 = encoderMotor2.getCurrentPosition();
+//      int diff = e1 - e2;
+//      if (diff > 0) {
+//        pl += .02;
+//        pr -= .02;
+//      } else if (diff < 0) {
+//        pl -= .02;
+//        pr += .02;
+//      } else {
+//        pl = power;
+//        pr = power;
+//      }
+//      moveLeft(scale(pl));
+//      moveRight(scale(pr));
       drive(power);
+
+    }
     stopMotors();
+  }
+
+  double scale(double d) {
+    if (d > 1) return 1;
+    if (d < -1) return -1;
+    else return d;
   }
 
   void rotateTicks(double power, AtomicUtil.Direction dir, int ticks) {

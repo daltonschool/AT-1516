@@ -128,6 +128,7 @@ public abstract class AlphaDrive extends BaseTeleOp{
     telemetry.addData("Aim position", aimCount);
     telemetry.addData("Left encoder", getEncoders()[0]);
     telemetry.addData("Right encoder", getEncoders()[1]);
+    telemetry.addData("Dropper", leftPersonCount);
   }
   int originalLeft;
   int originalRight;
