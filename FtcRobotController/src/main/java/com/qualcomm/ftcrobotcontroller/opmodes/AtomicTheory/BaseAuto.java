@@ -107,6 +107,7 @@ public abstract class BaseAuto extends LinearOpMode{
       rotate(power, dir);
     stopMotors();
   }
+  abstract AtomicUtil.Alliance getTeam();
 
 //  abstract AtomicUtil.Alliance getTeam();
 }
