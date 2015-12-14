@@ -17,6 +17,6 @@ public class AutoRed extends LinearAlpha{
     sleep(500);
     rotateTicks(.8, AtomicUtil.Direction.COUNTERCLOCKWISE, 510);
     sleep(500);
-    driveTicks(.5, 1000);
+    driveTicks(.5, 500);
   }
 }

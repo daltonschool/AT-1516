@@ -17,6 +17,6 @@ public class AutoBlue extends LinearAlpha{
     sleep(500);
     rotateTicks(.8, AtomicUtil.Direction.CLOCKWISE, 510);
     sleep(500);
-    driveTicks(.5, 1000);
+    driveTicks(.5, 500);
   }
 }
