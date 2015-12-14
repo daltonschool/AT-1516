@@ -11,9 +11,12 @@ public abstract class BaseAuto extends LinearOpMode{
   DcMotor encoderMotor1;
   DcMotor encoderMotor2;
 
-  ColorSensor colorSensor;
+  ColorSensor colorSensor1;
+  ColorSensor colorSensor2;
 
   final int LINE_THRESHOLD = 20;
+
+  abstract AtomicUtil.Alliance getTeam();
 
   /**
    * Drive the left side of the robot.
@@ -77,6 +80,11 @@ public abstract class BaseAuto extends LinearOpMode{
     stopMotors();
   }
 
+  /**
+   * Drive forward until encoder tick threshold is met.
+   * @param power
+   * @param ticks Number of encoder ticks to travel
+   */
   void dumbTicks(double power, int ticks) {
     int start = encoderMotor1.getCurrentPosition();
     int start2 = encoderMotor2.getCurrentPosition();
@@ -86,37 +94,52 @@ public abstract class BaseAuto extends LinearOpMode{
     }
   }
 
+  /**
+   * Use a proportional control algorithm to drive a certain number of encoder
+   * ticks forward.
+   * @param power Base motor power. Motors will run around this speed.
+   * @param ticks Number of encoder ticks to travel.
+   */
   void driveTicks(double power, int ticks) {
+    // Starting positions
     int startLeft;
-    int posLeft;
-
     int startRight;
+    // Current positions
+    int posLeft;
     int posRight;
+    // Motor power in the proportional control algorithm.
+    double pl;
+    double pr;
 
-    startLeft = posLeft = Math.abs(encoderMotor1.getCurrentPosition());
-    startRight = posRight = Math.abs(encoderMotor2.getCurrentPosition());
+    double K = .001; // proportionality constant
 
-    double pl = power;
-    double pr = power;
+    startLeft = Math.abs(encoderMotor1.getCurrentPosition());
+    startRight = Math.abs(encoderMotor2.getCurrentPosition());
+    pl = pr = power;
 
-    double K = .001;
-    double C = .02;
     do {
-      int diff = posLeft - posRight;
+      // update encoder positions
+      posLeft = Math.abs(encoderMotor1.getCurrentPosition());
+      posRight = Math.abs(encoderMotor2.getCurrentPosition());
 
-      pl += diff *  sign(diff) * K;
-      pr += diff * -sign(diff) * K;
+      int error = posLeft - posRight; // Discrepancy between the two encoders
+      double correction = error * K; // Multiply that error by the constant to get the correction.
+
+      // correct the motor speeds
+      pl += correction * sign(error);
+      pr -= correction * sign(error);
+
+      // ensure we're still within the thresholds so we don't throw an error
       pl = scale(pl);
       pr = scale(pr);
 
+      // drive the motors
       moveLeft(pl);
       moveRight(pr);
-
-      posLeft = Math.abs(encoderMotor1.getCurrentPosition());
-      posRight = Math.abs(encoderMotor2.getCurrentPosition());
     } while (posLeft - startLeft < ticks || posRight - startRight < ticks);
+    // ^^ do all that while we still have encoder ticks left to run
 
-    stopMotors();
+    stopMotors(); // stop motors before exiting
   }
 
   /**
@@ -149,10 +172,24 @@ public abstract class BaseAuto extends LinearOpMode{
    * @param speed power to send to the motors.
    */
   void followLine(float speed) {
-    if (colorSensor.alpha() > LINE_THRESHOLD) {
-      moveLeft(speed);
-    } else {
-      moveRight(speed);
+    // If two color sensors are connected, use advanced line following.
+    if (colorSensor2 != null) {
+      if (colorSensor1.alpha() > LINE_THRESHOLD && colorSensor2.alpha() > LINE_THRESHOLD) // if both see the line
+        drive(speed); // drive straight.
+      else if (colorSensor1.alpha() > LINE_THRESHOLD) // if only the left sensor sees the line
+        moveRight(speed); // turn to the right
+      else if (colorSensor2.alpha() > LINE_THRESHOLD) // if only the right sensor sees the line
+        moveLeft(speed); // turn to the left
+      else // if neither sensor sees the line,
+        drive(speed); // drive straight.
+    }
+
+    // If only one sensor is connected, fallback to simple line following.
+    else {
+      if (colorSensor1.alpha() > LINE_THRESHOLD) // if the sensor is on the line
+        moveLeft(speed); // move off the line
+      else // if the sensor is off the line
+        moveRight(speed); // move onto it
     }
   }
 
@@ -166,6 +203,4 @@ public abstract class BaseAuto extends LinearOpMode{
       followLine(speed);
     stopMotors();
   }
-
-  abstract AtomicUtil.Alliance getTeam();
 }
