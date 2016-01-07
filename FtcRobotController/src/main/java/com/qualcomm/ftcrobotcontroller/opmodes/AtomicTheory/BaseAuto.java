@@ -16,6 +16,30 @@ public abstract class BaseAuto extends LinearOpMode{
 
   final int LINE_THRESHOLD = 20;
 
+  AdafruitIMU boschBNO055;
+  double startHeading = 0;
+  //The following arrays contain both the Euler angles reported by the IMU (indices = 0) AND the
+  // Tait-Bryan angles calculated from the 4 components of the quaternion vector (indices = 1)
+  volatile double[] rollAngle = new double[2], pitchAngle = new double[2], yawAngle = new double[2];
+
+  public void updateIMU() {
+    boschBNO055.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);
+  }
+
+  public double getHeading() {
+    updateIMU();
+    double corrected = yawAngle[0] - startHeading;
+    if (corrected > 0)
+      return corrected;
+    else
+      return corrected + 360;
+  }
+
+  public void resetHeading() {
+    getHeading();
+    startHeading = yawAngle[0];
+  }
+
   abstract AtomicUtil.Alliance getTeam();
 
   /**

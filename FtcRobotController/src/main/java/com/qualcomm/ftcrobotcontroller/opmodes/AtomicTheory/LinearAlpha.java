@@ -1,5 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 
+import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Hardware;
@@ -42,5 +43,16 @@ public abstract class LinearAlpha extends BaseAuto {
     whack.setPosition(.493);
     left.setDirection(DcMotor.Direction.FORWARD);
     right.setDirection(DcMotor.Direction.REVERSE);
+
+    long systemTime = System.nanoTime();
+    try {
+      boschBNO055 = new AdafruitIMU(hardwareMap, "bno055"
+              , (byte)(AdafruitIMU.BNO055_ADDRESS_A * 2)
+              , (byte)AdafruitIMU.OPERATION_MODE_IMU);
+    } catch (RobotCoreException e){
+      telemetry.addData("FtcRobotController", "Exception: " + e.getMessage());
+    }
+    telemetry.addData("FtcRobotController", "IMU Init method finished in: "
+            + (-(systemTime - (systemTime = System.nanoTime()))) + " ns.");
   }
 }
