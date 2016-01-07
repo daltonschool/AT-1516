@@ -27,29 +27,20 @@ public abstract class LinearAlpha extends BaseAuto {
   }
 
   public void setup() {
-    left = hardwareMap.dcMotor.get("left");
-    right = hardwareMap.dcMotor.get("right");
+    left = encoderMotor1 = hardwareMap.dcMotor.get("left");
+    right= encoderMotor2 = hardwareMap.dcMotor.get("right");
     pull = hardwareMap.dcMotor.get("pull");
     aim = hardwareMap.servo.get("aim");
     leftPersonDropper = hardwareMap.servo.get("leftPersonServo");
     whack = hardwareMap.servo.get("whack");
+    colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
+    colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
 
     leftPersonDropper.setPosition(leftPersonCount);
     aimCount = .2;
-    encoderMotor1 = left;
-    encoderMotor2 = right;
     aim.setPosition(aimCount);
     whack.setPosition(.493);
     left.setDirection(DcMotor.Direction.FORWARD);
     right.setDirection(DcMotor.Direction.REVERSE);
-  }
-
-  double scaleServo(double d) {
-    if (d > 1)
-      return 1;
-    else if (d < 0)
-      return 0;
-    else
-      return d;
   }
 }

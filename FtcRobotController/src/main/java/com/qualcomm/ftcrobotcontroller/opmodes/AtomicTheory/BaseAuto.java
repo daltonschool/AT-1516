@@ -121,13 +121,17 @@ public abstract class BaseAuto extends LinearOpMode{
       // update encoder positions
       posLeft = Math.abs(encoderMotor1.getCurrentPosition());
       posRight = Math.abs(encoderMotor2.getCurrentPosition());
+      posLeft = Math.abs(posLeft - startLeft);
+      posRight = Math.abs(posRight - startRight);
+      telemetry.addData("left", posLeft);
+      telemetry.addData("right", posRight);
 
       int error = posLeft - posRight; // Discrepancy between the two encoders
       double correction = error * K; // Multiply that error by the constant to get the correction.
 
       // correct the motor speeds
-      pl += correction * sign(error);
-      pr -= correction * sign(error);
+      pl += correction;
+      pr -= correction;
 
       // ensure we're still within the thresholds so we don't throw an error
       pl = scale(pl);
@@ -148,8 +152,8 @@ public abstract class BaseAuto extends LinearOpMode{
    * @return number, as long as it's within -1 and 1. Returns the bound otherwise.
    */
   double scale(double d) {
-    if (d > 1) return 1;
-    if (d < -1) return -1;
+    if (d > 1) return 1.0;
+    if (d < -1) return -1.0;
     else return d;
   }
 
@@ -163,6 +167,10 @@ public abstract class BaseAuto extends LinearOpMode{
     else return -1.0;
   }
 
+  boolean seesLine(ColorSensor c) {
+    return c.alpha() > LINE_THRESHOLD;
+  }
+
   /**
    * Follow a white line, using a color sensor.
    * This is an event-driven method. To continue to follow the line,
@@ -174,11 +182,11 @@ public abstract class BaseAuto extends LinearOpMode{
   void followLine(float speed) {
     // If two color sensors are connected, use advanced line following.
     if (colorSensor2 != null) {
-      if (colorSensor1.alpha() > LINE_THRESHOLD && colorSensor2.alpha() > LINE_THRESHOLD) // if both see the line
+      if (seesLine(colorSensor1) && seesLine(colorSensor2)) // if both see the line
         drive(speed); // drive straight.
-      else if (colorSensor1.alpha() > LINE_THRESHOLD) // if only the left sensor sees the line
+      else if (seesLine(colorSensor1)) // if only the left sensor sees the line
         moveRight(speed); // turn to the right
-      else if (colorSensor2.alpha() > LINE_THRESHOLD) // if only the right sensor sees the line
+      else if (seesLine(colorSensor2)) // if only the right sensor sees the line
         moveLeft(speed); // turn to the left
       else // if neither sensor sees the line,
         drive(speed); // drive straight.
@@ -186,7 +194,7 @@ public abstract class BaseAuto extends LinearOpMode{
 
     // If only one sensor is connected, fallback to simple line following.
     else {
-      if (colorSensor1.alpha() > LINE_THRESHOLD) // if the sensor is on the line
+      if (seesLine(colorSensor1)) // if the sensor is on the line
         moveLeft(speed); // move off the line
       else // if the sensor is off the line
         moveRight(speed); // move onto it

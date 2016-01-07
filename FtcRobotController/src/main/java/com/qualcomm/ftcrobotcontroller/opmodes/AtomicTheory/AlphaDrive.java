@@ -1,6 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -18,6 +19,9 @@ public abstract class AlphaDrive extends BaseTeleOp{
   double aimCount;
   double leftPersonCount;
 
+  ColorSensor colorSensor1;
+  ColorSensor colorSensor2;
+
   DcMotor pull;
 
   final double AIM_PRESET_INTO_THIN_AIR = 0.36;
@@ -31,6 +35,8 @@ public abstract class AlphaDrive extends BaseTeleOp{
     aim = hardwareMap.servo.get("aim");
     whack = hardwareMap.servo.get("whack");
     leftPersonDropper = hardwareMap.servo.get("leftPersonServo");
+    colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
+    colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
 
     originalLeft = left.getCurrentPosition();
     originalRight = right.getCurrentPosition();
@@ -129,6 +135,8 @@ public abstract class AlphaDrive extends BaseTeleOp{
     telemetry.addData("Left encoder", getEncoders()[0]);
     telemetry.addData("Right encoder", getEncoders()[1]);
     telemetry.addData("Dropper", leftPersonCount);
+    telemetry.addData("ColorSensor1 Alpha", colorSensor1.alpha());
+    telemetry.addData("ColorSensor2 Alpha", colorSensor2.alpha());
   }
   int originalLeft;
   int originalRight;
