@@ -118,57 +118,84 @@ public abstract class BaseAuto extends LinearOpMode{
     }
   }
 
-  /**
-   * Use a proportional control algorithm to drive a certain number of encoder
-   * ticks forward.
-   * @param power Base motor power. Motors will run around this speed.
-   * @param ticks Number of encoder ticks to travel.
-   */
   void driveTicks(double power, int ticks) {
-    // Starting positions
-    int startLeft;
-    int startRight;
-    // Current positions
-    int posLeft;
-    int posRight;
-    // Motor power in the proportional control algorithm.
-    double pl;
-    double pr;
+    resetHeading();
+    int startLeft = encoderMotor1.getCurrentPosition();
+    int startRight = encoderMotor2.getCurrentPosition();
+    double pl, pr;
 
-    double K = .001; // proportionality constant
-
-    startLeft = Math.abs(encoderMotor1.getCurrentPosition());
-    startRight = Math.abs(encoderMotor2.getCurrentPosition());
     pl = pr = power;
 
-    do {
-      // update encoder positions
-      posLeft = Math.abs(encoderMotor1.getCurrentPosition());
-      posRight = Math.abs(encoderMotor2.getCurrentPosition());
-      posLeft = Math.abs(posLeft - startLeft);
-      posRight = Math.abs(posRight - startRight);
-      telemetry.addData("left", posLeft);
-      telemetry.addData("right", posRight);
+    while (Math.abs(encoderMotor1.getCurrentPosition()- startLeft) < ticks ||
+            Math.abs(encoderMotor2.getCurrentPosition()- startRight) < ticks) {
+      double heading = getHeading();
+      if (heading > 180 && heading < 358) // if we're veering to the left,
+        pl += .1;
+      else if (heading < 180 && heading > 2) // if we're veering to the right,
+        pr += .1;
+      else // if we're going straight, back to normal power.
+        pl = pr = power;
 
-      int error = posLeft - posRight; // Discrepancy between the two encoders
-      double correction = error * K; // Multiply that error by the constant to get the correction.
-
-      // correct the motor speeds
-      pl += correction;
-      pr -= correction;
-
-      // ensure we're still within the thresholds so we don't throw an error
       pl = scale(pl);
       pr = scale(pr);
 
-      // drive the motors
       moveLeft(pl);
       moveRight(pr);
-    } while (posLeft - startLeft < ticks || posRight - startRight < ticks);
-    // ^^ do all that while we still have encoder ticks left to run
-
-    stopMotors(); // stop motors before exiting
+    }
+    stopMotors();
   }
+
+//  /**
+//   * Use a proportional control algorithm to drive a certain number of encoder
+//   * ticks forward.
+//   * @param power Base motor power. Motors will run around this speed.
+//   * @param ticks Number of encoder ticks to travel.
+//   */
+//  void driveTicks(double power, int ticks) {
+//    // Starting positions
+//    int startLeft;
+//    int startRight;
+//    // Current positions
+//    int posLeft;
+//    int posRight;
+//    // Motor power in the proportional control algorithm.
+//    double pl;
+//    double pr;
+//
+//    double K = .001; // proportionality constant
+//
+//    startLeft = Math.abs(encoderMotor1.getCurrentPosition());
+//    startRight = Math.abs(encoderMotor2.getCurrentPosition());
+//    pl = pr = power;
+//
+//    do {
+//      // update encoder positions
+//      posLeft = Math.abs(encoderMotor1.getCurrentPosition());
+//      posRight = Math.abs(encoderMotor2.getCurrentPosition());
+//      posLeft = Math.abs(posLeft - startLeft);
+//      posRight = Math.abs(posRight - startRight);
+//      telemetry.addData("left", posLeft);
+//      telemetry.addData("right", posRight);
+//
+//      int error = posLeft - posRight; // Discrepancy between the two encoders
+//      double correction = error * K; // Multiply that error by the constant to get the correction.
+//
+//      // correct the motor speeds
+//      pl += correction;
+//      pr -= correction;
+//
+//      // ensure we're still within the thresholds so we don't throw an error
+//      pl = scale(pl);
+//      pr = scale(pr);
+//
+//      // drive the motors
+//      moveLeft(pl);
+//      moveRight(pr);
+//    } while (posLeft - startLeft < ticks || posRight - startRight < ticks);
+//    // ^^ do all that while we still have encoder ticks left to run
+//
+//    stopMotors(); // stop motors before exiting
+//  }
 
   /**
    * Ensure a number is within bounds for motor controllers.
