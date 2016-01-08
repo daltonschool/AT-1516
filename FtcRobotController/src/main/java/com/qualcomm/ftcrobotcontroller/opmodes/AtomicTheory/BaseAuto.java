@@ -104,6 +104,16 @@ public abstract class BaseAuto extends LinearOpMode{
     stopMotors();
   }
 
+  void rotateDegs(double power, AtomicUtil.Direction dir, double deg) {
+    resetHeading();
+    if (dir == AtomicUtil.Direction.CLOCKWISE)
+      while(getHeading() < deg)
+        rotate(power, dir);
+    else if (dir == AtomicUtil.Direction.COUNTERCLOCKWISE)
+      while (getHeading() > (360 - deg))
+        rotate(power, dir);
+  }
+
   /**
    * Drive forward until encoder tick threshold is met.
    * @param power
