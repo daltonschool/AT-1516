@@ -17,16 +17,16 @@ public abstract class AutoV3 extends LinearAlpha{
         break;
     }
     waitForStart();
-    driveTicks(0.5, 4165);
+    dumbTicks(0.5, 4165);
     sleep(500);
     rotateTicks(.8, turnDir, 650);
     sleep(500);
-    driveTicks(0.5, 4500);
+    dumbTicks(0.5, 4500);
     sleep(500);
-    driveTicks(-0.5, 731);
+    dumbTicks(-0.5, 731);
     sleep(500);
     rotateTicks(.8, turnDir, 510);
     sleep(500);
-    driveTicks(.5, 500);
+    dumbTicks(.5, 500);
   }
 }
