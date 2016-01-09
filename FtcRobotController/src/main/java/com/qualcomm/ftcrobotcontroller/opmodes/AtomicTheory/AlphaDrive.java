@@ -1,10 +1,8 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by davis on 11/5/15.
@@ -14,10 +12,13 @@ public abstract class AlphaDrive extends BaseTeleOp{
   DcMotor left;
   DcMotor right;
   Servo aim;
-  Servo leftPersonDropper;
-  Servo whack;
+  Servo dump;
+  Servo rightZip;
+  Servo leftZip;
   double aimCount;
-  double leftPersonCount;
+  double dumpCount;
+  double leftZipCount;
+  double rightZipCount;
 
   ColorSensor colorSensor1;
   ColorSensor colorSensor2;
@@ -32,21 +33,24 @@ public abstract class AlphaDrive extends BaseTeleOp{
     left = hardwareMap.dcMotor.get("left");
     right = hardwareMap.dcMotor.get("right");
     pull = hardwareMap.dcMotor.get("pull");
+
     aim = hardwareMap.servo.get("aim");
-    whack = hardwareMap.servo.get("whack");
-    leftPersonDropper = hardwareMap.servo.get("leftPersonServo");
-    colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
-    colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
+    leftZip = hardwareMap.servo.get("leftZip");
+    rightZip = hardwareMap.servo.get("rightZip");
+    dump = hardwareMap.servo.get("dump");
 
     originalLeft = left.getCurrentPosition();
     originalRight = right.getCurrentPosition();
-    aimCount = 0.2;
-    leftPersonCount = 0;
+    aimCount = 0;
+    dumpCount = 1;
+    rightZipCount = .3;
+    leftZipCount = .7;
 
     aim.setPosition(aimCount);
-    leftPersonDropper.setPosition(leftPersonCount);
+    dump.setPosition(dumpCount);
+    leftZip.setPosition(leftZipCount);
+    rightZip.setPosition(rightZipCount);
 
-    whack.setPosition(.493);
     left.setDirection(DcMotor.Direction.FORWARD);
     right.setDirection(DcMotor.Direction.REVERSE);
 
@@ -76,34 +80,61 @@ public abstract class AlphaDrive extends BaseTeleOp{
     aim.setPosition(aimCount);
   }
 
-  void pressLT(double d) {
-    double t = .493 + d/2;
-    if (t > 1) t = 1;
-    else if (t < 0) t = 0;
-    whack.setPosition(t);
+  void rightZipDown() {
+    rightZipCount += .01;
+
+    if (rightZipCount > 1)
+      rightZipCount = 1;
+    else if (rightZipCount < 0) rightZipCount = 0;
+
+    rightZip.setPosition(rightZipCount);
+  }
+
+  void rightZipUp() {
+    rightZipCount -= .05;
+
+    if (rightZipCount > 1)
+      rightZipCount = 1;
+    else if (rightZipCount < 0) rightZipCount = 0;
+
+    rightZip.setPosition(rightZipCount);
+  }
+
+  void leftZipDown() {
+    leftZipCount -= .01;
+
+    if (leftZipCount > 1)
+      leftZipCount = 1;
+    else if (leftZipCount < 0) leftZipCount = 0;
+
+    leftZip.setPosition(leftZipCount);
+  }
+
+  void leftZipUp() {
+    leftZipCount -= .05;
+
+    if (leftZipCount > 1)
+      leftZipCount = 1;
+    else if (leftZipCount < 0) leftZipCount = 0;
+
+    leftZip.setPosition(leftZipCount);
+  }
+  void resetZips() {
+    leftZipCount = .7;
+    rightZipCount = .3;
+    leftZip.setPosition(leftZipCount);
+    rightZip.setPosition(rightZipCount);
   }
 
   void pressLB() {
-    leftPersonCount = scaleServo(leftPersonCount - .002);
-    leftPersonDropper.setPosition(leftPersonCount);
-  }
-
-  void pressRT(double d) {
-    double t = .493 - d;
-    if (t > 1) t = 1;
-    else if (t < 0) t = 0;
-    whack.setPosition(t);
+    dumpCount = scaleServo(dumpCount - .02);
+    dump.setPosition(dumpCount);
   }
 
   void pressRB() {
-    leftPersonCount = scaleServo(leftPersonCount + .002);
-    leftPersonDropper.setPosition(leftPersonCount);
+    dumpCount = scaleServo(dumpCount + .02);
+    dump.setPosition(dumpCount);
   }
-
-  void noPressT() {
-    whack.setPosition(.493);
-  }
-
   void smoothAim(double m) {
     aimCount = scaleServo(aimCount + m/300);
     aim.setPosition(aimCount);
@@ -134,9 +165,7 @@ public abstract class AlphaDrive extends BaseTeleOp{
     telemetry.addData("Aim position", aimCount);
     telemetry.addData("Left encoder", getEncoders()[0]);
     telemetry.addData("Right encoder", getEncoders()[1]);
-    telemetry.addData("Dropper", leftPersonCount);
-    telemetry.addData("ColorSensor1 Alpha", colorSensor1.alpha());
-    telemetry.addData("ColorSensor2 Alpha", colorSensor2.alpha());
+    telemetry.addData("Dropper", dumpCount);
   }
   int originalLeft;
   int originalRight;

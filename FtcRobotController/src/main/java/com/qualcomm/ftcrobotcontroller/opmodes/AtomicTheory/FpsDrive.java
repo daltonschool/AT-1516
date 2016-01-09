@@ -34,9 +34,9 @@ public class FpsDrive extends AlphaDrive {
 
     if (gamepad2.a)
       syncAim(AIM_PRESET_INTO_THIN_AIR);
-    else if(gamepad2.b) {
-      syncAim(AIM_PRESET_MID_ZONE);
-    }
+//    else if(gamepad2.b) {
+//      syncAim(AIM_PRESET_MID_ZONE);
+//    }
 
     if (gamepad1.left_bumper)
       moveLift(1);
@@ -57,12 +57,22 @@ public class FpsDrive extends AlphaDrive {
     else if (gamepad2.right_bumper)
       pressRB();
 
-    if (gamepad2.left_trigger > .1)
-      pressLT(gamepad2.left_trigger);
-    else if(gamepad2.right_trigger > .1)
-      pressRT(gamepad2.right_trigger);
-    else
-      noPressT();
+    if (gamepad2.b) {
+      rightZipDown();
+    }
+    if (gamepad2.x) {
+      leftZipDown();
+    }
+    if (gamepad2.y) {
+      resetZips();
+    }
+
+//    if (gamepad2.left_trigger > .1)
+//      pressLT(gamepad2.left_trigger);
+//    else if(gamepad2.right_trigger > .1)
+//      pressRT(gamepad2.right_trigger);
+//    else
+//      noPressT();
 
 
     writeTelemetry();

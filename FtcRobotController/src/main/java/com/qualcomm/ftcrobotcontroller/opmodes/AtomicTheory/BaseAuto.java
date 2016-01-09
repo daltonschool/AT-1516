@@ -107,10 +107,10 @@ public abstract class BaseAuto extends LinearOpMode{
   void rotateDegs(double power, AtomicUtil.Direction dir, double deg) {
     resetHeading();
     if (dir == AtomicUtil.Direction.CLOCKWISE)
-      while(getHeading() < deg)
+      while(getHeading() > (360 - deg))
         rotate(power, dir);
     else if (dir == AtomicUtil.Direction.COUNTERCLOCKWISE)
-      while (getHeading() > (360 - deg))
+      while (getHeading() < deg)
         rotate(power, dir);
   }
 
@@ -139,10 +139,10 @@ public abstract class BaseAuto extends LinearOpMode{
     while (Math.abs(encoderMotor1.getCurrentPosition()- startLeft) < ticks ||
             Math.abs(encoderMotor2.getCurrentPosition()- startRight) < ticks) {
       double heading = getHeading();
-      if (heading > 180 && heading < 358) // if we're veering to the left,
-        pl += .1;
-      else if (heading < 180 && heading > 2) // if we're veering to the right,
+      if (heading > 180 && heading < 358) // if we're veering to the right,
         pr += .1;
+      else if (heading < 180 && heading > 2) // if we're veering to the left,
+        pl += .1;
       else // if we're going straight, back to normal power.
         pl = pr = power;
 
