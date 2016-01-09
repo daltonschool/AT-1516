@@ -176,8 +176,7 @@ public class IMUTest extends OpMode
      * THIS "loop" METHOD IS THE ONLY ONE THAT "TOUCHES" ANY SENSOR OR MOTOR HARDWARE.
      */
 
-    public void updatePosition()
-    {
+    public void updatePosition() {
         elapsedTime = systemTime - prevTime;
         prevTime = systemTime;
         double elapsedSeconds = elapsedTime / 1000000000;
@@ -196,17 +195,17 @@ public class IMUTest extends OpMode
         prevXVel = curXVel;
         prevYVel = curYVel;
         prevZVel = curZVel;
-        curXVel = prevXVel + (curXAcc / elapsedSeconds);
-        curYVel = prevYVel + (curYAcc / elapsedSeconds);
-        curZVel = prevZVel + (curZAcc / elapsedSeconds);
+        curXVel = prevXVel + (curXAcc * elapsedSeconds);
+        curYVel = prevYVel + (curYAcc * elapsedSeconds);
+        curZVel = prevZVel + (curZAcc * elapsedSeconds);
 
         //Update position
         prevXPos = curXPos;
         prevYPos = curYPos;
         prevZPos = curZPos;
-        curXPos = prevXPos + ((curXVel / elapsedSeconds) * 100);
-        curYPos = prevYPos + ((curYVel / elapsedSeconds) * 100);
-        curZPos = prevZPos + ((curZPos / elapsedSeconds) * 100);
+        curXPos = prevXPos + ((curXVel * elapsedSeconds));
+        curYPos = prevYPos + ((curYVel * elapsedSeconds));
+        curZPos = prevZPos + ((curZPos * elapsedSeconds));
 
         //Update gyro values
         gyro.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);
@@ -216,7 +215,10 @@ public class IMUTest extends OpMode
         //Display information on screen
         telemetry.addData("Headings(yaw): ",
                 String.format("Euler= %4.5f", yawAngle[0]));
+        telemetry.addData("X:", String.format("%4.5f", curXPos));
+
     }
+
 
     public static double calcDesiredHeading(double startX, double startY, double endX, double endY)
     {
