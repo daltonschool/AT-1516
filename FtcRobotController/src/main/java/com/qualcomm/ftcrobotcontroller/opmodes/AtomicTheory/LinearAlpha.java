@@ -64,27 +64,6 @@ public abstract class LinearAlpha extends BaseAuto {
     curHeading = 0; //CHANGE BASED ON PROGRAM
     hasStarted = false;
     prevHeading = curHeading;
-    curXAcc = 0;
-    curYAcc = 0;
-    curZAcc = 0;
-    prevXAcc = 0;
-    prevYAcc = 0;
-    prevZAcc = 0;
-
-    curXVel = 0;
-    curYVel = 0;
-    curZVel = 0;
-    prevXVel = 0;
-    prevYVel = 0;
-    prevZVel = 0;
-
-    curXPos = 0; //CHANGE BASED ON PROGRAM
-    curYPos = 0; //CHANGE BASED ON PROGRAM
-    curZPos = 0;
-    prevXPos = curXPos;
-    prevYPos = 0;
-    prevZVel = 0;
-
 
     systemTime = System.nanoTime();
     prevTime = systemTime;
@@ -109,26 +88,6 @@ public abstract class LinearAlpha extends BaseAuto {
   //The following arrays contain both the Euler angles reported by the IMU (indices = 0) AND the
   // Tait-Bryan angles calculated from the 4 components of the quaternion vector (indices = 1)
   volatile double[] rollAngle = new double[2], pitchAngle = new double[2], yawAngle = new double[2], accs = new double[3];
-  double curXAcc; //In m/s^2
-  double curYAcc; //In m/s^2
-  double curZAcc; //In m/s^2
-  double prevXAcc; //In m/s^2
-  double prevYAcc; //In m/s^2
-  double prevZAcc; //In m/s^2
-
-  double curXVel; //In m/s
-  double curYVel; //In m/s
-  double curZVel; //In m/s
-  double prevXVel; //In m/s
-  double prevYVel; //In m/s
-  double prevZVel; //In m/s
-
-  double curXPos; //In cm
-  double curYPos; //In cm
-  double curZPos; //In cm
-  double prevXPos; //In cm
-  double prevYPos; //In cm
-  double prevZPos; //In cm
 
   boolean hasStarted;
 
@@ -201,8 +160,7 @@ public abstract class LinearAlpha extends BaseAuto {
       telemetry.addData("m2:", Math.abs(encoderMotor2.getCurrentPosition() - start2) - ticks);
     }
 
-    moveLeft(0);
-    moveRight(0);
+    stopMotors();
   }
 
 
@@ -234,7 +192,6 @@ public abstract class LinearAlpha extends BaseAuto {
     //Display information on screen
     telemetry.addData("Headings(yaw): ",
             String.format("Euler= %4.5f", yawAngle[0]));
-    telemetry.addData("X:", String.format("%4.5f", curXPos));
 
   }
 }
