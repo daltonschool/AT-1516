@@ -79,6 +79,8 @@ public abstract class LinearAlpha extends BaseAuto {
     gyro.startIMU();//Set up the IMU as needed for a continual stream of I2C reads.
     telemetry.addData("FtcRobotController", "IMU Start method finished in: "
             + (-(systemTime - (systemTime = System.nanoTime()))) + " ns.");
+    updateHeading(); // get the ball rolling with updating gyro?
+    //hopefully reduces lag during initial autonomous
   }
 
   /*gyro specific stuff*/
@@ -195,21 +197,6 @@ public abstract class LinearAlpha extends BaseAuto {
     }
 
     stopMotors();
-  }
-
-
-  public static double calcDesiredDistance(double startX, double startY, double endX, double endY) {
-    double dist = 0.0;
-    double changeX = startX - endX;
-    double changeY = startY - endY;
-
-    if (changeX < 0)
-      changeX *= -1;
-    if (changeY < 0)
-      changeY *= -1;
-    dist = (changeX * changeX) + (changeY * changeY);
-    dist = Math.sqrt(dist);
-    return dist;
   }
 
   public void updateHeading() {
