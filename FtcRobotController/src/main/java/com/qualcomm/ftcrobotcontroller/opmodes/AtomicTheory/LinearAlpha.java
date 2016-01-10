@@ -101,7 +101,7 @@ public abstract class LinearAlpha extends BaseAuto {
   double prevHeading;
   double desiredHeading;
 
-  public void turnToHeading(double desiredHeading) {
+  public void turnToHeading(double turnPower, double desiredHeading) {
     updateHeading();
     if (curHeading > desiredHeading) {
       /* might need a dead zone for turning... */
@@ -122,6 +122,13 @@ public abstract class LinearAlpha extends BaseAuto {
       stopMotors();
     }
     updateHeading();
+  }
+  public void rotateDegs(double turnPower, double degs) {
+    updateHeading();
+    double h = curHeading + degs * -sign(turnPower);
+    if (Math.abs(h) > 180)
+      h += -360*sign(h);
+    turnToHeading(Math.abs(turnPower), h);
   }
 
   /**
