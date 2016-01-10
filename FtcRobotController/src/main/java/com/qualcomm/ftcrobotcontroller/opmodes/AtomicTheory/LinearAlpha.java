@@ -77,7 +77,7 @@ public abstract class LinearAlpha extends BaseAuto {
 
     systemTime = System.nanoTime();
     gyro.startIMU();//Set up the IMU as needed for a continual stream of I2C reads.
-    Log.i("FtcRobotController", "IMU Start method finished in: "
+    telemetry.addData("FtcRobotController", "IMU Start method finished in: "
             + (-(systemTime - (systemTime = System.nanoTime()))) + " ns.");
   }
 

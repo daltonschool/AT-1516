@@ -9,8 +9,6 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
 import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.*;
 
 public abstract class AutoV4 extends LinearAlpha{
-
-
     Direction turnDir;
     int turnK = 0;
     public void runOpMode() throws InterruptedException{
