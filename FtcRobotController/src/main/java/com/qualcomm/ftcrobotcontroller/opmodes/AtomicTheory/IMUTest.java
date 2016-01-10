@@ -179,7 +179,7 @@ public class IMUTest extends OpMode
     public void updatePosition() {
         elapsedTime = systemTime - prevTime;
         prevTime = systemTime;
-        double elapsedSeconds = elapsedTime / 1000000000;
+        double elapsedSeconds = elapsedTime / (1000000000f);
         systemTime = System.nanoTime();
 
         //Update accelerations
@@ -216,7 +216,9 @@ public class IMUTest extends OpMode
         telemetry.addData("Headings(yaw): ",
                 String.format("Euler= %4.5f", yawAngle[0]));
         telemetry.addData("X:", String.format("%4.5f", curXPos));
-
+        telemetry.addData("xv:", String.format("%4.5f", curXVel));
+        telemetry.addData("xa:", String.format("%4.5f", curXAcc));
+        telemetry.addData("dt:", String.format("%4.5f", elapsedSeconds));
     }
 
 

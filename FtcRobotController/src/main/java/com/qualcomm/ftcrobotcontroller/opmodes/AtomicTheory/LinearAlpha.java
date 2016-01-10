@@ -143,12 +143,12 @@ public abstract class LinearAlpha extends BaseAuto {
   double desiredHeading;
 
   public void turnToHeading(double desiredHeading) {
-    updatePosition();
+    updateHeading();
     if (curHeading > desiredHeading) {
       /* might need a dead zone for turning... */
       //Turn left until robot reaches the desiredHeading
       while (curHeading > desiredHeading) {
-        updatePosition();
+        updateHeading();
         moveLeft(turnPower);
         moveRight(-turnPower);
       }
@@ -156,38 +156,55 @@ public abstract class LinearAlpha extends BaseAuto {
     } else {
       //Turn right until robot reaches the desiredHeading
       while (curHeading < desiredHeading) {
-        updatePosition();
+        updateHeading();
         moveLeft(turnPower);
         moveRight(-turnPower);
       }
       stopMotors();
     }
-    updatePosition();
+    updateHeading();
   }
 
-  public void driveStraight(double distance) {
-    curXPos = 0; //set relative x position to 0 (x is the forward-backward axis of the robot
+  /**
+   * Drive forward until encoder tick threshold is met.
+   * @param power
+   * @param ticks Number of encoder ticks to travel
+   */
+  public void driveTicksStraight(double power, int ticks) {
+    int start = encoderMotor1.getCurrentPosition();
+    int start2 = encoderMotor2.getCurrentPosition();
 
-    while(Math.abs(curXPos) < distance) {
-      //set power
-      double power = (distance < 0) ? -drivePower : drivePower; //set negative if backwards, otherwise positive drivePower
-      double leftPower = power;
-      double rightPower = power;
+    double initHeading = curHeading;
+    double error_const = .04;
 
-      //adjust power to drive straight
 
-      //set motor power
-      moveLeft(leftPower);
-      moveRight(rightPower);
+    while (Math.abs(encoderMotor1.getCurrentPosition() - start) < ticks
+            || Math.abs(encoderMotor2.getCurrentPosition() - start2) < ticks) {
+      updateHeading();
 
-      //update location
-      updatePosition();
+      //gyro is too finicky to do integral stuff so just the basic derivative stuff
+      double pl = power;
+      double pr = power;
+
+
+      double error = curHeading - initHeading;
+
+      pl-=error * error_const;
+      pr+=error * error_const;
+
+      pl = scale(pl);
+      pr = scale(pr);
+
+      moveLeft(pl);
+      moveRight(pr);
+      telemetry.addData("m1:", Math.abs(encoderMotor1.getCurrentPosition() - start) - ticks);
+      telemetry.addData("m2:", Math.abs(encoderMotor2.getCurrentPosition() - start2) - ticks);
     }
 
-    //stop motors
     moveLeft(0);
     moveRight(0);
   }
+
 
   public static double calcDesiredDistance(double startX, double startY, double endX, double endY) {
     double dist = 0.0;
@@ -203,36 +220,11 @@ public abstract class LinearAlpha extends BaseAuto {
     return dist;
   }
 
-  public void updatePosition() {
+  public void updateHeading() {
     elapsedTime = systemTime - prevTime;
     prevTime = systemTime;
     double elapsedSeconds = elapsedTime / 1000000000;
     systemTime = System.nanoTime();
-
-    //Update accelerations
-    gyro.getAccel(accs);
-    prevXAcc = curXAcc;
-    prevYAcc = curYAcc;
-    prevZAcc = curZAcc;
-    curXAcc = accs[0];
-    curYAcc = accs[1];
-    curZAcc = accs[2];
-
-    //Update velocities
-    prevXVel = curXVel;
-    prevYVel = curYVel;
-    prevZVel = curZVel;
-    curXVel = prevXVel + (curXAcc * elapsedSeconds);
-    curYVel = prevYVel + (curYAcc * elapsedSeconds);
-    curZVel = prevZVel + (curZAcc * elapsedSeconds);
-
-    //Update position
-    prevXPos = curXPos;
-    prevYPos = curYPos;
-    prevZPos = curZPos;
-    curXPos = prevXPos + ((curXVel * elapsedSeconds));
-    curYPos = prevYPos + ((curYVel * elapsedSeconds));
-    curZPos = prevZPos + ((curZPos * elapsedSeconds));
 
     //Update gyro values
     gyro.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);

@@ -24,7 +24,6 @@ public abstract class AutoV4 extends LinearAlpha{
         }
         waitForStart();
 
-        turnToHeading(90);
-
+        driveTicksStraight(.5, 20000);
     }
 }
