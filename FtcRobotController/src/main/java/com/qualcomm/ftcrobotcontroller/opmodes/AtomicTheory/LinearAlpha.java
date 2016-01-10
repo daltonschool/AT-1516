@@ -125,6 +125,33 @@ public abstract class LinearAlpha extends BaseAuto {
   }
 
   /**
+   * Calculate one step of the proportional control for driving straight
+   * With the Adafruit IMU.
+   *
+   * driveTicksStraight allows us to drive straight using encoder ticks to determine when to stop,
+   * but we might want to stop driving when we reach other thresholds, such as a distance away
+   * from the wall measured by an Optical Distance Sensor.
+   *
+   * This function allows us to do that. Use it inside of a loop where the breakout condition is
+   * when you want to stop driving. Pass in the heading you want to drive to and the power
+   * you want to drive at, and right after the loop call stopMotors();
+   *
+   * @param power
+   * @param initHeading the heading to drive to
+   */
+  public void driveStraight(double power, double initHeading) {
+    updateHeading();
+
+    double error = curHeading - initHeading;
+    double error_const = .04;
+    double pl = scale(power - error*error_const);
+    double pr = scale(power + error*error_const);
+
+    moveLeft(pl);
+    moveRight(pr);
+  }
+
+  /**
    * Drive forward until encoder tick threshold is met.
    * @param power
    * @param ticks Number of encoder ticks to travel
