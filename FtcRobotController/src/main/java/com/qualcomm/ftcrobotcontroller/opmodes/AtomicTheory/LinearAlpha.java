@@ -103,7 +103,7 @@ public abstract class LinearAlpha extends BaseAuto {
   double prevHeading;
   double desiredHeading;
 
-  public void turnToHeading(double desiredHeading) {
+  public void turnToHeading(double turnPower, double desiredHeading) {
     updateHeading();
     if (curHeading > desiredHeading) {
       /* might need a dead zone for turning... */
@@ -124,6 +124,40 @@ public abstract class LinearAlpha extends BaseAuto {
       stopMotors();
     }
     updateHeading();
+  }
+  public void rotateDegs(double turnPower, double degs) {
+    updateHeading();
+    double h = curHeading + degs * -sign(turnPower);
+    if (Math.abs(h) > 180)
+      h += -360*sign(h);
+    turnToHeading(Math.abs(turnPower), h);
+  }
+
+  /**
+   * Calculate one step of the proportional control for driving straight
+   * With the Adafruit IMU.
+   *
+   * driveTicksStraight allows us to drive straight using encoder ticks to determine when to stop,
+   * but we might want to stop driving when we reach other thresholds, such as a distance away
+   * from the wall measured by an Optical Distance Sensor.
+   *
+   * This function allows us to do that. Use it inside of a loop where the breakout condition is
+   * when you want to stop driving. Pass in the heading you want to drive to and the power
+   * you want to drive at, and right after the loop call stopMotors();
+   *
+   * @param power
+   * @param initHeading the heading to drive to
+   */
+  public void driveStraight(double power, double initHeading) {
+    updateHeading();
+
+    double error = curHeading - initHeading;
+    double error_const = .04;
+    double pl = scale(power - error*error_const);
+    double pr = scale(power + error*error_const);
+
+    moveLeft(pl);
+    moveRight(pr);
   }
 
   /**
