@@ -58,6 +58,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("FPS Drive", FpsDrive.class);
 //    manager.register("Encoder Test", ForwardTest.class);
 //    manager.register("Color Sensor Test", ColorSensorTest.class);
+    manager.register("Turning test", RotateTest.class);
     manager.register("IMU Test", IMUTest.class);
     manager.register("Red Autonomous", AutoRed.class);
     manager.register("Blue Autonomous", AutoBlue.class);
