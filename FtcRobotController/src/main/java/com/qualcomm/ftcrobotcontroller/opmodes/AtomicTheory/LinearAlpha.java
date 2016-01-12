@@ -83,8 +83,8 @@ public abstract class LinearAlpha extends BaseAuto {
     Thread headingThread = new Thread() {
 		    public void run() {
 		        while(true){
-					updateHeading();
-				}
+					    updateHeadingThreaded();
+				    }
 		    }  
 		};
 
@@ -210,7 +210,11 @@ public abstract class LinearAlpha extends BaseAuto {
     stopMotors();
   }
 
-  public static void updateHeading() {
+  public void updateHeading() {
+  	
+  }
+  
+  public static void updateHeadingThreaded() {
     elapsedTime = systemTime - prevTime;
     prevTime = systemTime;
     double elapsedSeconds = elapsedTime / 1000000000;
