@@ -79,7 +79,18 @@ public abstract class LinearAlpha extends BaseAuto {
     gyro.startIMU();//Set up the IMU as needed for a continual stream of I2C reads.
     telemetry.addData("FtcRobotController", "IMU Start method finished in: "
             + (-(systemTime - (systemTime = System.nanoTime()))) + " ns.");
-    updateHeading(); // get the ball rolling with updating gyro?
+            
+    Thread headingThread = new Thread() {
+		    public void run() {
+		        while(true){
+					updateHeading();
+					System.out.println(heading);
+				}
+		    }  
+		};
+
+		headingThread.start();
+		
     //hopefully reduces lag during initial autonomous
   }
 
@@ -89,19 +100,19 @@ public abstract class LinearAlpha extends BaseAuto {
 
   //The following arrays contain both the Euler angles reported by the IMU (indices = 0) AND the
   // Tait-Bryan angles calculated from the 4 components of the quaternion vector (indices = 1)
-  volatile double[] rollAngle = new double[2], pitchAngle = new double[2], yawAngle = new double[2], accs = new double[3];
+  static volatile double[] rollAngle = new double[2], pitchAngle = new double[2], yawAngle = new double[2], accs = new double[3];
 
   boolean hasStarted;
 
   long systemTime;//Relevant values of System.nanoTime
-  long elapsedTime;
-  long prevTime;
+  static long elapsedTime;
+  static long prevTime;
 
   /* heading is from -180 to 180 degrees */
 
-  double curHeading;
-  double prevHeading;
-  double desiredHeading;
+  static double curHeading;
+  static double prevHeading;
+  static double desiredHeading;
 
   public void turnToHeading(double turnPower, double desiredHeading) {
     updateHeading();
@@ -200,7 +211,7 @@ public abstract class LinearAlpha extends BaseAuto {
     stopMotors();
   }
 
-  public void updateHeading() {
+  public static void updateHeading() {
     elapsedTime = systemTime - prevTime;
     prevTime = systemTime;
     double elapsedSeconds = elapsedTime / 1000000000;
