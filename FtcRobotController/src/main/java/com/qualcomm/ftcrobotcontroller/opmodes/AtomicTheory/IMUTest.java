@@ -118,6 +118,7 @@ public class IMUTest extends OpMode
         } catch (RobotCoreException e){
             Log.i("FtcRobotController", "Exception: " + e.getMessage());
         }
+        telemetry.addData("IMU", "Initialized");
     }
 
     @Override

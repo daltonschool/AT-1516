@@ -105,10 +105,10 @@ public abstract class LinearAlpha extends BaseAuto {
 
   public void turnToHeading(double turnPower, double desiredHeading) {
     updateHeading();
-    if (curHeading > desiredHeading) {
+    if (curHeading+180 > desiredHeading+180) {
       /* might need a dead zone for turning... */
       //Turn left until robot reaches the desiredHeading
-      while (curHeading > desiredHeading) {
+      while (curHeading+180 > desiredHeading+180) {
         updateHeading();
         moveLeft(turnPower);
         moveRight(-turnPower);
@@ -116,7 +116,7 @@ public abstract class LinearAlpha extends BaseAuto {
       stopMotors();
     } else {
       //Turn right until robot reaches the desiredHeading
-      while (curHeading < desiredHeading) {
+      while (curHeading+180 < desiredHeading+180) {
         updateHeading();
         moveLeft(turnPower);
         moveRight(-turnPower);
@@ -169,6 +169,7 @@ public abstract class LinearAlpha extends BaseAuto {
     int start = encoderMotor1.getCurrentPosition();
     int start2 = encoderMotor2.getCurrentPosition();
 
+    updateHeading();
     double initHeading = curHeading;
     double error_const = .04;
 
