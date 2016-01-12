@@ -83,8 +83,7 @@ public abstract class LinearAlpha extends BaseAuto {
     Thread headingThread = new Thread() {
 		    public void run() {
 		        while(true){
-					updateHeading();
-					System.out.println(heading);
+					updateHeadingThreaded();
 				}
 		    }  
 		};
@@ -96,7 +95,7 @@ public abstract class LinearAlpha extends BaseAuto {
 
   /*gyro specific stuff*/
 
-  AdafruitIMU gyro;
+  static AdafruitIMU gyro;
 
   //The following arrays contain both the Euler angles reported by the IMU (indices = 0) AND the
   // Tait-Bryan angles calculated from the 4 components of the quaternion vector (indices = 1)
@@ -104,7 +103,7 @@ public abstract class LinearAlpha extends BaseAuto {
 
   boolean hasStarted;
 
-  long systemTime;//Relevant values of System.nanoTime
+  static long systemTime;//Relevant values of System.nanoTime
   static long elapsedTime;
   static long prevTime;
 
@@ -211,7 +210,11 @@ public abstract class LinearAlpha extends BaseAuto {
     stopMotors();
   }
 
-  public static void updateHeading() {
+  public void updateHeading() {
+  	
+  }
+  
+  public static void updateHeadingThreaded() {
     elapsedTime = systemTime - prevTime;
     prevTime = systemTime;
     double elapsedSeconds = elapsedTime / 1000000000;
@@ -223,8 +226,8 @@ public abstract class LinearAlpha extends BaseAuto {
     curHeading = yawAngle[0];
 
     //Display information on screen
-    telemetry.addData("Headings(yaw): ",
-            String.format("Euler= %4.5f", yawAngle[0]));
+    //telemetry.addData("Headings(yaw): ",
+    //        String.format("Euler= %4.5f", yawAngle[0]));
 
   }
 }
