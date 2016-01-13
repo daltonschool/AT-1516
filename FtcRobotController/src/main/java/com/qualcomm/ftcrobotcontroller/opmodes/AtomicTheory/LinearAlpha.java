@@ -36,6 +36,13 @@ public abstract class LinearAlpha extends BaseAuto {
     right.setPower(power);
   }
 
+  void stopMotors() {
+    while (left.getPower() != 0.0 || right.getPower() != 0) {
+      left.setPower(0);
+      right.setPower(0);
+    }
+  }
+
   public void setup() {
     left = encoderMotor1 = hardwareMap.dcMotor.get("left");
     right = encoderMotor2 = hardwareMap.dcMotor.get("right");

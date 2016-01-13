@@ -15,37 +15,22 @@ public class RotateTest extends LinearAlpha{
     switch (getTeam()) {
       case BLUE:
         turnDir = AtomicUtil.Direction.CLOCKWISE;
-        turnK = 1;
+        turnK = -1;
         break;
       case RED:
         turnDir = AtomicUtil.Direction.COUNTERCLOCKWISE;
-        turnK = -1;
+        turnK = 1;
         break;
     }
 
-    updateHeading();
+    waitForStart();
     double startHeading = curHeading+180;
-    double targetHeading = (startHeading + 90)%360;
-//    double error;
-//    do {
-//      updateHeading();
-//
-//      error = curHeading+180 - targetHeading;
-//      double error_const = .04;
-//      double pl = scale(- error*error_const);
-//      double pr = scale(error*error_const);
-//
-//      moveLeft(pl);
-//      moveRight(pr);
-//    } while (Math.abs(error) > 1);
+    double turn = 85.0;
+    double targetHeading = (startHeading + turn*turnK)%360;
     while(curHeading+180 < targetHeading) {
-      updateHeading();
       rotate(.8, turnDir);
     }
     stopMotors();
-    left.setPower(0);
-    right.setPower(0);
-    sleep(10);
     telemetry.addData("Right", right.getPower());
     telemetry.addData("Left", left.getPower());
   }
