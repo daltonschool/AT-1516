@@ -25,7 +25,7 @@ public class RotateTest extends LinearAlpha{
 
     waitForStart();
     double startHeading = curHeading+180;
-    double turn = 85.0;
+    double turn =  85.0;
     double targetHeading = (startHeading + turn*turnK)%360;
     while(curHeading+180 < targetHeading) {
       rotate(.8, turnDir);

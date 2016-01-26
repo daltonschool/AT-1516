@@ -62,6 +62,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("IMU Test", IMUTest.class);
     manager.register("Red Autonomous", AutoRed.class);
     manager.register("Blue Autonomous", AutoBlue.class);
+    manager.register("Nathaniel is testing autnomous", AutoTestingRotateGyro.class);
 
     manager.register("NullOp", NullOp.class);
   }
