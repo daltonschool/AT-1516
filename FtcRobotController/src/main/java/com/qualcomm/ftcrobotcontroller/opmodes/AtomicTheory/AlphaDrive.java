@@ -68,12 +68,12 @@ public abstract class AlphaDrive extends BaseTeleOp{
     right.setPower(power);
   }
 
-  void pressA() {
-    aimCount = scaleServo(aimCount + .01);
+  void aimUp() {
+    aimCount = scaleServo(aimCount + .5/300.0);
     aim.setPosition(aimCount);
   }
-  void pressB() {
-    aimCount =  scaleServo(aimCount -.01);
+  void aimDown() {
+    aimCount =  scaleServo(aimCount -.5/300.0);
     aim.setPosition(aimCount);
   }
 
@@ -121,19 +121,25 @@ public abstract class AlphaDrive extends BaseTeleOp{
 
     leftZip.setPosition(leftZipCount);
   }
-  void resetZips() {
-    leftZipCount = .7;
+  void resetRight() {
     rightZipCount = .3;
-    leftZip.setPosition(leftZipCount);
     rightZip.setPosition(rightZipCount);
   }
+  void resetLeft() {
+    leftZipCount = .7;
+    leftZip.setPosition(leftZipCount);
+  }
+  void resetZips() {
+    resetRight();
+    resetLeft();
+  }
 
-  void pressLB() {
+  void dumpDown() {
     dumpCount = scaleServo(dumpCount - .02);
     dump.setPosition(dumpCount);
   }
 
-  void pressRB() {
+  void dumpUp() {
     dumpCount = scaleServo(dumpCount + .02);
     dump.setPosition(dumpCount);
   }

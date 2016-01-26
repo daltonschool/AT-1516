@@ -15,9 +15,9 @@ public class FpsDrive extends AlphaDrive {
     moveRight(rightPower);
 
     if (gamepad1.a)
-      pressA();
+      aimUp();
     else if (gamepad1.b)
-      pressB();
+      aimDown();
     else if (Math.abs(gamepad2.right_stick_y) > .05)
       smoothAim(gamepad2.right_stick_y);
     else
@@ -39,33 +39,37 @@ public class FpsDrive extends AlphaDrive {
 //    }
 
     if (gamepad1.left_bumper)
-      moveLift(1);
+      dumpDown();
     else if (gamepad1.right_bumper)
-      moveLift(-1);
-    else
-      moveLift(0);
+      dumpUp();
 
     if (gamepad1.dpad_up)
-      releaseZipline();
+      resetZips();
     else if (gamepad1.dpad_left)
-      engageZipline(AtomicUtil.Direction.LEFT);
+      leftZipDown();
     else if (gamepad1.dpad_right)
-      engageZipline(AtomicUtil.Direction.RIGHT);
+      rightZipDown();
+    else if (gamepad2.dpad_up)
+      resetZips();
+    else if (gamepad2.dpad_left)
+      leftZipDown();
+    else if (gamepad2.dpad_right)
+      rightZipDown();
 
     if(gamepad2.left_bumper)
-      pressLB();
+      dumpDown();
     else if (gamepad2.right_bumper)
-      pressRB();
+      dumpUp();
 
-    if (gamepad2.b) {
-      rightZipDown();
-    }
-    if (gamepad2.x) {
-      leftZipDown();
-    }
-    if (gamepad2.y) {
-      resetZips();
-    }
+//    if (gamepad2.b) {
+//      rightZipDown();
+//    }
+//    if (gamepad2.x) {
+//      leftZipDown();
+//    }
+//    if (gamepad2.y) {
+//      resetZips();
+//    }
 
 //    if (gamepad2.left_trigger > .1)
 //      pressLT(gamepad2.left_trigger);
