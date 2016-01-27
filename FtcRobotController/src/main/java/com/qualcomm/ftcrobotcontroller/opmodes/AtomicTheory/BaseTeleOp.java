@@ -27,22 +27,6 @@ public abstract class BaseTeleOp extends OpMode{
   abstract void moveRight(double power);
 
 
-  abstract void aimUp();
-  abstract void aimDown();
-  abstract void noAB();
-  abstract void pressX();
-  abstract void pressY();
-  abstract void noXY();
-//  abstract void pressLT(double d);
-  abstract void dumpDown();
-//  abstract void pressRT(double d);
-  abstract void noLBLT();
-
-  abstract void moveLift(double dir);
-
-  abstract void engageZipline(Direction d);
-  abstract void releaseZipline();
-
   /**
    * Stop the motors.
    */

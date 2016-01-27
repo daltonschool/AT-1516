@@ -55,6 +55,7 @@ public class FtcOpModeRegister implements OpModeRegister {
      * If two or more op modes are registered with the same name, the app will display an error.
      */
 
+    manager.register("Delta Drive", DeltaDrive.class);
     manager.register("FPS Drive", FpsDrive.class);
 //    manager.register("Encoder Test", ForwardTest.class);
 //    manager.register("Color Sensor Test", ColorSensorTest.class);
