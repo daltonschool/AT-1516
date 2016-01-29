@@ -13,20 +13,24 @@ public class DeltaDrive extends BaseTeleOp{
   Servo aim;
 
   double armPos;
+  double floorPos;
 
   Servo AFL; // Front Left Arm
   Servo ABL; // Back Left Arm
   Servo AFR; // Front Right Arm
   Servo ABR; // Back Right Arm
+  Servo floor;
 
   public void init() {
     AFL = hardwareMap.servo.get("AFL");
     ABL = hardwareMap.servo.get("ABL");
     AFR = hardwareMap.servo.get("AFR");
     ABR = hardwareMap.servo.get("ABR");
+    floor = hardwareMap.servo.get("floor");
 
     armPos = 0;
     moveArms(armPos);
+    setFloor(.5);
   }
 
   void moveLeft(double power) {
@@ -42,13 +46,20 @@ public class DeltaDrive extends BaseTeleOp{
       armPos = scaleServo(armPos + .01);
     else if (gamepad1.left_bumper)
       armPos = scaleServo(armPos - .01);
+    if(gamepad1.x)
+      floorPos = scaleServo(floorPos - .01);
+    if(gamepad1.b)
+      floorPos = scaleServo(floorPos + .01);
+    if(gamepad1.y)
+      floorPos = scaleServo(floorPos = .5);
 
     moveArms(armPos);
+    setFloor(floorPos);
   }
 
   void moveLeftArm(double pos) {
-    AFL.setPosition(pos);
-    ABL.setPosition(pos);
+    AFL.setPosition(1.0-pos);
+    ABL.setPosition(1.0 - pos);
   }
 
   void moveRightArm(double pos) {
@@ -59,5 +70,9 @@ public class DeltaDrive extends BaseTeleOp{
   void moveArms(double pos) {
     moveLeftArm(pos);
     moveRightArm(pos);
+  }
+
+  void setFloor(double pos){
+    floor.setPosition(pos);
   }
 }
