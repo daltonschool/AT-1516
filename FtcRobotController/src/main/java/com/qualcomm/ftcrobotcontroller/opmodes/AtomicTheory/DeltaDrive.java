@@ -9,24 +9,24 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class DeltaDrive extends BaseTeleOp{
   DcMotor left;
   DcMotor right;
+
+  // Attachments
+  DcMotor leftArm;
+  DcMotor rightArm;
   DcMotor pull;
   Servo aim;
 
   double armPos;
   double floorPos;
 
-  Servo AFL; // Front Left Arm
-  Servo ABL; // Back Left Arm
-  Servo AFR; // Front Right Arm
-  Servo ABR; // Back Right Arm
   Servo floor;
 
   public void init() {
-    AFL = hardwareMap.servo.get("AFL");
-    ABL = hardwareMap.servo.get("ABL");
-    AFR = hardwareMap.servo.get("AFR");
-    ABR = hardwareMap.servo.get("ABR");
-    floor = hardwareMap.servo.get("floor");
+    leftArm = hardwareMap.dcMotor.get("leftArm");
+    rightArm = hardwareMap.dcMotor.get("rightArm");
+    rightArm.setDirection(DcMotor.Direction.REVERSE);
+
+//    floor = hardwareMap.servo.get("floor");
 
     armPos = 0;
     moveArms(armPos);
@@ -42,10 +42,14 @@ public class DeltaDrive extends BaseTeleOp{
 
   public void loop() {
 
-    if (gamepad1.right_bumper)
-      armPos = scaleServo(armPos + .01);
-    else if (gamepad1.left_bumper)
-      armPos = scaleServo(armPos - .01);
+    if (Math.abs(gamepad1.right_trigger) > .1)
+      moveArms(gamepad1.right_trigger);
+    else if (Math.abs(gamepad1.left_trigger) > .1)
+      moveArms(-gamepad1.left_trigger);
+    else
+      moveArms(0);
+
+
     if(gamepad1.x)
       floorPos = scaleServo(floorPos - .01);
     if(gamepad1.b)
@@ -53,26 +57,17 @@ public class DeltaDrive extends BaseTeleOp{
     if(gamepad1.y)
       floorPos = scaleServo(floorPos = .5);
 
-    moveArms(armPos);
     setFloor(floorPos);
   }
 
-  void moveLeftArm(double pos) {
-    AFL.setPosition(1.0-pos);
-    ABL.setPosition(1.0 - pos);
-  }
+  void moveArms(double pow) {
+    pow *= .2;
 
-  void moveRightArm(double pos) {
-    AFR.setPosition(pos);
-    ABR.setPosition(pos);
-  }
-
-  void moveArms(double pos) {
-    moveLeftArm(pos);
-    moveRightArm(pos);
+    leftArm.setPower(pow);
+    rightArm.setPower(pow);
   }
 
   void setFloor(double pos){
-    floor.setPosition(pos);
+//    floor.setPosition(pos);
   }
 }
