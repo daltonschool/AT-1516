@@ -1,4 +1,4 @@
-package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
+package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.Archived;
 
 /**
  * Created by nathaniel on 1/9/16
@@ -7,8 +7,9 @@ package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
  */
 
 import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.AtomicUtil.*;
+import com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory.LinearAlpha;
 
-public abstract class AutoV4 extends LinearAlpha{
+public abstract class AutoV4 extends LinearAlpha {
     Direction turnDir;
     int turnK = 0;
     public void runOpMode() throws InterruptedException{

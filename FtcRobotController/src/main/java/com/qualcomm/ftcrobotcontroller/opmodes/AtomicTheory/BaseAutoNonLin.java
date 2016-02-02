@@ -1,6 +1,8 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.AtomicTheory;
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -9,22 +11,111 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  */
 
 public abstract class BaseAutoNonLin extends OpMode {
-    DcMotor encoderMotor1;
-    DcMotor encoderMotor2;
+
+
+    void setup() {
+        setupElectronics();
+        updateMotorEncodeStart();
+
+    /* gyro initialization */
+        startHeading = 0;
+
+        long systemTime = System.nanoTime();
+        prevTime = systemTime;
+        try {
+            gyro = new AdafruitIMU(hardwareMap, "bno055"
+                    , (byte) (AdafruitIMU.BNO055_ADDRESS_A * 2)//By convention the FTC SDK always does 8-bit I2C bus
+                    , (byte) AdafruitIMU.OPERATION_MODE_IMU);
+        } catch (RobotCoreException e) {
+            Log.i("FtcRobotController", "Exception: " + e.getMessage());
+        }
+
+        systemTime = System.nanoTime();
+        gyro.startIMU();//Set up the IMU as needed for a continual stream of I2C reads.
+        telemetry.addData("FtcRobotController", "IMU Start method finished in: "
+                + (-(systemTime - (systemTime = System.nanoTime()))) + " ns.");
+
+        Thread headingThread = new Thread() {
+            public void run() {
+                while (true) {
+                    updateHeadingThreaded();
+                }
+            }
+        };
+
+        headingThread.start();
+    }
+
+    void setupElectronics() {
+        //add in general electronics initialization stuff below...
+//        left = encoderMotor1 = hardwareMap.dcMotor.get("left");
+//        right = encoderMotor2 = hardwareMap.dcMotor.get("right");
+//        pull = hardwareMap.dcMotor.get("pull");
+//        aim = hardwareMap.servo.get("aim");
+//        leftZip = hardwareMap.servo.get("leftZip");
+//        rightZip = hardwareMap.servo.get("rightZip");
+//        dump = hardwareMap.servo.get("dump");
+//
+//        aimCount = 0;
+//        dumpCount = 1;
+//        rightZipCount = .3;
+//        leftZipCount = .7;
+//
+//        aim.setPosition(aimCount);
+//        dump.setPosition(dumpCount);
+//        leftZip.setPosition(leftZipCount);
+//        rightZip.setPosition(rightZipCount);
+//
+//        left.setDirection(DcMotor.Direction.FORWARD);
+//        right.setDirection(DcMotor.Direction.REVERSE);
+    }
+
+    void updateMotorEncodeStart() {
+        start = encoderMotor2.getCurrentPosition();
+        start2 = encoderMotor2.getCurrentPosition();
+    }
+
+    public static void updateHeadingThreaded() {
+        long systemTime = System.nanoTime();
+        long elapsedTime = systemTime - prevTime;
+        prevTime = systemTime;
+        double elapsedSeconds = elapsedTime / 1000000000;
+        systemTime = System.nanoTime();
+
+        //Update gyro values
+        gyro.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);
+
+
+        //Display information on screen
+        //telemetry.addData("Headings(yaw): ",
+        //        String.format("Euler= %4.5f", yawAngle[0]));
+
+    }
+
+
+    //drive encoders values
+    int start;
+    int start2;
+
+    //state variable
+    int state = 0;
 
     ColorSensor colorSensor1;
     ColorSensor colorSensor2;
 
     final int LINE_THRESHOLD = 20;
 
-    AdafruitIMU boschBNO055;
+    //gyroscope
+    static long prevTime = System.nanoTime();
+
+    static AdafruitIMU gyro;
     double startHeading = 0;
     //The following arrays contain both the Euler angles reported by the IMU (indices = 0) AND the
     // Tait-Bryan angles calculated from the 4 components of the quaternion vector (indices = 1)
-    volatile double[] rollAngle = new double[2], pitchAngle = new double[2], yawAngle = new double[2];
+    static volatile double[] rollAngle = new double[2], pitchAngle = new double[2], yawAngle = new double[2];
 
     public void updateIMU() {
-        boschBNO055.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);
+        gyro.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);
     }
 
     public double getHeading() {
@@ -121,8 +212,6 @@ public abstract class BaseAutoNonLin extends OpMode {
      * @param ticks Number of encoder ticks to travel
      */
     void dumbTicks(double power, int ticks) {
-        int start = encoderMotor1.getCurrentPosition();
-        int start2 = encoderMotor2.getCurrentPosition();
         while (Math.abs(encoderMotor1.getCurrentPosition() - start) < ticks
                 || Math.abs(encoderMotor2.getCurrentPosition() - start2) < ticks) {
             drive(power);
