@@ -57,13 +57,13 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("Delta Drive", DeltaDrive.class);
     manager.register("FPS Drive", FpsDrive.class);
-//    manager.register("Encoder Test", ForwardTest.class);
 //    manager.register("Color Sensor Test", ColorSensorTest.class);
+
     manager.register("Turning test", RotateTest.class);
     manager.register("IMU Test", IMUTest.class);
     manager.register("Red Autonomous", AutoRed.class);
     manager.register("Blue Autonomous", AutoBlue.class);
-    manager.register("Nathaniel is testing autnomous", AutoTestingRotateGyro.class);
+    manager.register("One Motor", MoveOneMotor.class);
 
     manager.register("NullOp", NullOp.class);
   }
