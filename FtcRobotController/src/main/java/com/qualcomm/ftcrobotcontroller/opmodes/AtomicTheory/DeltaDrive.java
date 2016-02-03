@@ -26,6 +26,9 @@ public class DeltaDrive extends BaseTeleOp{
     rightArm = hardwareMap.dcMotor.get("rightArm");
     rightArm.setDirection(DcMotor.Direction.REVERSE);
 
+    left = hardwareMap.dcMotor.get("left");
+    right = hardwareMap.dcMotor.get("right");
+    right.setDirection(DcMotor.Direction.REVERSE);
 //    floor = hardwareMap.servo.get("floor");
 
     armPos = 0;
@@ -41,6 +44,16 @@ public class DeltaDrive extends BaseTeleOp{
   }
 
   public void loop() {
+
+    float throttle = gamepad1.left_stick_y;
+    float turn = gamepad1.right_stick_x;
+
+    double leftPower = scale_motor_power(throttle - turn);
+    double rightPower = scale_motor_power(throttle + turn);
+
+    moveLeft(leftPower);
+    moveRight(rightPower);
+
 
     if (Math.abs(gamepad1.right_trigger) > .1)
       moveArms(gamepad1.right_trigger);
