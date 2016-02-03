@@ -15,9 +15,8 @@ public abstract class BaseAutoNonLin extends OpMode {
 
     void setup() {
         setupElectronics();
-        updateMotorEncodeStart();
 
-    /* gyro initialization */
+        /* gyro initialization */
         startHeading = 0;
 
         long systemTime = System.nanoTime();
@@ -46,34 +45,51 @@ public abstract class BaseAutoNonLin extends OpMode {
         headingThread.start();
     }
 
+
+
+
+    DcMotor encoderMotor1;
+    DcMotor encoderMotor2;
+    DcMotor left;
+    DcMotor right;
+
     void setupElectronics() {
-        //add in general electronics initialization stuff below...
-//        left = encoderMotor1 = hardwareMap.dcMotor.get("left");
-//        right = encoderMotor2 = hardwareMap.dcMotor.get("right");
-//        pull = hardwareMap.dcMotor.get("pull");
-//        aim = hardwareMap.servo.get("aim");
-//        leftZip = hardwareMap.servo.get("leftZip");
-//        rightZip = hardwareMap.servo.get("rightZip");
-//        dump = hardwareMap.servo.get("dump");
-//
-//        aimCount = 0;
-//        dumpCount = 1;
-//        rightZipCount = .3;
-//        leftZipCount = .7;
-//
-//        aim.setPosition(aimCount);
-//        dump.setPosition(dumpCount);
-//        leftZip.setPosition(leftZipCount);
-//        rightZip.setPosition(rightZipCount);
-//
-//        left.setDirection(DcMotor.Direction.FORWARD);
-//        right.setDirection(DcMotor.Direction.REVERSE);
+        left = encoderMotor1 = hardwareMap.dcMotor.get("left");
+        right = encoderMotor2 = hardwareMap.dcMotor.get("right");
+
+        left.setDirection(DcMotor.Direction.FORWARD);
+        right.setDirection(DcMotor.Direction.REVERSE);
     }
 
-    void updateMotorEncodeStart() {
-        start = encoderMotor2.getCurrentPosition();
-        start2 = encoderMotor2.getCurrentPosition();
+    void updateGlobalHeadingAndEncodeInformation() {
+        updateMotorEncoderStart();
+        updateStartHeading();
     }
+
+    void updateMotorEncoderStart() {
+        if(startEncoderUpdateState != state) {
+            start = encoderMotor2.getCurrentPosition();
+            start2 = encoderMotor2.getCurrentPosition();
+            startEncoderUpdateState = state;
+        }
+    }
+
+    void updateStartHeading() {
+        if(startHeadingUpdateState != state) {
+            startHeading = curHeading;
+            startHeadingUpdateState = state;
+        }
+    }
+
+    void incrementState() {
+        state++;
+    }
+
+    void incrementStateAndStopMotors() {
+        incrementState();
+        stopMotors();
+    }
+
 
     public static void updateHeadingThreaded() {
         long systemTime = System.nanoTime();
@@ -84,12 +100,6 @@ public abstract class BaseAutoNonLin extends OpMode {
 
         //Update gyro values
         gyro.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);
-
-
-        //Display information on screen
-        //telemetry.addData("Headings(yaw): ",
-        //        String.format("Euler= %4.5f", yawAngle[0]));
-
     }
 
 
@@ -99,6 +109,8 @@ public abstract class BaseAutoNonLin extends OpMode {
 
     //state variable
     int state = 0;
+    int startHeadingUpdateState = -1;
+    int startEncoderUpdateState = -1;
 
     ColorSensor colorSensor1;
     ColorSensor colorSensor2;
@@ -114,23 +126,14 @@ public abstract class BaseAutoNonLin extends OpMode {
     // Tait-Bryan angles calculated from the 4 components of the quaternion vector (indices = 1)
     static volatile double[] rollAngle = new double[2], pitchAngle = new double[2], yawAngle = new double[2];
 
+    static double curHeading;
+    static double prevHeading;
+
     public void updateIMU() {
         gyro.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);
     }
 
-    public double getHeading() {
-        updateIMU();
-        double corrected = yawAngle[0] - startHeading;
-        if (corrected > 0)
-            return corrected;
-        else
-            return corrected + 360;
-    }
 
-    public void resetHeading() {
-        getHeading();
-        startHeading = yawAngle[0];
-    }
 
     abstract AtomicUtil.Alliance getTeam();
 
@@ -190,20 +193,21 @@ public abstract class BaseAutoNonLin extends OpMode {
     }
 
     void rotateTicks(double power, AtomicUtil.Direction dir, int ticks) {
-        int start = encoderMotor1.getCurrentPosition();
         while(Math.abs(encoderMotor1.getCurrentPosition() - start) < ticks)
             rotate(power, dir);
         stopMotors();
     }
 
     void rotateDegs(double power, AtomicUtil.Direction dir, double deg) {
-        resetHeading();
         if (dir == AtomicUtil.Direction.CLOCKWISE)
-            while(getHeading() > (360 - deg))
+            if(curHeading > (360 - deg))
                 rotate(power, dir);
         else if (dir == AtomicUtil.Direction.COUNTERCLOCKWISE)
-            while (getHeading() < deg)
+            if (curHeading < deg)
                 rotate(power, dir);
+
+
+        //need stop motors code
     }
 
     /**
@@ -212,90 +216,44 @@ public abstract class BaseAutoNonLin extends OpMode {
      * @param ticks Number of encoder ticks to travel
      */
     void dumbTicks(double power, int ticks) {
-        while (Math.abs(encoderMotor1.getCurrentPosition() - start) < ticks
-                || Math.abs(encoderMotor2.getCurrentPosition() - start2) < ticks) {
+        if (Math.abs(encoderMotor1.getCurrentPosition() - start) < ticks) {
             drive(power);
+        } else {
+            incrementStateAndStopMotors();
         }
     }
 
-    void driveTicks(double power, int ticks) {
-        resetHeading();
-        int startLeft = encoderMotor1.getCurrentPosition();
-        int startRight = encoderMotor2.getCurrentPosition();
-        double pl, pr;
+    /**
+     * Drive forward until encoder tick threshold is met.
+     * @param power
+     * @param ticks Number of encoder ticks to travel
+     */
+    public void driveTicksStraight(double power, int ticks) {
+        double error_const = .04;
 
-        pl = pr = power;
+        if (Math.abs(encoderMotor1.getCurrentPosition() - start) < ticks
+                || Math.abs(encoderMotor2.getCurrentPosition() - start2) < ticks) { //might need to use && instead of ||
+            double pl = power;
+            double pr = power;
 
-        while (Math.abs(encoderMotor1.getCurrentPosition()- startLeft) < ticks ||
-                Math.abs(encoderMotor2.getCurrentPosition()- startRight) < ticks) {
-            double heading = getHeading();
-            if (heading > 180 && heading < 358) // if we're veering to the right,
-                pr += .1;
-            else if (heading < 180 && heading > 2) // if we're veering to the left,
-                pl += .1;
-            else // if we're going straight, back to normal power.
-                pl = pr = power;
+
+            double error = curHeading - startHeading;
+
+            pl-=error * error_const;
+            pr+=error * error_const;
 
             pl = scale(pl);
             pr = scale(pr);
 
             moveLeft(pl);
             moveRight(pr);
+            telemetry.addData("m1:", Math.abs(encoderMotor1.getCurrentPosition() - start) - ticks);
+            telemetry.addData("m2:", Math.abs(encoderMotor2.getCurrentPosition() - start2) - ticks);
+        } else {
+            incrementStateAndStopMotors();
         }
-        stopMotors();
     }
 
-//  /**
-//   * Use a proportional control algorithm to drive a certain number of encoder
-//   * ticks forward.
-//   * @param power Base motor power. Motors will run around this speed.
-//   * @param ticks Number of encoder ticks to travel.
-//   */
-//  void driveTicks(double power, int ticks) {
-//    // Starting positions
-//    int startLeft;
-//    int startRight;
-//    // Current positions
-//    int posLeft;
-//    int posRight;
-//    // Motor power in the proportional control algorithm.
-//    double pl;
-//    double pr;
-//
-//    double K = .001; // proportionality constant
-//
-//    startLeft = Math.abs(encoderMotor1.getCurrentPosition());
-//    startRight = Math.abs(encoderMotor2.getCurrentPosition());
-//    pl = pr = power;
-//
-//    do {
-//      // update encoder positions
-//      posLeft = Math.abs(encoderMotor1.getCurrentPosition());
-//      posRight = Math.abs(encoderMotor2.getCurrentPosition());
-//      posLeft = Math.abs(posLeft - startLeft);
-//      posRight = Math.abs(posRight - startRight);
-//      telemetry.addData("left", posLeft);
-//      telemetry.addData("right", posRight);
-//
-//      int error = posLeft - posRight; // Discrepancy between the two encoders
-//      double correction = error * K; // Multiply that error by the constant to get the correction.
-//
-//      // correct the motor speeds
-//      pl += correction;
-//      pr -= correction;
-//
-//      // ensure we're still within the thresholds so we don't throw an error
-//      pl = scale(pl);
-//      pr = scale(pr);
-//
-//      // drive the motors
-//      moveLeft(pl);
-//      moveRight(pr);
-//    } while (posLeft - startLeft < ticks || posRight - startRight < ticks);
-//    // ^^ do all that while we still have encoder ticks left to run
-//
-//    stopMotors(); // stop motors before exiting
-//  }
 
     /**
      * Ensure a number is within bounds for motor controllers.
@@ -318,48 +276,5 @@ public abstract class BaseAutoNonLin extends OpMode {
         else return -1.0;
     }
 
-    boolean seesLine(ColorSensor c) {
-        return c.alpha() > LINE_THRESHOLD;
-    }
 
-    /**
-     * Follow a white line, using a color sensor.
-     * This is an event-driven method. To continue to follow the line,
-     * keep calling this function. When you want to stop, call
-     * stopMotors() instead of this function.
-     *
-     * @param speed power to send to the motors.
-     */
-    void followLine(float speed) {
-        // If two color sensors are connected, use advanced line following.
-        if (colorSensor2 != null) {
-            if (seesLine(colorSensor1) && seesLine(colorSensor2)) // if both see the line
-                drive(speed); // drive straight.
-            else if (seesLine(colorSensor1)) // if only the left sensor sees the line
-                moveRight(speed); // turn to the right
-            else if (seesLine(colorSensor2)) // if only the right sensor sees the line
-                moveLeft(speed); // turn to the left
-            else // if neither sensor sees the line,
-                drive(speed); // drive straight.
-        }
-
-        // If only one sensor is connected, fallback to simple line following.
-        else {
-            if (seesLine(colorSensor1)) // if the sensor is on the line
-                moveLeft(speed); // move off the line
-            else // if the sensor is off the line
-                moveRight(speed); // move onto it
-        }
-    }
-
-    /**
-     * Follow a line for a given amount of time.
-     * @param millis time to follow the line for, in milliseconds.
-     */
-    void followLine(float speed, double millis) {
-        long t = System.currentTimeMillis();
-        while (System.currentTimeMillis() - t < millis)
-            followLine(speed);
-        stopMotors();
-    }
 }

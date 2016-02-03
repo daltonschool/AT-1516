@@ -11,4 +11,9 @@ public class AtomicUtil {
   public enum Direction {
     FORWARD, BACKWARD, LEFT, RIGHT, CLOCKWISE, COUNTERCLOCKWISE
   }
+
+  public Direction getOtherClockDirection(Direction dir) {
+      return (dir == Direction.CLOCKWISE) ? Direction.COUNTERCLOCKWISE : Direction.CLOCKWISE;
+  }
+
 }
