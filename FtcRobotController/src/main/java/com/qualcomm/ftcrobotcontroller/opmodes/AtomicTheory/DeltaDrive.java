@@ -29,7 +29,6 @@ public class DeltaDrive extends BaseTeleOp{
     left = hardwareMap.dcMotor.get("left");
     right = hardwareMap.dcMotor.get("right");
     right.setDirection(DcMotor.Direction.REVERSE);
-//    floor = hardwareMap.servo.get("floor");
 
     armPos = 0;
     moveArms(armPos);
