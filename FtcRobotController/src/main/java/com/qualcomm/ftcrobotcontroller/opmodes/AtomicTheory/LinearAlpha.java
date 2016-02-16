@@ -218,7 +218,7 @@ public abstract class LinearAlpha extends BaseAuto {
   }
 
   public void updateHeading() {
-  	
+
   }
   
   public static void updateHeadingThreaded() {
