@@ -13,26 +13,46 @@ public class DeltaDrive extends BaseTeleOp{
   // Attachments
   DcMotor leftArm;
   DcMotor rightArm;
+
   DcMotor pull;
   Servo aim;
 
   double armPos;
   double floorPos;
-
+  double aimPos;
   Servo floor;
 
+  DcMotor elevator;
+  DcMotor nom;
+
+
+
   public void init() {
-    leftArm = hardwareMap.dcMotor.get("leftArm");
-    rightArm = hardwareMap.dcMotor.get("rightArm");
+    // lift
+    leftArm = hardwareMap.dcMotor.get("lift left");
+    rightArm = hardwareMap.dcMotor.get("lift right");
     rightArm.setDirection(DcMotor.Direction.REVERSE);
 
-    left = hardwareMap.dcMotor.get("left");
-    right = hardwareMap.dcMotor.get("right");
-    right.setDirection(DcMotor.Direction.REVERSE);
+    // drivetrain
+    left = hardwareMap.dcMotor.get("drive left");
+    right = hardwareMap.dcMotor.get("drive right");
+    left.setDirection(DcMotor.Direction.REVERSE);
 
-    armPos = 0;
-    moveArms(armPos);
-    setFloor(.5);
+    // pickup
+    elevator = hardwareMap.dcMotor.get("elevator");
+    nom = hardwareMap.dcMotor.get("nom");
+    nom.setDirection(DcMotor.Direction.REVERSE);
+    floor = hardwareMap.servo.get("box tipper");
+
+    // hang
+    pull = hardwareMap.dcMotor.get("pullup");
+//    pull.setDirection(DcMotor.Direction.REVERSE);
+    aim = hardwareMap.servo.get("pullup aim");
+
+    floorPos = .5;
+    aimPos = 1;
+    setFloor(floorPos);
+    aim.setPosition(aimPos);
   }
 
   void moveLeft(double power) {
@@ -54,6 +74,7 @@ public class DeltaDrive extends BaseTeleOp{
     moveRight(rightPower);
 
 
+    // move lift
     if (Math.abs(gamepad1.right_trigger) > .1)
       moveArms(gamepad1.right_trigger);
     else if (Math.abs(gamepad1.left_trigger) > .1)
@@ -61,25 +82,66 @@ public class DeltaDrive extends BaseTeleOp{
     else
       moveArms(0);
 
-
+    // move floor of box
     if(gamepad1.x)
       floorPos = scaleServo(floorPos - .01);
     if(gamepad1.b)
       floorPos = scaleServo(floorPos + .01);
     if(gamepad1.y)
       floorPos = scaleServo(floorPos = .5);
-
     setFloor(floorPos);
+
+    // move elevator and nom
+    if (gamepad1.left_bumper) {
+      elevator.setPower(1);
+      nom.setPower(1);
+    }
+    else if (gamepad1.right_bumper) {
+      elevator.setPower(-1);
+      nom.setPower(-1);
+    }
+    else {
+      elevator.setPower(0);
+      nom.setPower(0);
+    }
+
+    // pullup
+    if (gamepad1.dpad_up)
+      pull.setPower(1);
+    else if (gamepad1.dpad_down)
+      pull.setPower(-1);
+    else
+      pull.setPower(0);
+
+    // servo aim
+    if (gamepad1.dpad_left)
+      aimUp();
+    else if (gamepad1.dpad_right)
+      aimDown();
   }
 
   void moveArms(double pow) {
-    pow *= .2;
+    pow *= .3;
 
     leftArm.setPower(pow);
     rightArm.setPower(pow);
   }
 
+  void aimUp() {
+    aimPos = scaleServo(aimPos + .5/100.0);
+    aim.setPosition(aimPos);
+  }
+  void aimDown() {
+    aimPos =  scaleServo(aimPos -.5/100.0);
+    aim.setPosition(aimPos);
+  }
+
+  void syncAim(double preset) {
+    aimPos = scaleServo(preset);
+    aim.setPosition(aimPos);
+  }
+
   void setFloor(double pos){
-//    floor.setPosition(pos);
+    floor.setPosition(pos);
   }
 }
