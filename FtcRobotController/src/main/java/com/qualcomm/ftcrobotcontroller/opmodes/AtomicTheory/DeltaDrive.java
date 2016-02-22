@@ -21,6 +21,7 @@ public class DeltaDrive extends BaseTeleOp{
   double floorPos;
   double aimPos;
   Servo floor;
+  Servo conveyor;
 
   DcMotor elevator;
   DcMotor nom;
@@ -41,13 +42,17 @@ public class DeltaDrive extends BaseTeleOp{
     // pickup
     elevator = hardwareMap.dcMotor.get("elevator");
     nom = hardwareMap.dcMotor.get("nom");
-    nom.setDirection(DcMotor.Direction.REVERSE);
     floor = hardwareMap.servo.get("box tipper");
 
     // hang
     pull = hardwareMap.dcMotor.get("pullup");
-//    pull.setDirection(DcMotor.Direction.REVERSE);
+    pull.setDirection(DcMotor.Direction.REVERSE);
     aim = hardwareMap.servo.get("pullup aim");
+
+    // conveyor test
+    conveyor = hardwareMap.servo.get("conveyor");
+    conveyor.setPosition(.493);
+
 
     floorPos = .5;
     aimPos = 1;
@@ -93,11 +98,11 @@ public class DeltaDrive extends BaseTeleOp{
 
     // move elevator and nom
     if (gamepad1.left_bumper) {
-      elevator.setPower(1);
+      elevator.setPower(.5);
       nom.setPower(1);
     }
     else if (gamepad1.right_bumper) {
-      elevator.setPower(-1);
+      elevator.setPower(-.5);
       nom.setPower(-1);
     }
     else {
@@ -118,10 +123,18 @@ public class DeltaDrive extends BaseTeleOp{
       aimUp();
     else if (gamepad1.dpad_right)
       aimDown();
+
+    //move conveyor
+    if (gamepad2.dpad_right)
+      conveyor.setPosition(1);
+    else if (gamepad2.dpad_left)
+      conveyor.setPosition(0);
+    else
+      conveyor.setPosition(.493);
   }
 
   void moveArms(double pow) {
-    pow *= .3;
+    pow *= .75;
 
     leftArm.setPower(pow);
     rightArm.setPower(pow);
@@ -144,4 +157,5 @@ public class DeltaDrive extends BaseTeleOp{
   void setFloor(double pos){
     floor.setPosition(pos);
   }
+
 }
