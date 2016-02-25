@@ -23,6 +23,16 @@ public class DeltaDrive extends BaseTeleOp{
   Servo floor;
   Servo conveyor;
 
+  Servo climberDumper;
+  double climberPos;
+
+  Servo ziplinerLeft;
+  Servo ziplinerRight;
+
+  double zipLeftPos = .95;
+  double zipRightPos = .05;
+
+
   DcMotor elevator;
   DcMotor nom;
 
@@ -42,7 +52,6 @@ public class DeltaDrive extends BaseTeleOp{
     // pickup
     elevator = hardwareMap.dcMotor.get("elevator");
     nom = hardwareMap.dcMotor.get("nom");
-    floor = hardwareMap.servo.get("box tipper");
 
     // hang
     pull = hardwareMap.dcMotor.get("pullup");
@@ -53,10 +62,19 @@ public class DeltaDrive extends BaseTeleOp{
     conveyor = hardwareMap.servo.get("conveyor");
     conveyor.setPosition(.493);
 
+    //climber dumper
+    climberDumper = hardwareMap.servo.get("climber");
+    climberDumper.setPosition(.5);
+
+    ziplinerLeft = hardwareMap.servo.get("zipl");
+    ziplinerRight = hardwareMap.servo.get("zipr");
+
+    ziplinerLeft.setPosition(.5);
+    ziplinerRight.setPosition(.5);
 
     floorPos = .5;
     aimPos = 1;
-    setFloor(floorPos);
+
     aim.setPosition(aimPos);
   }
 
@@ -87,14 +105,29 @@ public class DeltaDrive extends BaseTeleOp{
     else
       moveArms(0);
 
-    // move floor of box
-    if(gamepad1.x)
-      floorPos = scaleServo(floorPos - .01);
-    if(gamepad1.b)
-      floorPos = scaleServo(floorPos + .01);
-    if(gamepad1.y)
-      floorPos = scaleServo(floorPos = .5);
-    setFloor(floorPos);
+
+    if(gamepad2.x)
+      climberPos = scaleServo(floorPos - .01);
+    if(gamepad2.b)
+      climberPos = scaleServo(floorPos + .01);
+    if(gamepad2.y)
+      climberPos = scaleServo(floorPos = .5);
+    setClimber(climberPos);
+
+
+    if(gamepad2.right_trigger == 1.0)
+      zipRightPos = scaleServo(zipRightPos + .01);
+    if(gamepad2.right_bumper)
+      zipRightPos = scaleServo(zipRightPos - .01);
+    ziplinerRight.setPosition(zipRightPos);
+
+    if(gamepad2.left_trigger == 1.0)
+      zipLeftPos = scaleServo(zipLeftPos - .01);
+    if(gamepad2.left_bumper)
+      zipLeftPos = scaleServo(zipLeftPos + .01);
+    ziplinerLeft.setPosition(zipLeftPos);
+
+
 
     // move elevator and nom
     if (gamepad1.left_bumper) {
@@ -125,9 +158,9 @@ public class DeltaDrive extends BaseTeleOp{
       aimDown();
 
     //move conveyor
-    if (gamepad2.dpad_right)
+    if (gamepad2.a)
       conveyor.setPosition(1);
-    else if (gamepad2.dpad_left)
+    else if (gamepad2.b)
       conveyor.setPosition(0);
     else
       conveyor.setPosition(.493);
@@ -154,8 +187,9 @@ public class DeltaDrive extends BaseTeleOp{
     aim.setPosition(aimPos);
   }
 
-  void setFloor(double pos){
-    floor.setPosition(pos);
+
+  void setClimber(double pos) {
+    climberDumper.setPosition(pos);
   }
 
 }
