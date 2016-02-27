@@ -64,7 +64,6 @@ public class DeltaDrive extends BaseTeleOp{
 
     //climber dumper
     climberDumper = hardwareMap.servo.get("climber");
-    climberDumper.setPosition(.5);
 
     ziplinerLeft = hardwareMap.servo.get("zipl");
     ziplinerRight = hardwareMap.servo.get("zipr");
@@ -73,8 +72,10 @@ public class DeltaDrive extends BaseTeleOp{
     ziplinerRight.setPosition(.5);
 
     floorPos = .5;
-    aimPos = 1;
+    aimPos = 0;
+    climberPos = 1;
 
+    climberDumper.setPosition(climberPos);
     aim.setPosition(aimPos);
   }
 
